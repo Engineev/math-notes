@@ -11,7 +11,8 @@
   listings,
   fontspec,
   xcolor,
-  supertabular
+  supertabular,
+  multirow
 }
 \definecolor{bgGray}{RGB}{36, 36, 36}
 \usepackage[
@@ -24,31 +25,37 @@
 
 
 \theoremstyle{margin}
-%\theorembodyfont{\normalfont}
+\theorembodyfont{\normalfont}
 \newtheorem{thm}{定理}
 \newtheorem{cor}[thm]{推论}
+\newtheorem{pos}[thm]{命题}
 \newtheorem{lemma}[thm]{引理}
 \newtheorem{defi}[thm]{定义}
-\newtheorem{law}[thm]{定律}
+\newtheorem{std}[thm]{标准}
+\newtheorem{imp}[thm]{实现}
 \newcommand{\st}{\text{s.t.}}
 \newcommand{\mn}{\mathnormal}
 \newcommand{\tbf}{\textbf}
+\newcommand{\fl}{\mathnormal{fl}}
 \newcommand{\f}{\mathnormal{f}}
 \newcommand{\g}{\mathnormal{g}}
 \newcommand{\R}{\mathbf{R}}
 \newcommand{\Q}{\mathbf{Q}}
 \newcommand{\JD}{\textbf{D}}
 \newcommand{\rd}{\mathrm{d}}
+\newcommand{\str}{^*}
+\newcommand{\vep}{\varepsilon}
 \newcommand{\con}{\text{Const}}
 \newcommand{\oneton}{1,\,2,\,\dots,\,n}
 \newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
 \newcommand\thmref[1]{定理~\ref{#1}}
 \newcommand\defref[1]{定义~\ref{#1}}
 \newcommand{\remark}{\paragraph{评注}}
 \newcommand{\example}{\paragraph{例}}
 \newcommand{\proof}{\paragraph{证明}}
 
-\title{科学计算\\MA235}
+\title{科学计算 笔记\\MA235}
 \author{任云玮}
 \date{}
 
@@ -70,90 +77,195 @@
 
 \section{绪论}
 
-%%%
-\subsection{计算机数值计算原理}
+\subsection{计算机数值计算基本原理}
+
 \subsubsection{计算机基本工作原理}
+  \begin{tabular}{lcr}
+    |CPU| &  & |外存储器| \\
+    | & 数据总线 & | \\
+    |I/O接口| & |I/O接口| & |外存接口| \\
+    |输入|    & |输出|    & |外存储器|
+  \end{tabular}
 
 \subsubsection{实数的存贮方法}
+  \begin{defi}[二进制浮点数系]\footnote{Floating Number System}
+    实数在计算机内部为\tbf{近似存贮}，采用二进制浮点数系
+    \[
+      F(2,n,L,U)=\{\pm0.\aoneton\times10^m\}\cup\{0\}
+    \]
+    其中$a_1=1$，$a_i\in\{0,\,1\}$. 指数$m$满足$L\le m\le U$.
+    称$n$为其字长，$2$表示采用二进制。
+  \end{defi}
+
+  \begin{std}[IEEE]
+    $\,$
+    \begin{enumerate}
+      \item 单精度: $t=24,L=-126,U=127$
+      \item 双精度: $t=53,L=-1022,U=1023$
+      \item Underflow Limit: $UFL=0.1\times2^L$.
+      若$0<x<UFL$，则$\fl(x)=0$.
+      \item Overflow Limit: $OFL=0.11\dots1*2^U$.
+      若$x>OFL$，则$\fl(x)=\infty$.
+      \item 舍入: 若$UFL\le x\le OFL$，则$\fl(x)$为舍入所得浮点数。
+      舍入规则如下：设$x=0.\aoneton\dots\times2^m$. 若$a_{n+1}=1$，
+      则$d_t+1$并舍弃其后项；否则直接舍弃其后项。
+    \end{enumerate}
+  \end{std}
+
+  \begin{defi}[机器精度]
+    下仅考虑舍去的情况。
+    \[\begin{split}
+    x-\fl(x) &= 2^m \times 0.0\dots0a_{n+2}\dots \\
+    &=2^m \times [2^{-(t+2)} + 2^{-(t+3)} + \cdots] \\
+    &=2^m\times2^{-(t+1)}
+    \end{split}\]
+    其相对误差满足
+    \[
+      \frac{x-\fl(x)}{x} < \frac{x-\fl(x)}{0.5\times2^m}=2^{-t}
+    \]
+    记为$\varepsilon$，称之为机器精度。
+  \end{defi}
+
+  \begin{pos}
+    \[
+      \fl(x)=x(1+\delta),\,\text{其中}\,|\delta|\le\varepsilon
+    \]
+  \end{pos}
 
 \subsubsection{实数的基本运算原理}
+  加法$+$硬件实现$\Rightarrow$四则运算。
 
-%%%
+  \begin{imp}[$x+y$]
+    设$x,\,y$为浮点数，则$x+y$的实现方式如下：
+    \begin{enumerate}
+      \item 对阶：将指数$m$化为两者中较大者；
+      \item 尾数相加；
+      \item 舍入；
+      \item 溢出分析等……
+      \item 结果输出。
+    \end{enumerate}
+  \end{imp}
+  \remark
+    由$\fl(x)+\fl(y)=x(1+\delta_x)+y(1+\delta_y)$可知，当一个
+    大数与一个小数相加时，小数有可能被忽略，所以应当避免大数小数间的相加。
+
+\newpage
 \subsection{误差的来源与估计}
 
 \subsubsection{误差的来源}
-  \begin{enumerate}
-    \item 模型问题。例：近似地球为球体来计算。
-    \item 测量误差。例：测量地球半径时的误差。
-    \item 方法误差（截断误差）。
-    例：对于$y=\f(x)$，求$\f(x^*)$时使用Taylor展开。
-    \item 舍入误差（rounding-off）。例：计算机计算时的误差。
-  \end{enumerate}
+ \begin{enumerate}
+  \item 模型问题。例：近似地球为球体来计算。
+  \item 测量误差。例：测量地球半径时的误差。
+  \item 方法误差（截断误差）。
+  例：对于$y=\f(x)$，求$\f(x^*)$时使用Taylor展开。
+  \item 舍入误差（rounding-off）。例：计算机计算时的误差。
+ \end{enumerate}
 
-\subsubsection{误差和有效数字}
-  \begin{defi}[绝对误差等]
-    设$x\in\R$，$x^*$为$x$的近似值。称
+\subsubsection{误差与有效数字}
+  \begin{defi}[绝对误差]
+    设$x$为给定实数，$x^*$为其近似值。定义绝对误差为
     \[
-      e(x^*)=x^*-x
+      e(x^*) = x^* - x.
     \]
-    为$x^*$的绝对误差。其误差上界$\epsilon^*$满足
+    称$\varepsilon^*$为其误差上界，若
     \[
-      |e(x^*)|\le\varepsilon^*
+      |e(x^*)| \le \varepsilon^*
     \]
   \end{defi}
 
-  \begin{defi}[相对误差等]
-  \end{defi}
-
-  \begin{defi}[有效数字]\footnote{The number of significant}
-    设$x=+-0.a_1a_2...\times10^m$，若在第$n$位舍入，则得到
+  \begin{defi}[相对误差]
+    对于同上的$x$和$x^*$，定义其相对误差
     \[
-     x^*=+-0.......≥
+      e_r(x^*)=\frac{x^* - x}{x}
     \]
-    称$x^*$具$n$位有效数字。
+    称$\varepsilon_r^*$为其相对误差界，若
+    \[
+      |e_r(x^*)|\le\varepsilon_r^*
+    \]
   \end{defi}
-  \example
-    设$\pi=3.1415926\dots$，则$\pi_1=3$的有效数字为$n(\pi_1)=1$，
-    而$n(4)=0$，因为它并非正确的舍入所得。$n(3.1416)=5$，
-    $n(3.1415)=4$。
+  \remark
+    在实际应用中，$x$通常是未知的，所以会采用
+    \[
+      \bar{e}_r(x^*)=\frac{x^*-x}{x^*}
+    \]
+    来代替相对误差。对于分子，使用绝对误差界来替代，有如下不等式
+    \[
+      |\bar{e}_r(x^*)| \le \frac{\varepsilon^*}{|x^*|}.
+    \]
+    这两种相对误差界间的差别，当$\varepsilon^x\ll 1$时，满足
+    \[
+      |e_r-\bar{e}_r|=O((\varepsilon_r^*)^2)
+    \]
+
   \begin{defi}[有效数字]
-    若存在最大的$n$，使得
+    设$x\in R$，$x^*$为其近似值。称$x^*$相对于$x$有$n$位有效数字，
+    若$n$是满足下式的$n$的最大值。
     \[
-      |x^*-x|\le\frac{1}{2}\times10^{m-n}
+      |x^* - x| \le \frac{1}{2} \times 10^{m - n}
     \]
-    则称有$n$位有效数字。
   \end{defi}
+  \remark
+    在实践中，一般可以采用更加简便的方法，对于归一化以后的$x^*$，
+    在尾数部分有$n$位，则称其有$n$位有效数字。注意，此方法对于
+    错误的舍入结果是不实用的。
 
   \begin{thm}[误差与有效数字]
-    若$x^*=...\times10^m$有$n$位有效数字，则其相对误差满足
+    若$x=0.\aoneton\times10^m$有$n$位有效数字，则
     \[
-      \varepsilon_r(x^*)\le\frac{1}{2a_1}\times^{1-n}.
+      \left|\frac{x^*-x}{x}\right| \le
+      \frac{1}{2a_1}\times10^{1-n}.
     \]
-    若相对误差满足
+    反之，若
     \[
-      \varepsilon_r(x^*)\le\frac{1}{2(1+a_1)}\times^{1-n}，
+      \left|\frac{x^*-x}{x}\right| \le
+      \frac{1}{2(1+a_1)}\times 10^{1-n},
     \]
     则$x^*$至少有$n$位有效数字。
   \end{thm}
   \proof
-    （假设$a_1$是精确的。）//todo
+    对于前者，只需利用有效数字的定义，以及利用$x\ge 0.a_1$
+    （仅考虑$a_1\ne0$的情况）。对于后者，证明是类似的。
 
-\subsubsection{数值运算误差估计}
-  设有$x_1\Rightarrow x_1^*$，$x_2\Rightarrow x_2^*$，
-  考虑$x_1+x_2\Rightarrow x_1^*+x_2^*$（假设运算无误差），
-  进行估计，有
-  \[
-    |(x_1+x_2) - (x_1^*+x_2^*)| \le \varepsilon(x_1^*)+...
-  \]
-  对于乘法是类似的。
-  \begin{thm}[运算误差估计]
-    设有$\x_n\Rightarrow x_n^*$，...,
-    \begin{split}\[
-      A&=\f(x)=\f(x_1,\,x_2,\,...,\,x_n)\\
-      A^*\f(x^*)=\f(x_1^*,\,x_2^*,\,...,\,x_n^*)
-    \]\end{split}
-
+\subsubsection{数值运算的误差估计}
+  以下内容都假设运算无误差。
+  \begin{thm}[四则运算误差估计]
+    $\,$
+    \begin{enumerate}
+      \item 加/减法: $\varepsilon(x\str\pm y\str)
+      \le \varepsilon_x\str + \varepsilon_y\str$
+      \item 乘法: $\vep(x\str y\str) \le
+      |x\str|\vep\str_y + |y\str|\vep\str_x$
+      \item 除法: $\vep(\dfrac{x\str}{y\str}) =
+      \dfrac{|x\str|\vep\str_y + |y\str|\vep\str_x}{|y\str|^2}$
+    \end{enumerate}
   \end{thm}
+  \proof
+    考虑加法的误差估计。对于$x$，$y$及其近似值$x^*$，$y^*$，
+    计算$x\str\pm y\str$和$x\pm y$间的误差。
+    \[\begin{split}
+        & |x\str\pm y\str - ( x \pm y)|
+        \le |x\str - x| + |y\str - y|
+        \le \varepsilon_x\str + \varepsilon_y\str \\
+        \Rightarrow\quad& \varepsilon(x\str\pm y\str)
+        \le \varepsilon_x\str + \varepsilon_y\str
+    \end{split}\]
+    对于其他的运算，证明是类似的。（证明中可用$+1-1$技巧）
 
+  \begin{thm}[运算的误差估计]
+    设$A = \f(\tbf{x}) = \f(\xoneton)$，$\tbf{x}\str$是
+    $\tbf{x}$的估计值。利用带Peano余项的Taylor展开，可知
+    $A$的绝对误差满足
+    \[\begin{split}
+      e(A\str) &= \f(\tbf{x}\str) - \f(\tbf{x}) \\
+      &= \sum_{p=1}^q\rd^k\f(\tbf{x}\str) + o(||x\str-x||^q) \\
+      &\text{取q=1，则} \\
+      &= \sum_{k=1}^n\partial_k\f(\tbf{x}\str)(x\str-x) + + o(||x\str-x||^q)
+    \end{split}\]
+    利用上式，可知
+    \[\begin{split}
+      &\vep(A\str) \approx \sum_{k=1}^n\partial_k\f(\tbf{x}\str)\vep(x\str)\\
+      &\vep_r(A\str) = \frac{\vep(A\str)}{|A\str|}
+    \end{split}\]
+  \end{thm}
 
 \end{document}
