@@ -1,0 +1,159 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=green
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+
+\theoremstyle{margin}
+%\theorembodyfont{\normalfont}
+\newtheorem{thm}{定理}
+\newtheorem{cor}[thm]{推论}
+\newtheorem{lemma}[thm]{引理}
+\newtheorem{defi}[thm]{定义}
+\newtheorem{law}[thm]{定律}
+\newcommand{\st}{\text{s.t.}}
+\newcommand{\mn}{\mathnormal}
+\newcommand{\tbf}{\textbf}
+\newcommand{\f}{\mathnormal{f}}
+\newcommand{\g}{\mathnormal{g}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\JD}{\textbf{D}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\con}{\text{Const}}
+\newcommand{\oneton}{1,\,2,\,\dots,\,n}
+\newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand\thmref[1]{定理~\ref{#1}}
+\newcommand\defref[1]{定义~\ref{#1}}
+\newcommand{\remark}{\paragraph{评注}}
+\newcommand{\example}{\paragraph{例}}
+\newcommand{\proof}{\paragraph{证明}}
+
+\title{科学计算\\MA235}
+\author{任云玮}
+\date{}
+
+\begin{document}
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=C++,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{绪论}
+
+%%%
+\subsection{计算机数值计算原理}
+\subsubsection{计算机基本工作原理}
+
+\subsubsection{实数的存贮方法}
+
+\subsubsection{实数的基本运算原理}
+
+%%%
+\subsection{误差的来源与估计}
+
+\subsubsection{误差的来源}
+  \begin{enumerate}
+    \item 模型问题。例：近似地球为球体来计算。
+    \item 测量误差。例：测量地球半径时的误差。
+    \item 方法误差（截断误差）。
+    例：对于$y=\f(x)$，求$\f(x^*)$时使用Taylor展开。
+    \item 舍入误差（rounding-off）。例：计算机计算时的误差。
+  \end{enumerate}
+
+\subsubsection{误差和有效数字}
+  \begin{defi}[绝对误差等]
+    设$x\in\R$，$x^*$为$x$的近似值。称
+    \[
+      e(x^*)=x^*-x
+    \]
+    为$x^*$的绝对误差。其误差上界$\epsilon^*$满足
+    \[
+      |e(x^*)|\le\varepsilon^*
+    \]
+  \end{defi}
+
+  \begin{defi}[相对误差等]
+  \end{defi}
+
+  \begin{defi}[有效数字]\footnote{The number of significant}
+    设$x=+-0.a_1a_2...\times10^m$，若在第$n$位舍入，则得到
+    \[
+     x^*=+-0.......≥
+    \]
+    称$x^*$具$n$位有效数字。
+  \end{defi}
+  \example
+    设$\pi=3.1415926\dots$，则$\pi_1=3$的有效数字为$n(\pi_1)=1$，
+    而$n(4)=0$，因为它并非正确的舍入所得。$n(3.1416)=5$，
+    $n(3.1415)=4$。
+  \begin{defi}[有效数字]
+    若存在最大的$n$，使得
+    \[
+      |x^*-x|\le\frac{1}{2}\times10^{m-n}
+    \]
+    则称有$n$位有效数字。
+  \end{defi}
+
+  \begin{thm}[误差与有效数字]
+    若$x^*=...\times10^m$有$n$位有效数字，则其相对误差满足
+    \[
+      \varepsilon_r(x^*)\le\frac{1}{2a_1}\times^{1-n}.
+    \]
+    若相对误差满足
+    \[
+      \varepsilon_r(x^*)\le\frac{1}{2(1+a_1)}\times^{1-n}，
+    \]
+    则$x^*$至少有$n$位有效数字。
+  \end{thm}
+  \proof
+    （假设$a_1$是精确的。）//todo
+
+\subsubsection{数值运算误差估计}
+  设有$x_1\Rightarrow x_1^*$，$x_2\Rightarrow x_2^*$，
+  考虑$x_1+x_2\Rightarrow x_1^*+x_2^*$（假设运算无误差），
+  进行估计，有
+  \[
+    |(x_1+x_2) - (x_1^*+x_2^*)| \le \varepsilon(x_1^*)+...
+  \]
+  对于乘法是类似的。
+  \begin{thm}[运算误差估计]
+    设有$\x_n\Rightarrow x_n^*$，...,
+    \begin{split}\[
+      A&=\f(x)=\f(x_1,\,x_2,\,...,\,x_n)\\
+      A^*\f(x^*)=\f(x_1^*,\,x_2^*,\,...,\,x_n^*)
+    \]\end{split}
+
+  \end{thm}
+
+
+\end{document}
