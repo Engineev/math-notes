@@ -23,7 +23,6 @@
 ]{hyperref}
 \newfontfamily\courier{Courier}
 
-
 \theoremstyle{margin}
 \theorembodyfont{\normalfont}
 \newtheorem{thm}{定理}
@@ -33,6 +32,8 @@
 \newtheorem{defi}[thm]{定义}
 \newtheorem{std}[thm]{标准}
 \newtheorem{imp}[thm]{实现}
+\newtheorem{alg}[thm]{算法}
+\newtheorem{exa}[thm]{例}
 \newcommand{\st}{\text{s.t.}}
 \newcommand{\mn}{\mathnormal}
 \newcommand{\tbf}{\textbf}
@@ -45,12 +46,16 @@
 \newcommand{\rd}{\mathrm{d}}
 \newcommand{\str}{^*}
 \newcommand{\vep}{\varepsilon}
+\newcommand{\lhs}{\text{L.H.S}}
+\newcommand{\rhs}{\text{R.H.S}}
 \newcommand{\con}{\text{Const}}
 \newcommand{\oneton}{1,\,2,\,\dots,\,n}
 \newcommand{\aoneton}{a_1a_2\dots a_n}
 \newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
-\newcommand\thmref[1]{定理~\ref{#1}}
-\newcommand\defref[1]{定义~\ref{#1}}
+\newcommand\thmref[1]{定理\ref{#1}}
+\newcommand\lemmaref[1]{引理\ref{#1}}
+\newcommand\defref[1]{定义\ref{#1}}
+\newcommand\equref[1]{(\ref{#1})}
 \newcommand{\remark}{\paragraph{评注}}
 \newcommand{\example}{\paragraph{例}}
 \newcommand{\proof}{\paragraph{证明}}
@@ -88,7 +93,7 @@
   \end{tabular}
 
 \subsubsection{实数的存贮方法}
-  \begin{defi}[二进制浮点数系]\footnote{Floating Number System}
+  \begin{defi}[二进制浮点数系]\footnote{floating Number System}
     实数在计算机内部为\tbf{近似存贮}，采用二进制浮点数系
     \[
       F(2,n,L,U)=\{\pm0.\aoneton\times10^m\}\cup\{0\}
@@ -103,7 +108,7 @@
       \item 单精度: $t=24,L=-126,U=127$
       \item 双精度: $t=53,L=-1022,U=1023$
       \item Underflow Limit: $UFL=0.1\times2^L$.
-      若$0<x<UFL$，则$\fl(x)=0$.
+      若$0<x<UFL$，则$\\fl(x)=0$.
       \item Overflow Limit: $OFL=0.11\dots1*2^U$.
       若$x>OFL$，则$\fl(x)=\infty$.
       \item 舍入: 若$UFL\le x\le OFL$，则$\fl(x)$为舍入所得浮点数。
@@ -207,7 +212,8 @@
   \remark
     在实践中，一般可以采用更加简便的方法，对于归一化以后的$x^*$，
     在尾数部分有$n$位，则称其有$n$位有效数字。注意，此方法对于
-    错误的舍入结果是不实用的。
+    错误的舍入结果是不适用的，对于错误的情况，需要再减去一位有效
+    数字。
 
   \begin{thm}[误差与有效数字]
     若$x=0.\aoneton\times10^m$有$n$位有效数字，则
@@ -267,5 +273,185 @@
       &\vep_r(A\str) = \frac{\vep(A\str)}{|A\str|}
     \end{split}\]
   \end{thm}
+
+\subsubsection{数字求和的舍入误差分析}
+  \begin{pos}
+    $n$个浮点数相加，若将它们从小到大排列后相加，则可以减小
+    舍入误差。
+  \end{pos}
+  \proof
+    考虑浮点数的求和$S_n=\sum_i^n a_i$，在计算机中的过程表现为
+    \[\begin{split}
+      & S_2^* = \fl(a_1+a_2)=(a_1+a_2)(1+\vep_2),\quad|\vep_2|\le\vep=2^{-t}\\
+      & \cdots\cdots\\
+      & S_n^* = \fl(S_{n-1}^*+a_n)(1+\vep_n),\quad|\vep_n|\le\vep
+    \end{split}\]
+    对于$S_n\str$的误差，若定义$\vep_1=0$，则
+    \[
+      S_n\str=\sum_{k=1}^n a_k\prod_{p=k}^n(1+\vep_p)
+    \]
+    对误差进行估计，舍去高阶无穷小，有
+    \[
+      \prod_{i=k}^n(1+\vep_k)\approx1+\sum_{i=k}^n\vep_k
+    \]
+    综合上两式，有
+    \[\begin{split}
+      S_n\str & \approx\sum_{k=1}^na_k(1+\sum_{p=k}^n\vep_p)\\
+      & = S_n + \sum_{k=1}^na_k\sum_{p=k}^n\vep_p
+    \end{split}\]
+    进行移项，并取绝对值，再利用三角不等式，以及$|\vep_i|\le\vep$，得
+    \[
+      \left|S_n\str-S_n\right|
+      \le \sum_{k=1}^n|a_k|\sum_{p=k}^n|\vep_p|
+      \le \vep\sum_{k=1}^n|a_k|(n-k+1)
+    \]
+    其中$n-k+1$关于$k$单调减少，所以根据排序不等式
+    [\lemmaref{lemma: 排序不等式}]，即可知命题成立。$\blacksquare$
+
+\newpage
+\subsection{避免算法失效的基本原则}
+  \begin{thm}[原则]
+    $\,$
+    \begin{enumerate}
+      \item 避免两数相除／相减，否则会严重损失有效数字；
+      \item 避免大数与小数相加；
+      \item 简化计算步骤。
+    \end{enumerate}
+  \end{thm}
+
+
+  \begin{alg}[高效计算$e^A$]
+    高效计算$e^A$，其中$A\in\R^{n\times n}$。首先有
+    \[
+      e^A = e^{(A/2^n)2^n} = B^{2^n}
+    \]
+    只需要得到$B$，即可以利用倍乘的方法快速得到$B^{2^n}$。
+    下对于$B$进行估计。当$x\to0$时，$e^x$有Taylor展开
+    \[
+      e^x = 1 + x + \cdots + \frac{x^n}{n!} + \cdots
+    \]
+    而取足够大的$n$，即可以使得$A/2^n\approx0$，则可以对它
+    展开得
+    \[
+      B \approx I + C + \frac{1}{2}C^2,\,\text{其中}
+      C = A/2^n
+    \]
+    而对于倍乘，考虑$B^2$，展开平方得
+    \[
+      B^2 \approx I + 2(C+\frac{1}{2}C^2) + (C+\frac{1}{2}C^2)^2
+    \]
+    从右至左相加即可。
+  \end{alg}
+
+  \begin{alg}[秦九韶，多项式估值]
+    设有多项式\equref{equ: 多项式}，计算$p(z), z\in\R$的值。
+    \begin{equation}
+      \label{equ: 多项式}
+      p(x) = a_0x^n + a_1x^{n-1} + \cdots + a_{n-1}x + a_n
+    \end{equation}
+    定义$b_n$满足
+    \[
+      b_0 = a_0, \quad b_k = a_k + b_{k-1}z
+    \]
+    则$b_n$即为所要求的值。并且成立
+    \[
+      p^{\prime}(z) = \sum_{k=0}^{n-1}b_kz^{n-1-k}
+    \]
+  \end{alg}
+  \proof
+    用$x-z$去除$p(x)$，记所得余数为$b_n(x)$，即
+    \[
+      p(x) = (x-z)q(x) + b_n(x),
+    \]
+    代入$x=z$，则左侧第一项为$0$，可知$p(z) = b_n(z)$。
+    将两边的式子展开，利用对应系数相等，即可得算法中$b_n$
+    的递推式。
+
+  \begin{thm}[外推法]
+    设$x_0$，$x_1$是$x$的两个估计值，且$x_1$相较于$x_0$更
+    接近$x$，则可以通过恰当的权值$\omega$，使得它们的加权平均
+    \[
+      \bar{x} = x_1 + \omega(x_1-x_0)
+    \]
+    更加接近精确值$x$。
+  \end{thm}
+
+  \begin{alg}[$\pi$的估计]
+    考虑单位圆，其面积为$\pi$，设$\pi_n$为单位圆的内接正$2n$边形
+    的面积，以及
+    \[
+      \widetilde{\pi}_n = \frac{1}{3}(4\pi_{2n}-\pi_n)
+    \]
+    则$\pi_n$与$\widetilde{\pi}_n$与$\pi$的误差满足
+    \[
+      |\pi_n - \pi| = O(\frac{1}{n^2}), \quad
+      |\widetilde{\pi}_n - \pi| = O(\frac{1}{n^4})
+    \]
+  \end{alg}
+  \proof
+    对于$\pi_n$.
+    \[
+      \pi_n=n\sin\frac{\pi}{n} =
+      \pi - \frac{pi^3}{3!}\frac{1}{n^2} +
+      \frac{pi^5}{5!}\frac{1}{n^4} - \cdots
+      \,\Rightarrow \, |\pi_n - \pi| = O(\frac{1}{n^2})
+    \]
+    对于$\widetilde{\pi}_n$.
+    \[\begin{split}
+      \widetilde{\pi}_n & = \pi_{2n} + k(\pi_{2n} - \pi_n)
+      = (1+k)\pi_{2n} - k\pi_n \\
+      & = (1+k)(\pi - \frac{\pi^3}{3!}\frac{1}{4n^2} + \cdots)
+      - k(\pi - \frac{\pi^3}{3!}\frac{1}{n^2} + \cdots) \\
+      & = \pi - (\frac{k+1}{4} - k)\frac{\pi^3}{3!}\frac{1}{n^2}
+      + O(\frac{1}{n^4})
+    \end{split}\]
+    取$k=\frac{1}{3}$，则成立
+    \[
+      |\widetilde{\pi}_n - \pi| = O(\frac{1}{n^4})
+      \quad\blacksquare
+    \]
+
+\newpage
+\section{附录}
+\subsection{不等式}
+
+  \begin{lemma}[排序不等式]
+    \label{lemma: 排序不等式}
+    对于满足下述条件的$\{a_n\}$，$\{b_n\}$，
+    \[\begin{split}
+      & 0 \le a_1\le a_2\le\cdots\le a_n \\
+      & 0 \le b_1\le b_2\le\cdots\le b_n
+    \end{split}\]
+    则同序相乘求和值最大，逆序最小，即
+    \[
+      \sum_{i=1}^n a_ib_i \ge \sum_{i=1}^n a_ib_{k_i}
+      \ge \sum_{i=1}^n a_ib_{n-i+1}
+    \]
+  \end{lemma}
+
+  \begin{lemma}[算数-几何均值不等式]
+    \[
+      (a_1a_2\cdots a_n)^{1/n} \le \frac{a_1+a_2+\cdots+a_n}{n}
+    \]
+    当且仅当$a_1 = a_2 = \cdots = a_n$时等号成立。
+  \end{lemma}
+  \proof
+    因为有齐次性，所以不妨设$\prod a_i=1$，并令
+    \[
+      a_1=\frac{\alpha_1}{\alpha_2},\quad
+      \dots,\quad
+      a_{n-1} = \frac{\alpha_{n-1}}{\alpha_n},\quad
+      a_n = \frac{\alpha_n}{\alpha_1}
+    \]
+    则只需证明下式即可。
+    \[
+      \frac{\alpha_1}{\alpha_2} + \cdots + \frac{\alpha_n}{\alpha_1}
+      \ge n
+    \]
+    不妨设$\alpha_1 \le \alpha_2 \le \cdots \le \alpha_n$，则根据排序不等式
+    \[
+      \lhs \ge \alpha_1\frac{1}{\alpha_1} + \cdots + \alpha_n\frac{1}{\alpha_n}
+       = n \quad\blacksquare
+    \]
 
 \end{document}
