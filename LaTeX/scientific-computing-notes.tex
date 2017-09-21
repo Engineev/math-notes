@@ -392,8 +392,8 @@
     对于$\pi_n$.
     \[
       \pi_n=n\sin\frac{\pi}{n} =
-      \pi - \frac{pi^3}{3!}\frac{1}{n^2} +
-      \frac{pi^5}{5!}\frac{1}{n^4} - \cdots
+      \pi - \frac{\pi^3}{3!}\frac{1}{n^2} +
+      \frac{\pi^5}{5!}\frac{1}{n^4} - \cdots
       \,\Rightarrow \, |\pi_n - \pi| = O(\frac{1}{n^2})
     \]
     对于$\widetilde{\pi}_n$.
@@ -405,11 +405,20 @@
       & = \pi - (\frac{k+1}{4} - k)\frac{\pi^3}{3!}\frac{1}{n^2}
       + O(\frac{1}{n^4})
     \end{split}\]
-    取$k=\frac{1}{3}$，则成立
+    为使式子的第二项为零，取$k=\frac{1}{3}$，则成立
     \[
       |\widetilde{\pi}_n - \pi| = O(\frac{1}{n^4})
       \quad\blacksquare
     \]
+  \remark
+    在实际中，$\pi_n$也是没有办法直接计算而得的，但是对于$n=3$，
+    即$6$边形的情况，可以知道$\pi_3=3\sqrt{3}/2$。同时有递推
+    公式
+    \[
+      \pi_{2n} = \sqrt{2n(n-\sqrt{n^2-\pi^2_n})},
+    \]
+    而开平方可以通过迭代的方式实现，从而即计算得到足够精确的
+    $\pi_2n$和$\pi_n$。
 
 \newpage
 \section{附录}
