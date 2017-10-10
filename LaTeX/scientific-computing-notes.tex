@@ -12,7 +12,9 @@
   fontspec,
   xcolor,
   supertabular,
-  multirow
+  multirow,
+  mathtools,
+  mathrsfs
 }
 \definecolor{bgGray}{RGB}{36, 36, 36}
 \usepackage[
@@ -35,8 +37,10 @@
 \newtheorem{alg}[thm]{算法}
 \newtheorem{exa}[thm]{例}
 \newcommand{\st}{\text{s.t.}}
+\newcommand{\ms}{\mathscr}
 \newcommand{\mn}{\mathnormal}
 \newcommand{\tbf}{\textbf}
+\newcommand{\mbf}{\mathbf}
 \newcommand{\fl}{\mathnormal{fl}}
 \newcommand{\f}{\mathnormal{f}}
 \newcommand{\g}{\mathnormal{g}}
@@ -60,7 +64,7 @@
 \newcommand{\example}{\paragraph{例}}
 \newcommand{\proof}{\paragraph{证明}}
 
-\title{科学计算 笔记\\MA235}
+\title{科学计算 笔记}
 \author{任云玮}
 \date{}
 
@@ -265,7 +269,7 @@
       e(A\str) &= \f(\tbf{x}\str) - \f(\tbf{x}) \\
       &= \sum_{p=1}^q\rd^k\f(\tbf{x}\str) + o(||x\str-x||^q) \\
       &\text{取q=1，则} \\
-      &= \sum_{k=1}^n\partial_k\f(\tbf{x}\str)(x\str-x) + + o(||x\str-x||^q)
+      &= \sum_{k=1}^n\partial_k\f(\tbf{x}\str)(x\str-x) + o(||x\str-x||)
     \end{split}\]
     利用上式，可知
     \[\begin{split}
@@ -419,6 +423,161 @@
     \]
     而开平方可以通过迭代的方式实现，从而即计算得到足够精确的
     $\pi_2n$和$\pi_n$。
+
+\newpage
+\section{函数的多项式插值与逼近}
+\subsection{问题的提出}
+  \begin{defi}[插值]
+    \label{defi: 插值}
+    设函数$y = \f(x)$在$[a, b]$上有定义，且已知在点
+    $a\le x_0 < x_1 < \cdots < x_n \le b$处的函数值
+    $y_i = \f(x_i)$，若存在一简单函数$P(x)$，成立
+    \[
+      P(x_i) = y_i,
+    \]
+    则称$P(x)$为$\f(x)$的插值函数，点$x_1,\,x_2,\,\dots,\,x_n$
+    称为插值节点，$[a, b]$称为插值区间，求$P(x)$的方法被称为插值法。\par
+    若$P(x) \in P_n$为次数不超过$n$的多项式，则称为多项式
+  \end{defi}
+
+  \iffalse
+    给定一个函数$y = y(x)$在$[a, b]$中的点$x_0<\cdots<x_n$相应的函数值
+    $y(x_i)$，设法重构函数$y = y(x)$。\footnote{从系统论的观点出发，
+    即：已知映射$K$的一系列输入输出对，如何重构该映射$K$。}\par
+    一般情况下解不唯一。所以设$y = y(x)$位于某一函数内，此时可能存在唯一解。
+    例如，设$y(x)\in P_n$，则只需知道$n+1$个点的函数值，即可有唯一解。
+      或者设输出$y_i$有测量误差。
+      \[
+      \widetilde{y}_i = \f(x_i) + \vep_i
+      \]
+      其中$\vep_i$为误差。
+      \[
+      y = \f(x) + \vep
+      \]
+      其中$\vep$正态分布。根据极大似然估计，等价于最小二乘解，
+      （输出最小二乘法）
+      \[
+      \min_{y\in\pi} \sum_{i=0}^n|y_i - y(x_i)|^2
+      \]
+      其中$\pi$为某一个函数，有两种情况，
+      \begin{enumerate}
+      \item $\pi$由物理或化学规律确定；（基于机理建模）
+      \item $\pi$由数据决定。（基于数据建模）
+      \end{enumerate}
+      （求关于权重和阈值的优化问题）；（非线性最小二乘解）。
+
+    \paragraph{系统论的观点}
+  \fi
+
+\subsection{多项式插值}
+  \begin{thm}[唯一性]
+    给定满足\defref{defi: 插值}的$n+1$个点上的函数值，则
+    次数不超过$n$的插值多项式$P_n(x)$存在且唯一。
+  \end{thm}
+  \proof
+    利用待定系数法，设多项式的系数为$a_0,\,\dots\,a_n$，则
+    有线性方程组
+    \[
+      \left\{
+      \begin{gathered}
+          a_0 + a_1x_0 + \cdots + a_nx_0^n = y_0,\\
+          a_0 + a_1x_1 + \cdots + a_nx_1^n = y_1,\\
+          \cdots\cdots \\
+          a_0 + a_1x_n + \cdots + a_nx_n^n = y_n,\\
+      \end{gathered}
+      \right.
+    \]
+    其系数矩阵为Vandermonde矩阵
+    \[
+      A =
+      \begin{pmatrix}
+        1 & x_0 & \cdots & x_0^n \\
+        1 & x_1 & \cdots & x_1^n \\
+        \vdots & \vdots & & \vdots \\
+        1 & x_n & \cdots & x_n^n \\
+      \end{pmatrix}
+    \]
+    根据\defref{defi: 插值}中对于$x_i$的要求，矩阵行列式成立
+    \[
+      \det A = \prod_{i,j=0,\,i>j}^n (x_i - x_j) \ne 0.
+    \]
+    所以该方程组有唯一解。
+
+  \begin{thm}[Lagrange插值法]
+    \label{thm: Lagrange插值法}
+    定义
+    \[\begin{split}
+      l_i(x) &= \frac{\prod_{j\ne i}(x - x_j)}{\prod_{j\ne i}(x_i - x_j)} \\
+      (L_n\f)(x) &= \sum_{i=0}^ny_il_i(x),
+    \end{split}\]
+    则$L_n\f$即为$\f$的插值多项式。
+  \end{thm}
+  \proof
+    考虑构造$l_i\in P_n$，满足条件$l_i(x_j) = \delta_{ij}$，这样
+    $L_n\f=\sum y_il_i$满足要求。改写条件为（以$l_0$为例）
+    \[\begin{split}
+      l_0(x) &= \alpha(x-x_1)\cdots(x-x_n) \\
+      l_0(x_0) &= 1
+    \end{split}\]
+    解得
+    \[
+      \alpha = \frac{1}{(x_0-x_1)\cdots(x_0-x_n)}\quad\blacksquare
+    \]
+  \remark
+    这样构造插值多项式的动机在于在取定插值节点后，插值实际上相当于
+    构造一个从$\mbf{y}=(y_0,\,\dots,\,y_n)\in\R^{n+1}$
+    到$y^*(x)\in P_n$的一个映射$\ms{F}$，并且可以证明，
+    $\ms{F}$是线性的。因此成立
+    \[
+      \ms{F}(\mbf{y}) = \ms{F}(\sum_{i=0}^ny_i\mbf{e}_i)
+       = \sum_{i=0}^ny_i\ms{F}(\mbf{e}_i)
+       = \sum_{i=0}^ny_i l_i(x).
+    \]
+
+  \begin{thm}[Lagrange余项公式]
+    设符号含义同\thmref{thm: Lagrange插值法}且$\f$充分光滑，则
+    对于每一个固定的$x$成立
+    \[
+      \f(x) - (L_n\f)(x) =
+      \frac{\f^{(n+1)}(\xi)}{(n+1)!}\omega_{n+1}(x)
+    \]
+    其中$\xi\in(a, b)$且
+    \[
+      \omega_{n+1}(x) = (x-x_0)\cdots(x-x_n).
+    \]
+  \end{thm}
+  \proof
+    固定$x\ne x_i$，定义$R(x)$满足
+    \[
+      \f(x) - (L_n\f)(x) = R(x)\omega_{n+1}(x).
+    \]
+    构造辅助函数$\g(t)$
+    \[
+      \g(t) = \f(t) - (L_n\f)(t) - R(x)\omega_{n+1}(t).
+    \]
+    根据插值法与$R(x)$的定义，成立
+    \[
+      \g(x_i) = 0,\quad g(x) = 0,
+    \]
+    即函数$\g(t)$有$n+2$个零点。反复应用Rolle定理，可知存在
+    $\xi\in(a, b)$，成立$\g^{(n+1)} = 0$，即
+    \[\begin{split}
+      & \g^{(n+1)}(\xi) = \f^{(n+1)}(\xi) - R(x)(n+1)! = 0 \\
+      \Rightarrow\quad& R(x) = \frac{\f^{(n+1)}(\xi)}{(n+1)!}
+    \end{split}\]
+    结合$R(x)$的定义式即可知命题成立。$\blacksquare$
+  \remark
+    当已知$\f^{(n+1)}$有界时，可以使用此公式进行估计。
+
+\subsection{Runge现象}
+  \begin{thm}
+    对于复函数$\f(z)$，如果存在$r_0>\frac32(b-a)$，使得
+    $\f(z)$在$B_{r_0}(\frac{a+b}{2})$内解析，则
+    $P_n(x) = L_n(x)$在$[a, b]$上一致收敛与$\f(z)$.
+    这里$B_{r_0}(\frac{a+b}{2})$为以$\frac{a+b}{2}$为圆心，
+    $r_0$为半径的圆。
+  \end{thm}
+
 
 \newpage
 \section{附录}
