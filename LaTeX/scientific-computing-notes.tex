@@ -37,6 +37,7 @@
 \newtheorem{alg}[thm]{算法}
 \newtheorem{exa}[thm]{例}
 \newcommand{\st}{\text{s.t.}}
+\newcommand{\hp}{^\prime}
 \newcommand{\ms}{\mathscr}
 \newcommand{\mn}{\mathnormal}
 \newcommand{\tbf}{\textbf}
@@ -87,14 +88,6 @@
 \section{绪论}
 
 \subsection{计算机数值计算基本原理}
-
-\subsubsection{计算机基本工作原理}
-  \begin{tabular}{lcr}
-    |CPU| &  & |外存储器| \\
-    | & 数据总线 & | \\
-    |I/O接口| & |I/O接口| & |外存接口| \\
-    |输入|    & |输出|    & |外存储器|
-  \end{tabular}
 
 \subsubsection{实数的存贮方法}
   \begin{defi}[二进制浮点数系]\footnote{floating Number System}
@@ -207,7 +200,8 @@
     \]
 
   \begin{defi}[有效数字]
-    设$x\in R$，$x^*$为其近似值。称$x^*$相对于$x$有$n$位有效数字，
+    设$x\in R$，$x^*=0.a_1a_2\cdots a_k\times 10^m$为其近似值。
+    称$x^*$相对于$x$有$n\,(n\le k)$位有效数字，
     若$n$是满足下式的$n$的最大值。
     \[
       |x^* - x| \le \frac{1}{2} \times 10^{m - n}
@@ -222,12 +216,12 @@
   \begin{thm}[误差与有效数字]
     若$x=0.\aoneton\times10^m$有$n$位有效数字，则
     \[
-      \left|\frac{x^*-x}{x}\right| \le
+      \vep^*_r \le
       \frac{1}{2a_1}\times10^{1-n}.
     \]
     反之，若
     \[
-      \left|\frac{x^*-x}{x}\right| \le
+      \vep^*_r \le
       \frac{1}{2(1+a_1)}\times 10^{1-n},
     \]
     则$x^*$至少有$n$位有效数字。
@@ -245,7 +239,7 @@
       \le \varepsilon_x\str + \varepsilon_y\str$
       \item 乘法: $\vep(x\str y\str) \le
       |x\str|\vep\str_y + |y\str|\vep\str_x$
-      \item 除法: $\vep(\dfrac{x\str}{y\str}) =
+      \item 除法: $\vep(\dfrac{x\str}{y\str}) \le
       \dfrac{|x\str|\vep\str_y + |y\str|\vep\str_x}{|y\str|^2}$
     \end{enumerate}
   \end{thm}
@@ -273,10 +267,17 @@
     \end{split}\]
     利用上式，可知
     \[\begin{split}
-      &\vep(A\str) \approx \sum_{k=1}^n\partial_k\f(\tbf{x}\str)\vep(x\str)\\
+      &\vep(A\str) \approx
+      \sum_{k=1}^n
+      \left|\partial_k\f(\tbf{x}\str)\right|\vep(x\str)\\
       &\vep_r(A\str) = \frac{\vep(A\str)}{|A\str|}
     \end{split}\]
   \end{thm}
+  \remark
+    对于定义在$\R$上的函数，即为
+    \[
+      \vep(\f(x^*)) \approx |\f\hp(x^*)|\vep(x^*)
+    \]
 
 \subsubsection{数字求和的舍入误差分析}
   \begin{pos}
@@ -317,7 +318,9 @@
   \begin{thm}[原则]
     $\,$
     \begin{enumerate}
-      \item 避免两数相除／相减，否则会严重损失有效数字；
+      \item 避免两数相除／相减，否则会严重损失有效数字。
+      \item 避免两相近数相减。
+      \item 避免绝对值很小的数做除数。
       \item 避免大数与小数相加；
       \item 简化计算步骤。
     \end{enumerate}
@@ -422,7 +425,7 @@
       \pi_{2n} = \sqrt{2n(n-\sqrt{n^2-\pi^2_n})},
     \]
     而开平方可以通过迭代的方式实现，从而即计算得到足够精确的
-    $\pi_2n$和$\pi_n$。
+    $\pi_{2n}$和$\pi_n$。
 
 \newpage
 \section{函数的多项式插值与逼近}
