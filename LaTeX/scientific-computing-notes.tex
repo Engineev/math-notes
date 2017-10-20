@@ -36,6 +36,8 @@
 \newtheorem{imp}[thm]{实现}
 \newtheorem{alg}[thm]{算法}
 \newtheorem{exa}[thm]{例}
+\DeclareMathOperator{\sft}{E}
+\DeclareMathOperator{\idt}{I}
 \newcommand{\st}{\text{s.t.}}
 \newcommand{\hp}{^\prime}
 \newcommand{\ms}{\mathscr}
@@ -440,39 +442,9 @@
     \]
     则称$P(x)$为$\f(x)$的插值函数，点$x_1,\,x_2,\,\dots,\,x_n$
     称为插值节点，$[a, b]$称为插值区间，求$P(x)$的方法被称为插值法。\par
-    若$P(x) \in P_n$为次数不超过$n$的多项式，则称为多项式
+    若$P(x) \in P_n$为次数不超过$n$的多项式，则称为多项式插值。
   \end{defi}
 
-  \iffalse
-    给定一个函数$y = y(x)$在$[a, b]$中的点$x_0<\cdots<x_n$相应的函数值
-    $y(x_i)$，设法重构函数$y = y(x)$。\footnote{从系统论的观点出发，
-    即：已知映射$K$的一系列输入输出对，如何重构该映射$K$。}\par
-    一般情况下解不唯一。所以设$y = y(x)$位于某一函数内，此时可能存在唯一解。
-    例如，设$y(x)\in P_n$，则只需知道$n+1$个点的函数值，即可有唯一解。
-      或者设输出$y_i$有测量误差。
-      \[
-      \widetilde{y}_i = \f(x_i) + \vep_i
-      \]
-      其中$\vep_i$为误差。
-      \[
-      y = \f(x) + \vep
-      \]
-      其中$\vep$正态分布。根据极大似然估计，等价于最小二乘解，
-      （输出最小二乘法）
-      \[
-      \min_{y\in\pi} \sum_{i=0}^n|y_i - y(x_i)|^2
-      \]
-      其中$\pi$为某一个函数，有两种情况，
-      \begin{enumerate}
-      \item $\pi$由物理或化学规律确定；（基于机理建模）
-      \item $\pi$由数据决定。（基于数据建模）
-      \end{enumerate}
-      （求关于权重和阈值的优化问题）；（非线性最小二乘解）。
-
-    \paragraph{系统论的观点}
-  \fi
-
-\subsection{多项式插值}
   \begin{thm}[唯一性]
     给定满足\defref{defi: 插值}的$n+1$个点上的函数值，则
     次数不超过$n$的插值多项式$P_n(x)$存在且唯一。
@@ -505,7 +477,40 @@
       \det A = \prod_{i,j=0,\,i>j}^n (x_i - x_j) \ne 0.
     \]
     所以该方程组有唯一解。
+  \remark
+    虽然插值多项式是唯一的，但是根据基函数的选取的不同，
+    系数是不相同的，所以才需要不同的插值方法。
 
+  \iffalse
+    给定一个函数$y = y(x)$在$[a, b]$中的点$x_0<\cdots<x_n$相应的函数值
+    $y(x_i)$，设法重构函数$y = y(x)$。\footnote{从系统论的观点出发，
+    即：已知映射$K$的一系列输入输出对，如何重构该映射$K$。}\par
+    一般情况下解不唯一。所以设$y = y(x)$位于某一函数内，此时可能存在唯一解。
+    例如，设$y(x)\in P_n$，则只需知道$n+1$个点的函数值，即可有唯一解。
+      或者设输出$y_i$有测量误差。
+      \[
+      \widetilde{y}_i = \f(x_i) + \vep_i
+      \]
+      其中$\vep_i$为误差。
+      \[
+      y = \f(x) + \vep
+      \]
+      其中$\vep$正态分布。根据极大似然估计，等价于最小二乘解，
+      （输出最小二乘法）
+      \[
+      \min_{y\in\pi} \sum_{i=0}^n|y_i - y(x_i)|^2
+      \]
+      其中$\pi$为某一个函数，有两种情况，
+      \begin{enumerate}
+      \item $\pi$由物理或化学规律确定；（基于机理建模）
+      \item $\pi$由数据决定。（基于数据建模）
+      \end{enumerate}
+      （求关于权重和阈值的优化问题）；（非线性最小二乘解）。
+
+    \paragraph{系统论的观点}
+  \fi
+
+\subsection{Lagrange插值法}
   \begin{thm}[Lagrange插值法]
     \label{thm: Lagrange插值法}
     定义
@@ -581,6 +586,161 @@
     $r_0$为半径的圆。
   \end{thm}
 
+\subsection{Newton插值法}
+  \begin{exa}
+    $n=2$时问题的求解。\par
+    设$y^*(x) = a_0 + a_1(x-x_0) + a_2(x-x_0)(x-x_1)$，
+    根据$y^*(x_0) = y_0$，$y^*(x_0) = y_0$，得$a_0 = \f(x_0)$，
+    $a_0 + a_1(x_1-x_0) = \f(x_1)$，即
+    \[
+      a_1 = \frac{\f(x_1)-\f(x_0)}{x_1 - x_0}.
+    \]
+    可以发现$a_1$为
+    割线的斜率。同理可知
+    \[
+      a_2 = \frac{\f(x_2)-\f(x_0)-a_1(x_2-x_0)}{(x_2-x_0)(x_2-x_1)}
+      = \frac{\dfrac{\f(x_2) - \f(x_0)}{x_2-x_0} - \dfrac{\f(x_1) - \f(x_0)}{x_1-x_0}}{x_2-x_1}
+    \]
+    为斜率的斜率。
+  \end{exa}
+
+  \begin{defi}[差商]
+    递归$\f(x)$在$x_{i},\,\dots,\,x_{i+n}$的各阶差商为：
+    $\f[x_i] = \f(x_i)$，第$k$阶差商为
+    \[
+      \f[x_i,\,\dots,\,x_{i+k}] =
+      \frac{\f[x_{i+1},\,\dots,\,x_{i+k}] - \f[x_i,\,\dots,\,x_{i+k-1}]}
+      {x_{i+k} - x_i}
+    \]
+  \end{defi}
+
+
+  \begin{thm}[$n$次Newton插值法]
+    \label{thm: Newton插值法}
+    $x_0,\dots,x_n$为互异插值点，则函数$\f(x)$满足
+    \[\begin{split}
+      \f(x) =& \f[x_0] + \f[x_0, x_1](x-x_0) + \f[x_0,x_1,x_2](x-x_0))(x-x_1) + \cdots \\
+      & + \f[x_0,\dots,x_n](x-x_0)\cdots(x-x_{n-1}) + R_n(x).
+    \end{split}\]
+    其中$R_n(x)$为其Newton插值多项式的余项，为
+    \[
+      R_n(x) = \f[x_0,\dots,x_n,x](x-x_0)\cdots(x-x_n).
+    \]
+  \end{thm}
+  \proof
+    根据差商的定义，有
+    \[\begin{split}
+      \f(x) &= \f[x_0] + \f[x_0, x](x-x_0) \\
+      \f[x_0, x] &= \f[x_0, x_1] + \f[x_0, x_1, x](x-x_1) \\
+      \cdots & \cdots\cdots \\
+      \f[x_0,\dots,x_{n-1}, x] &= \f[x_0,\dots,x_n] +
+      \f[x_0,\dots,x_n,x](x-x_n)
+    \end{split}\]
+    将上述式子反复代入它上面的式子，即得Newton插值公式。
+  \remark
+    Newton插值法的优点在于，当插值点的个数增加时，无需重新计算原有的系数，
+    即Newton插值多项式是可以递归计算的。
+
+  \begin{thm}
+    根据Newton插值公式，可以得到如下差商的性质。
+    \begin{enumerate}
+      \item
+      \[
+        \f[x_0,\dots,x_m] =
+        \sum_{i=0}^m\frac{\f(x_i)}{\prod_{j\ne i}(x_i-x_j)}
+      \]
+      \item 设$i_0,\dots,i_m$为$0,\dots, m$的任意一个排列，则
+      \[
+        \f[x_0,\dots,x_m] = \f[x_{i_0},\dots,x_{i_m}].
+      \]
+      \item 广义Lagrange中值定理
+      \[
+        \f[x_0,\dots,x_m] = \frac{\f^{(m)}(\xi)}{m!},\quad
+        \xi\in(\min\{x_i\}, \max\{x_i\})
+      \]
+    \end{enumerate}
+  \end{thm}
+  \proof
+    交换插值节点的顺序后，$n$次Newton插值多项式的$n$次项系数不变，
+    所以[2.]成立。同Lagrange插值多项式（$m-1$次）比较第$m-1$次
+    项系数及其余项，即可得到[1.]和[3.]
+  \remark
+    根据[3.]可知，对于一个$n$次多项式，$n$阶差商即为其$n$次项系数，
+    $k(k>n)$阶差商为零。
+
+  \begin{defi}
+    \label{def: 算符}
+    给定序列$\{\f_k\}$，$\f_k$表示$\f$在$x=x_k$处的值，定义
+    \begin{enumerate}
+      \item 前向差分算符$\Delta\f_k = \f_{k+1} - \f_k,$
+      \item 移位算符$\sft\f_k = \f_{k+1},$
+      \item 恒等算符$\idt\f_k = \f_k.$
+    \end{enumerate}
+  \end{defi}
+
+  \begin{thm}[算符二项式定理]
+    \label{thm: 算符二项式定理}
+    对于算符$A$，$B$，若它们可交换，则成立二项式定理
+    \[
+      (A+B)^m = \sum_{k=0}^m \binom{m}{k} A^kB^{m-k}
+    \]
+  \end{thm}
+
+  \begin{pos}
+    根据\defref{def: 算符}和\thmref{thm: 算符二项式定理}可知
+    \[\begin{split}
+      \Delta &= \sft - \idt \\
+      \Delta^n &= \sum_{k=0}^n\binom{n}{k}(-\idt)^{n-k}\sft^k \\
+      \sft^n &= \sum_{k=0}^n\binom{n}{k}\Delta^k
+    \end{split}\]
+  \end{pos}
+
+  \begin{thm}[均匀插值]
+    \label{thm: 均匀插值}
+    设$x_0,x_1,\dots,x_n$满足$x_k = x_0 + kh$，则有
+    \[\begin{split}
+      \f[x_k, x_{k+1}] &= \frac{\Delta\f_k}{h} \\
+      \f[x_k, x_{k+1}, x_{k+2}] &=
+      \frac{\Delta^2\f_k}{2h^2} \\
+      \cdots & \cdots \\
+      \f[x_k, \dots,x_{k+m}] &=
+      \frac{\Delta^m\f_k}{m!h^m} \\
+    \end{split}\]
+  \end{thm}
+
+  \begin{thm}[Newton前插公式]
+    设记号同\thmref{thm: 均匀插值}，另$x = x_0 + th$，$t\in\R$，
+    代入\thmref{thm: Newton插值法}，则成立
+    \[\begin{split}
+      N_n(x) =& \f_0 + t\Delta\f_0 + \frac{t(t-1)}{2!}\Delta^2\f_0 + \cdots + \frac{t(t-1)\cdots(t-n+1)}{n!}\Delta^n\f_0.
+    \end{split}\]
+    其余项为
+    \[
+      R_n(x) = \frac{t(t-1)\cdots(t-n)}{(n+1)!}h^{n+1}\f^{(n+1)}(\xi),
+      \quad \xi\in(x_0, x_n)
+    \]
+  \end{thm}
+  \remark
+    利用广义二项式定理，有
+    \[\begin{split}
+      \f(x) &= \f(x_0 + th) = \sft^t\f(x_0) = (\idt+\Delta)^t\f(x_0) \\
+      &= \sum_{k=0}^\infty\binom{t}{k}\Delta^k\f_0
+    \end{split}\]
+
+% 当前研究热点：稀疏重构，$\f(x_1,\dots,x_d),\,d\gg 1$，若给定基函数
+
+\subsection{Hermite插值}
+  \begin{thm}
+    设$\f\in C^n[a,b]$，$x_0,x_1,\dots,x_n$为$[a, b]$上的互异节点，
+    则$\f[x_0,\dots,x_n,x]$在$[a, b]$上连续。
+  \end{thm}
+
+  \begin{thm}[Hermite插值]
+    若给出$m+1$个插值条件（含函数值和导数值）可构造出次数不超过$m$次的
+    多项式。
+  \end{thm}
+  \remark
+    可以利用待定系数法或者基函数法求的Hermite插值多项式。
 
 \newpage
 \section{附录}
