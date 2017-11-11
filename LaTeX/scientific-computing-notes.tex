@@ -36,10 +36,12 @@
 \newtheorem{imp}[thm]{实现}
 \newtheorem{alg}[thm]{算法}
 \newtheorem{exa}[thm]{例}
+\newtheorem{prob}[thm]{问题}
 \DeclareMathOperator{\sft}{E}
 \DeclareMathOperator{\idt}{I}
 \newcommand{\pr}{\prime}
 \DeclareMathOperator{\spn}{span}
+\DeclareMathOperator*{\agm}{arg\,min}
 \newcommand{\tr}{^\intercal}
 \newcommand{\st}{\text{s.t.}}
 \newcommand{\hp}{^\prime}
@@ -62,9 +64,9 @@
 \newcommand{\oneton}{1,\,2,\,\dots,\,n}
 \newcommand{\aoneton}{a_1a_2\dots a_n}
 \newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
-\newcommand\thmref[1]{定理\ref{#1}}
-\newcommand\lemmaref[1]{引理\ref{#1}}
-\newcommand\defref[1]{定义\ref{#1}}
+\newcommand\thmref[1]{定理~\ref{#1}}
+\newcommand\lemmaref[1]{引理~\ref{#1}}
+\newcommand\defref[1]{定义~\ref{#1}}
 \newcommand\equref[1]{(\ref{#1})}
 \newcommand\figref[1]{图 \ref{#1}}
 \newcommand{\remark}{\paragraph{评注}}
@@ -922,7 +924,7 @@
     函数，若满足
     \begin{enumerate}
       \item $\int_a^b\rho(x)x^k\rd x < \infty$，$k=0,1,2,\dots$，
-      \item 对任意非负$\g\in\ms{C}[a, b]$，若$\int_a^b\rho(x)\g(x)=0$，
+      \item 对任意非负$\g\in\ms{C}[a, b]$，若$\int_a^b\rho(x)\g(x)\rd x =0$，
       则$g=0$.
     \end{enumerate}
   \end{defi}
@@ -997,6 +999,9 @@
       \f^* = \sum_{i=0}^na^*_i\varphi_i(x),
     \]
   \end{thm}
+  \remark
+    实际上在计算的时候一般采用Legendre多项式来计算，而非解法方程.
+    见\thmref{thm: Legendre多项式的逼近性质}.
 
   \paragraph{几何描述}
     可以从几何的角度来理解最佳平方逼近. $S_n$是$\{\varphi_k\}$
@@ -1042,14 +1047,14 @@
     设$\{\varphi_k\}$是内积空间$V$的一组基，定义
     \[\begin{split}
       \psi_0 &= \varphi_0, \\
-      \psi_{n} &= \varphi_n - \sum_{i=0}^{n-1}(\varphi_i, \eta_i)\eta_i
+      \psi_{n} &= \varphi_n - \sum_{i=0}^{n-1}(\varphi_n, \psi_i)\eta_i
     \end{split}\]
     其中$\eta_i = \psi_i / \|\psi_i\|$. 则$\{\psi_k\}$为
     $V$的一组正交基.
   \end{alg}
   \remark
     要求$n$次正交多项式组，只需另$\varphi_k = x^k$，再进行
-    Gram-Schmidt正交化即可。
+    Gram-Schmidt正交化即可.
 
   \begin{thm}
     设$\{\varphi_n\}_{n=0}^\infty$是一列正交多项式，
@@ -1103,10 +1108,10 @@
 
   \begin{thm}
     设$\{\varphi_n\}_{n=0}^\infty$为$[a, b]$上带权$\rho$的
-    正交多项式，则$\varphi_n$在区间$(a, b)$上有$n$个不同的零点。
+    正交多项式，则$\varphi_n$在区间$(a, b)$上有$n$个不同的零点.
   \end{thm}
   \proof
-    首先利用权函数的定义，证明零点不可能都是偶数重的。再假设
+    首先利用权函数的定义，证明零点不可能都是偶数重的. 再假设
     $x_1,\dots,x_l$是$\varphi_n$的奇数重零点，则
     \[
       \left(\varphi_n, (x-x_1)\cdots(x-x_l)) \right) \ne 0,
@@ -1117,7 +1122,7 @@
 \subsection{Legendre多项式}
   \begin{defi}[Legendre多项式]
     取区间$[-1, 1]$，$\rho(x)\equiv1$，称由$\{1,x,\dots,x^n,\dots\}$
-    正交化而得的多项式为Legendre多项式。其表达式为
+    正交化而得的多项式为Legendre多项式. 其表达式为
     \[
       P_0(x) = 1,\quad
       P_n(x) = \frac{1}{2^nn!}\frac{\rd^n}{\rd x^n}(x^2-1)^n,
@@ -1152,18 +1157,31 @@
   \proof todo
 
   \begin{thm}[Legendre多项式的逼近性质]
+    \label{thm: Legendre多项式的逼近性质}
     在区间$[-1, 1]$上，设$\widetilde{L}_n$是首项系数为$1$的
     Legendre多项式，则
     \[
       \|\widetilde{L}_n\|_2 = \min_{P\in P_n}\|P(x)\|_2.
     \]
   \end{thm}
+  \remark
+    应用方法和说明可以参考Chebyshev多项式的逼近性质.
+    （\thmref{thm: Chebyshev多项式的逼近性质}）
+
+  \begin{lemma}[前$4$项Legendre多项式]
+    \[\begin{split}
+      P_0 &= 1,\\
+      P_1 &= x,\\
+      P_2 &= \frac{3}{2}x^2 - \frac{1}{2},\\
+      P_3 &= \frac{5}{2}x^3 - \frac{3}{2}x
+    \end{split}\]
+  \end{lemma}
 
 \newpage
 \subsection{Chebyshev多项式}
   \begin{defi}[Chebyshev多项式]
     取区间$[-1, 1]$，$\rho(x)=(1-x^2)^{-1/2}$，称由$\{1,x,\dots,x^n,\dots\}$
-    正交化而得的多项式为Chebyshev多项式。其表达式为
+    正交化而得的多项式为Chebyshev多项式. 其表达式为
     \[
       T_n(x) = \cos(n\arccos x),\quad|x|\le 1
     \]
@@ -1187,7 +1205,7 @@
         \end{cases}
       \]
       \item $T_{2k}(x)$只含$x$的偶次幂，$T_{2k+1}(x)$只含$x$的
-      奇次幂。
+      奇次幂.
       \item $T_n$在区间$[-1, 1]$上的$n$个零点为
       \[
         x_k = \cos\frac{2k-1}{2n}\pi,\quad k = 1,2,\dots,n.
@@ -1207,14 +1225,14 @@
   \end{thm}
   \remark
     这一定理意味着，取区间$[-1, 1]$，$n$次Chebyshev多项式是所有次数
-    小于等于$n$的首项为$1$的多项式中，绝对值的最大值最小的一个。从而，
+    小于等于$n$的首项为$1$的多项式中，绝对值的最大值最小的一个. 从而，
     若想用$P_{n-1}$中的多项式来逼近$n$次多项式$\f$，只需找
     $\f^*\in P_{n-1}$，使得
     \[
       \f - \f^* = a_n \widetilde{T}_n.
     \]
-    其中$a_n$为$\f$的$n$次项系数。对于一般的在区间$[a, b]$上的情况，
-    只需利用平移和伸缩映射到$[-1, 1]$上即可。
+    其中$a_n$为$\f$的$n$次项系数. 对于一般的在区间$[a, b]$上的情况，
+    只需利用平移和伸缩映射到$[-1, 1]$上即可.
 
   \begin{thm}[Chebyshev零点插值]
     设插值节点$x_0,\dots,x_n$为Chebyshev多项式$T_{n+1}$的
@@ -1232,7 +1250,448 @@
     \]
   \remark
     这一定理保证了使用Chebyshev多项式的零点插值，至少可以使得
-    误差的最大值最小。
+    误差的最大值最小.
+
+\newpage
+\section{变分方法与数据拟合}
+  机理性建模 => 数据驱动型建模。\\
+  历史：最优化。泛函。The calculus of variations\par
+
+    若要求函数$\f(\mbf{x})$，$\mbf{x}\in\R^n$的最小值点，根据
+    Fermat引理，在最值点$\f$的梯度为零。而变分法研究过程的优化，
+  \begin{exa}
+    给定$A=(0,0)$，$B=(x_1,0)$，在连接$A$和$B$的足够光滑曲线中，
+    找弧长最短的一条。设曲线方程
+    \[
+      y=y(x),\quad y(0) = y(x_1) = 0.
+    \]
+    则它的弧长为
+    \[
+      L(y) = \int_0^{x_1} \sqrt{1+y^{\pr2}(x)}\rd x.
+    \]
+    则问题转化为，求解
+    \[
+      \min_{y\in K} L(y),\quad K = \{y\in\ms{C}^2[0,x_1]\,:\,
+      y(0) = y(x_1) = 0\}.
+    \]
+  \end{exa}
+
+  \begin{exa}[最速降线]
+    给定空中的一点$A=(0,0)$，地上一点$B=(x_1,y_1)$，求一条连接
+    $A$和$B$的轨迹，假设在无阻力情况下，有小球沿轨道从$A$到$B$，
+    应该如何选取轨迹，使得所需时间最短。\par
+    假设轨道充分光滑，设滑行轨道$y\in K$的方程为
+    \[
+      y=y(x), \quad y(0)=0,\quad y(x_1) = y_1.
+    \]
+    试确定$T(y)$. 根据机械能守恒，小球在$(*,-y)$出的速度，为
+    \[
+      v = \sqrt{2gy},
+    \]
+    同时由速度的定义知
+    \[
+      v = \frac{\rd s}{\rd t} = \sqrt{1+y^{\pr2}(x)}\frac{\rd x}{\rd t},
+    \]
+    根据上两式，即有
+    \[
+      \sqrt{2gy}\rd t = \sqrt{1+y^{\pr2}(x)}\rd x \,\Rightarrow\,
+      \rd t = \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2}\rd x
+    \]
+    设$A\to B$，$0\to t_1$，$0\to x_1$，则
+    \[
+      t_1 = \int_0^{x_1} \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2}\rd x,
+    \]
+    即为所要最小化的$T(y)$.
+  \end{exa}
+  \remark
+    Bernoulli，1696
+
+ % \subsubsection{变分问题的求解与Euler-Lagrange方程}
+  \begin{defi}[变分方法]
+    求解
+    \[
+      y^* = \agm_{y\in K}J(y),\quad
+      K = \{y\in\ms{C}^2[x_0,x_1]\,:\,y(x_0)=y_0, y(x_1)=y_1\}.
+    \]
+    定义集合
+    \[
+      K_0 = \{ y\in\ms{C}^2[x_0,x_1]\,:\, y(x_0)=y(x_1)=0 \},
+    \]
+    对任意$\eta\in K_0$，定义
+    \[
+      K(\eta) = \{y^* + \vep\eta\,:\, \vep\in\R\}.
+    \]
+    因为$y^*\in K(\eta)\subset K$，所以
+    \[
+      y^* = \agm_{y\in K(\eta)} J(y),
+    \]
+    即
+    \[
+      0 = \agm_{\vep\in\R} J(y+\vep\eta).
+    \]
+    由Fermat引理知，
+    \[
+      \frac{\rd}{\rd \vep} \bigg\vert_{\vep=0} J(y+\vep\eta)=0.
+    \]
+    称为左侧为泛函的变分或方向导数，记为$\delta J(y,\eta)$.
+  \end{defi}
+
+  \begin{thm}
+    若$y=y^*$为上述……的最优解，则成立
+    \[
+      \delta J = \delta J(y^*, \eta) = 0
+    \]
+  \end{thm}
+
+  具体化. 设
+  \[
+    J = \int_{x_0}^{x_1} F(x,y(x),y\hp(x)) \rd x.
+  \]
+  对任意的$\eta \in K$，（假设可以换序）
+  \[\begin{split}
+    \frac{\rd}{\rd\vep} J(y + \vep\eta) &=
+    \frac{\rd}{\rd\vep}\int_{x_0}^{x_1} F(x,y + \vep\eta,y\hp + \vep\eta\hp) \rd x\\
+    &= \int_{x_0}^{x_1} ... \\
+    &= \int_{x_0}^{x_1} [F_y(x,y,y\hp)\eta + F_{y\hp}(x,y,y\hp)\eta\hp]\rd x \\
+    &=
+  \end{split}\]
+  由变分引理可知，若在$y=y^*$处$J$最优，则满足Euler-Lagrange方程
+  \begin{equation}
+    \label{equ: e-l}
+    F_y - \frac{\rd}{\rd x}F_{y\hp} = 0.
+  \end{equation}
+
+  \begin{lemma}[变分引理]
+    设函数$\f\in\ms{C}[x_0,x_1]$，若对于任意$\g\in K_0$，成立
+    \[
+      \int_{x_0}^{x_1} \f\g\rd x = 0,
+    \]
+    则$\f\equiv 0$.
+  \end{lemma}
+
+  % \subsubsection{\equref{eq: e-l}的求解}
+  \paragraph{精确求解}
+    若$F = F(y,y\hp)$，不显含$x$
+    \footnote{即关于$x$对称. }，则有
+  \begin{thm}[守恒律定理]
+    若$F = F(y,y\hp)$，则沿着解曲线，$y=y^*(x)$成立
+    \[
+      H = y\hp F_{y\hp}-F = \text{Constant}.
+    \]
+  \end{thm}
+  \proof
+    当$y=y^*(x)$时，
+    \[
+      \frac{\rd H}{\rd x} = \frac{\rd}{\rd x}(y\hp F_{y\hp}-F) =
+      y^{\pr\pr}F_{y\hp} + y\hp\frac{\rd}{\rd x}F_{y\hp} -
+      \left( F_{y}y\hp + F_{y\hp}y^{\pr\pr} \right)
+    \]
+    有E-L方程可知为零.
+
+  \begin{exa}[最速降线的求解]
+    \[\begin{split}
+    F(x, y, y\hp) = F(x, u, v), \quad u = y(x),\quad v = y\hp(x) \\
+       F = \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2} \\
+    \end{split}\]
+    由于不显含$x$，所以根据守恒率，成立
+    \[\begin{split}
+      F_{y\hp} = (2gy)^{-1/2}[(1+y^{\pr2})^{1/2}]_{y\hp} = \frac{1}{2}(1+y^2)^{-1/2} \times 2y\hp\\
+      H = y\hp F_{y\hp} - F = (2gy)^{-1/2}y^{\pr2}(1+y)
+    \end{split}\]
+  \end{exa}
+
+  \paragraph{求解曲线拟合的正则化方法}
+    已知$0=x_0 < \cdots < x_n = 1$上$y=\f(x)$的近似值
+    $\widetilde{y}_i \approx \f(x_i)$，如何重构$y=\f(x)$？
+    要求
+    \begin{enumerate}
+      \item 吻合数据：$J_1(y)$（数据保真项）
+      \item 正则性要求： $J_2(y)$
+    \end{enumerate}
+    即
+    \begin{equation}
+      \label{equ: 曲线拟合}
+      \min_{y\in K} J(y) = J_1(y) + \alpha J_2(y)
+    \end{equation}
+    其中$\alpha >0$为正则化参数。（Tikhonov正则化，若$\f$取神经网络函数，
+    则推出带正则化的多层感知器模型和BP算法）\\
+    本问题的处理，
+    \[\begin{split}
+      &J_1(\f) = \sum_{i=1}^{n-1}\frac{h_i + h_{i+1}}{2}
+      \left( \widetilde{y}_i - \f(x_i) \right)^2 \\
+      &J_2(\f)  = \int_0^1 (\f^{\pr\pr})^2(x) \rd x
+    \end{split}\]
+
+    \equref{equ: 曲线拟合}得
+    \[
+      \min_{f\in K} J(y) = \sum_{i=1}^{n-1}\frac{h_i + h_{i+1}}{2}
+      \left( \widetilde{y}_i - \f(x_i) \right)^2 + \alpha
+      \int_0^1 (\f^{\pr\pr})^2(x) \rd x
+    \]
+    其中，（可以不妨设两端点精确，否则可以设$Y(x) = y(x)+\widetilde{y}_0
+    +()....$）
+    \[
+      K = \{\f\in\ms{C}^1[0,1], \int_0^1\f^{\pr\pr}\rd x<\infty,
+      \f(x_0) = y_0, \f(x_n) = y_n\}
+    \]
+
+    求解：$\delta J = 0$
+
+\newpage
+\section{变分方法与数据拟合}
+\subsection{绪论}
+  若要求函数$\f(\mbf{x})$，$x\in\R^n$的最值点，根据
+  Fermat引理，只需要求出所有成立$\nabla\f = 0$的点再
+  逐一验证即可。变分是这一思想的推广，它所处理的是过程的优化。
+  下给出一个优化过程的例子，完整的解答见之后的章节。(todo: ref)
+
+  \begin{exa}[最速降线]
+    给定空中的一点$A=(0,0)$，地上一点$B=(x_1,y_1)$，求一条连接
+    $A$和$B$的轨迹，使得假设在无阻力情况下，有小球沿轨道从$A$到$B$
+    所需要的时间最短。\par
+    假设轨道曲线充分光滑，则问题可以转换为，设滑行轨道$y\in\ms{C}^2$的方程为
+    \[
+      y=y(x), \quad y(0)=0,\quad y(x_1) = y_1.
+    \]
+    试确定曲线$y$使得时间$T(y)$最小. 根据机械能守恒，小球在$(*,-y)$处
+    (见\figref{fig: 最速降线问题})的速度，为
+    \[
+      v = \sqrt{2gy},
+    \]
+    同时由速度的定义知
+    \[
+      v = \frac{\rd s}{\rd t} = \sqrt{1+y^{\pr2}(x)}\frac{\rd x}{\rd t},
+    \]
+    根据上两式，即有
+    \[
+      \sqrt{2gy}\rd t = \sqrt{1+y^{\pr2}(x)}\rd x \,\Rightarrow\,
+      \rd t = \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2}\rd x
+    \]
+    设过程为$A\to B$，$0\to t_1$，$0\to x_1$，则
+    \[
+      T(y) = t_1 = \int_0^{x_1} \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2}\rd x,
+    \]
+    即为所要最小化的$T(y)$.
+    \begin{figure}[htbp]
+      \centering
+      \includegraphics[height=5cm]{../image/brachistochrone.png}
+      \caption{最速降线问题}
+      \label{fig: 最速降线问题}
+    \end{figure}
+  \end{exa}
+
+\newpage
+\subsection{变分方法}
+  \begin{defi}[过程优化]
+    \label{def: 过程优化}
+    过程的优化即求解
+    \[
+      \label{equ: 过程优化}
+      y^* = \agm_{y\in K}J(y)
+    \]
+    的过程，其中函数集合
+    \[
+      K = \{y\in\ms{C}^2[x_0, x_1]\,:\, y(x_0)=y_0,\,y(x_1)=y_1\}.
+    \]
+  \end{defi}
+
+  \begin{defi}
+    \label{defi: K}
+    定义函数集合
+    \[\begin{split}
+      K &= \{\f\in\ms{C}^2[x_0, x_1]\,:\,\f(x_0)=y_0,
+      \f(x_1) = y_1\}, \\
+      K_0 &=\{\f\in\ms{C}^2[x_0, x_1]\,:\,\f(x_0)=
+      \f(x_1) = 0\}.
+    \end{split}\]
+    对于任意$\f_0\in K$，$\eta \in K_0$定义集合
+    \[
+      K(\f_0, \eta) = \{\f_0 + \vep\eta\,:\,\vep\in\R\}.
+    \]
+  \end{defi}
+
+  \begin{defi}[泛函的方向导数]
+    \label{def: 泛函的方向导数}
+    记号同\defref{defi: K}. 定义泛函
+    \[
+      J(\f) = \int_a^bL(x, \f(x), \f\hp(x)) \rd x,\quad
+      \f \in K.
+    \]
+    如果$\f^*$是函数$J(\f)$在集合$K$中的最小值点，即
+    \[
+      \f^* = \agm_{\f\in K}J(\f),
+    \]
+    则对于任意$\eta\in K_0$，$\f^*$也是$J(\f)$在集合$K(\f^*,\eta)$
+    中的最小值点。所以成立
+    \[
+      \f^* = \agm_{\vep\in\R}J(\f^* + \vep\eta).
+    \]
+    由于函数$J(\f^* + \vep\eta)$是关于实数$\vep$的一元函数，所以在
+    它最小值点，即$\vep =0$处成立
+    \begin{equation}
+      \label{equ: 方向导数为零}
+      \frac{\rd}{\rd\vep}J(\f^* + \vep\eta)\bigg|_{\vep =0}=0.
+    \end{equation}
+    称左侧为泛函$J$在$\f^*$处沿$\eta$方向的\tbf{变分}
+    或\tbf{方向导数}. 即为$\delta J(\f^*, \eta)$\footnote{一般来讲，
+    $\f^*$可以是集合中的任意一点. }.
+  \end{defi}
+  \remark
+    这里采用的是分析学中一个常见思想，将一个在高维空间中的问题
+    转化为一个低维空间中的问题。一个更加简单的例子是，证明若
+    $k$维欧式空间中的函数$\f$在凸集$K$中的各偏导数恒为零，则
+    它在$K$中为常量。一个证法是取定$K$中任意一点(向量)$\mbf{x}_0$，
+    则对于任意$\mbf{x}\in K$，则对于任意直线段$xx_0$，有方程
+    \[
+      y = \mbf{x_0}t + \mbf{x}(1-t).
+    \]
+    上式是一个一元实函数，对它求导并利用一元函数微分学中的知识，可以
+    知道在这条直线段上$\f$的函数值不变。由于$\mbf{x}_0$和$\mbf{x}$
+    的选取是任意的，所以在$K$上$\f$的值不变。\par
+    在这里采用的是同样的思想，只是把欧式空间换成了一个函数集合而已。
+
+  \begin{lemma}[变分引理]
+    \label{lemma: 变分引理}
+    设$\f\in\ms{C}[x_0,x_1]$，且对任意$\g\in K$，有
+    \[
+      \int_{x_0}^{x_1}\f\g \rd x =0,
+    \]
+    则成立
+    \[
+      \f(x)\equiv 0,\quad x\in[x_0, x_1].
+    \]
+  \end{lemma}
+
+  \begin{thm}[Euler-Lagrange方程]
+    \label{thm: Euler-Lagrange方程}
+    记号同\defref{def: 泛函的方向导数}. 泛函$J(\f)$在极值点满足
+    Euler-Lagrange方程
+    \begin{equation}
+      \label{equ: Euler-Lagrange方程}
+      \frac{\partial L}{\partial\f} - \frac{\rd}{\rd x}\frac{\partial L}{\partial\f\hp} = 0.
+    \end{equation}
+  \end{thm}
+  \proof
+    假设满足求导积分换序的条件，则泛函$J(\f)$在
+    $\f_*+\vep\eta$处沿$\eta$方向的方向导数为
+    \footnote{为了记号的清晰，这里用$\f_*$替代之前的$\f^*$.
+    并且这里关于偏导数的记号，应理解为关于分母所表示的那一分量的偏导数. }
+    \[\begin{split}
+      \frac{\rd}{\rd\vep}J(\f_*+\vep\eta) &=
+      \frac{\rd}{\rd\vep}\int_{x_0}^{x_1}L(x,\f_*+\vep\eta,\f_*\hp+\vep\eta\hp)\rd x\\
+      &= \int_{x_0}^{x_1} \frac{\partial L}{\partial (\f_*+\vep\eta)}\eta
+      +\frac{\partial L}{\partial (\f_*\hp+\vep\eta\hp)}\eta\hp\,\rd x.
+    \end{split}\]
+    代入$\vep=0$，即得$J$在最小值点$\f_*$处的方向导数，为
+    \[\begin{split}
+      \frac{\rd}{\rd\vep}J(\f_*) &=
+      \int_{x_0}^{x_1} \frac{\partial L}{\partial \f}\eta
+      +\frac{\partial L}{\partial \f\hp}\eta\hp\,\rd x \\
+      &= \int_{x_0}^{x_1} \frac{\partial L}{\partial\f}\eta\rd x
+      + \frac{\partial L}{\partial\f\hp}\eta\bigg|_{x_0}^{x_1}
+      - \int_{x_0}^{x_1}\eta\frac{\rd}{\rd x}\frac{\partial L}{\partial \f\hp}\rd x\\
+      &= \int_{x_0}^{x_1} \eta\left( \frac{\partial L}{\partial\f}
+      - \frac{\rd}{\rd x}\frac{\partial L}{\partial\f\hp} \right) \rd x = 0.
+    \end{split}\]
+    注意由于$\eta\in K_0$，即有$\eta(x_0) = \eta(x_1) = 0$.
+    由于$\eta$的选取是任意的，所以根据\lemmaref{lemma: 变分引理}，式子
+    \equref{equ: Euler-Lagrange方程}成立. $\blacksquare$
+  \remark
+    对于$L = L(\f,\f\hp)$，即$L$不显含$x$的情况，
+    \equref{equ: Euler-Lagrange方程}是可以精确求解的.
+
+  \begin{thm}[守恒律定理]
+    \label{thm: 守恒律定理}
+    设$L = L(\f,\f\hp)$，则沿着\equref{equ: 过程优化}的解曲线
+    $y^* = \f^*(x)$，成立
+    \[
+      H = \f\hp\frac{\partial L}{\partial\f\hp} - L = \text{Const}.
+    \]
+  \end{thm}
+  \proof
+    \[\begin{split}
+     \frac{\rd H}{\rd x} &= \frac{\rd}{\rd x}
+     \left( \f\hp\frac{\partial L}{\partial\f\hp}-L(\f,\f\hp) \right)\\
+     &= \f^{\pr\pr}\frac{\partial L}{\partial\f\hp}
+     + \f\hp\frac{\rd}{\rd x}\frac{\partial L}{\partial\f\hp} -
+     \frac{\partial L}{\rd\f}\f\hp -
+     \frac{\partial L}{\rd\f\hp}\f^{\pr\pr}.
+    \end{split}\]
+    根据\thmref{thm: Euler-Lagrange方程}，$\rd H /\rd x =0$，所以
+    命题成立. $\blacksquare$
+
+  % \begin{exa}[最速降线的求解]
+  %   根据之前的讨论，即求解
+  %   \[
+  %     \f_* = \agm_{\f\in K} T(\f) = \int_{0}^{x_1}
+  %     \left( \frac{1+\f\hp}{2g\f} \right)^{1/2}\rd x.
+  %   \]
+  %   根据\thmref{thm: 守恒律定理}，成立
+  %   \[
+  %
+  %   \]
+  % \end{exa}
+
+\newpage
+\subsection{曲线拟合的正则化方法}
+  \begin{defi}[Tikhonov正则化]
+    \label{def: Tikhonov正则化}
+    对于给定的数据$Y$，定义数据拟合项为$J_1(\f)$，用于表示拟合结果
+    相较于原数据的接近程度，同时要求拟合的结果尽可能满足对于结果的
+    要求，用$J_2(\f)$来描述$\f$满足要求的程度，则求解拟合结果的
+    过程即为求解
+    \[
+      \f_* = \agm_{\f\in K}(J_1(\f) + \alpha J_2(\f)).
+    \]
+    其中$\alpha$为\tbf{正则化参数}，用于表示拟合的过程中，应更接近
+    原数据或是更满足拟合要求. 若取$\alpha=0$，即为插值.
+  \end{defi}
+
+  \begin{prob}
+    给定函数$y$在样本点$0=x_0 < x_1 < \cdots < x_n = 1$处的
+    近似值$\tilde{y}_i$，误差满足
+    \[
+      |\tilde{y}_i - y(x_i)| \le \delta,
+    \]
+    试重构$y$的近似函数$\f_*$.\par
+    按照\defref{def: Tikhonov正则化}的思想，定义
+    \[\begin{split}
+      J_1(\f) &= \sum_{i=1}^{n-1}\frac{h_i+h_{i+1}}{2}
+      \left( \tilde{y}_i - \f(x_i) \right)^2 \\
+      J_2(\f) &= \int_0^1 (\f^{\pr\pr})^2\rd x
+    \end{split}\]
+    其中
+    \[\begin{split}
+      h_i &= x_i - x_{i-1},\quad i = 1,2,\dots,n\\
+      h &= \max_{1\le i\le n}h_i
+    \end{split}\]
+    则问题转换为求解
+    \begin{equation}
+      \label{equ: 正则化曲线拟合}
+      \f_* = \agm_{\f\in K}\left( J_1(\f) + \alpha J_2(\f) \right).
+    \end{equation}
+  \end{prob}
+  \remark
+    不失一般性的，可以设$\tilde{y}_0 = \f(x_0)$且$\tilde{y}_n=\f(x_n)$.
+    否则只需要用
+    \[
+      Y(x) = y(x)+\tilde{y}_0-y(0)+(\tilde{y}_n-y(1)+y(0)-\tilde{y}_n)x
+    \]
+    来替代$y$即可. 可以证明
+    \begin{enumerate}
+      \item $Y(0) = \tilde{y}_0$且$Y(1) = \tilde{y}_n$，
+      \item $|\tilde{y}_i - Y(x_i)| \le 4\delta$.
+    \end{enumerate}
+    todo
+
+  \begin{thm}
+    对于任意$\alpha>0$，\equref{equ: 正则化曲线拟合}的解存在且唯一.
+  \end{thm}
+  \proof
+    设$\f_*$为式\equref{equ: 正则化曲线拟合}的解，则根据
+    \thmref{thm: Euler-Lagrange方程}，成立
+
+
 
 \newpage
 \section{附录}
@@ -1276,5 +1735,17 @@
       \lhs \ge \alpha_1\frac{1}{\alpha_1} + \cdots + \alpha_n\frac{1}{\alpha_n}
        = n \quad\blacksquare
     \]
+
+\newpage
+\subsection{积分相关公式}
+  \begin{lemma}[分部积分]
+    设$u,v\in\ms{C}^{n+1}[a, b]$，则成立
+    \[
+      \int_a^buv^{(n+1)}\rd x =
+      [ uv^{(n)} - u\hp v^{(n-1)} + \cdots +  (-1)^nu^{(n)}v]
+      \bigg\vert_a^b + (-1)^{n+1}\int_a^bu^{(n+1)}v\rd x.
+    \]
+  \end{lemma}
+
 
 \end{document}
