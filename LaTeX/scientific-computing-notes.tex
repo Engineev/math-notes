@@ -1254,191 +1254,6 @@
 
 \newpage
 \section{变分方法与数据拟合}
-  机理性建模 => 数据驱动型建模。\\
-  历史：最优化。泛函。The calculus of variations\par
-
-    若要求函数$\f(\mbf{x})$，$\mbf{x}\in\R^n$的最小值点，根据
-    Fermat引理，在最值点$\f$的梯度为零。而变分法研究过程的优化，
-  \begin{exa}
-    给定$A=(0,0)$，$B=(x_1,0)$，在连接$A$和$B$的足够光滑曲线中，
-    找弧长最短的一条。设曲线方程
-    \[
-      y=y(x),\quad y(0) = y(x_1) = 0.
-    \]
-    则它的弧长为
-    \[
-      L(y) = \int_0^{x_1} \sqrt{1+y^{\pr2}(x)}\rd x.
-    \]
-    则问题转化为，求解
-    \[
-      \min_{y\in K} L(y),\quad K = \{y\in\ms{C}^2[0,x_1]\,:\,
-      y(0) = y(x_1) = 0\}.
-    \]
-  \end{exa}
-
-  \begin{exa}[最速降线]
-    给定空中的一点$A=(0,0)$，地上一点$B=(x_1,y_1)$，求一条连接
-    $A$和$B$的轨迹，假设在无阻力情况下，有小球沿轨道从$A$到$B$，
-    应该如何选取轨迹，使得所需时间最短。\par
-    假设轨道充分光滑，设滑行轨道$y\in K$的方程为
-    \[
-      y=y(x), \quad y(0)=0,\quad y(x_1) = y_1.
-    \]
-    试确定$T(y)$. 根据机械能守恒，小球在$(*,-y)$出的速度，为
-    \[
-      v = \sqrt{2gy},
-    \]
-    同时由速度的定义知
-    \[
-      v = \frac{\rd s}{\rd t} = \sqrt{1+y^{\pr2}(x)}\frac{\rd x}{\rd t},
-    \]
-    根据上两式，即有
-    \[
-      \sqrt{2gy}\rd t = \sqrt{1+y^{\pr2}(x)}\rd x \,\Rightarrow\,
-      \rd t = \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2}\rd x
-    \]
-    设$A\to B$，$0\to t_1$，$0\to x_1$，则
-    \[
-      t_1 = \int_0^{x_1} \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2}\rd x,
-    \]
-    即为所要最小化的$T(y)$.
-  \end{exa}
-  \remark
-    Bernoulli，1696
-
- % \subsubsection{变分问题的求解与Euler-Lagrange方程}
-  \begin{defi}[变分方法]
-    求解
-    \[
-      y^* = \agm_{y\in K}J(y),\quad
-      K = \{y\in\ms{C}^2[x_0,x_1]\,:\,y(x_0)=y_0, y(x_1)=y_1\}.
-    \]
-    定义集合
-    \[
-      K_0 = \{ y\in\ms{C}^2[x_0,x_1]\,:\, y(x_0)=y(x_1)=0 \},
-    \]
-    对任意$\eta\in K_0$，定义
-    \[
-      K(\eta) = \{y^* + \vep\eta\,:\, \vep\in\R\}.
-    \]
-    因为$y^*\in K(\eta)\subset K$，所以
-    \[
-      y^* = \agm_{y\in K(\eta)} J(y),
-    \]
-    即
-    \[
-      0 = \agm_{\vep\in\R} J(y+\vep\eta).
-    \]
-    由Fermat引理知，
-    \[
-      \frac{\rd}{\rd \vep} \bigg\vert_{\vep=0} J(y+\vep\eta)=0.
-    \]
-    称为左侧为泛函的变分或方向导数，记为$\delta J(y,\eta)$.
-  \end{defi}
-
-  \begin{thm}
-    若$y=y^*$为上述……的最优解，则成立
-    \[
-      \delta J = \delta J(y^*, \eta) = 0
-    \]
-  \end{thm}
-
-  具体化. 设
-  \[
-    J = \int_{x_0}^{x_1} F(x,y(x),y\hp(x)) \rd x.
-  \]
-  对任意的$\eta \in K$，（假设可以换序）
-  \[\begin{split}
-    \frac{\rd}{\rd\vep} J(y + \vep\eta) &=
-    \frac{\rd}{\rd\vep}\int_{x_0}^{x_1} F(x,y + \vep\eta,y\hp + \vep\eta\hp) \rd x\\
-    &= \int_{x_0}^{x_1} ... \\
-    &= \int_{x_0}^{x_1} [F_y(x,y,y\hp)\eta + F_{y\hp}(x,y,y\hp)\eta\hp]\rd x \\
-    &=
-  \end{split}\]
-  由变分引理可知，若在$y=y^*$处$J$最优，则满足Euler-Lagrange方程
-  \begin{equation}
-    \label{equ: e-l}
-    F_y - \frac{\rd}{\rd x}F_{y\hp} = 0.
-  \end{equation}
-
-  \begin{lemma}[变分引理]
-    设函数$\f\in\ms{C}[x_0,x_1]$，若对于任意$\g\in K_0$，成立
-    \[
-      \int_{x_0}^{x_1} \f\g\rd x = 0,
-    \]
-    则$\f\equiv 0$.
-  \end{lemma}
-
-  % \subsubsection{\equref{eq: e-l}的求解}
-  \paragraph{精确求解}
-    若$F = F(y,y\hp)$，不显含$x$
-    \footnote{即关于$x$对称. }，则有
-  \begin{thm}[守恒律定理]
-    若$F = F(y,y\hp)$，则沿着解曲线，$y=y^*(x)$成立
-    \[
-      H = y\hp F_{y\hp}-F = \text{Constant}.
-    \]
-  \end{thm}
-  \proof
-    当$y=y^*(x)$时，
-    \[
-      \frac{\rd H}{\rd x} = \frac{\rd}{\rd x}(y\hp F_{y\hp}-F) =
-      y^{\pr\pr}F_{y\hp} + y\hp\frac{\rd}{\rd x}F_{y\hp} -
-      \left( F_{y}y\hp + F_{y\hp}y^{\pr\pr} \right)
-    \]
-    有E-L方程可知为零.
-
-  \begin{exa}[最速降线的求解]
-    \[\begin{split}
-    F(x, y, y\hp) = F(x, u, v), \quad u = y(x),\quad v = y\hp(x) \\
-       F = \left( \frac{1+y^{\pr2}}{2gy} \right)^{1/2} \\
-    \end{split}\]
-    由于不显含$x$，所以根据守恒率，成立
-    \[\begin{split}
-      F_{y\hp} = (2gy)^{-1/2}[(1+y^{\pr2})^{1/2}]_{y\hp} = \frac{1}{2}(1+y^2)^{-1/2} \times 2y\hp\\
-      H = y\hp F_{y\hp} - F = (2gy)^{-1/2}y^{\pr2}(1+y)
-    \end{split}\]
-  \end{exa}
-
-  \paragraph{求解曲线拟合的正则化方法}
-    已知$0=x_0 < \cdots < x_n = 1$上$y=\f(x)$的近似值
-    $\widetilde{y}_i \approx \f(x_i)$，如何重构$y=\f(x)$？
-    要求
-    \begin{enumerate}
-      \item 吻合数据：$J_1(y)$（数据保真项）
-      \item 正则性要求： $J_2(y)$
-    \end{enumerate}
-    即
-    \begin{equation}
-      \label{equ: 曲线拟合}
-      \min_{y\in K} J(y) = J_1(y) + \alpha J_2(y)
-    \end{equation}
-    其中$\alpha >0$为正则化参数。（Tikhonov正则化，若$\f$取神经网络函数，
-    则推出带正则化的多层感知器模型和BP算法）\\
-    本问题的处理，
-    \[\begin{split}
-      &J_1(\f) = \sum_{i=1}^{n-1}\frac{h_i + h_{i+1}}{2}
-      \left( \widetilde{y}_i - \f(x_i) \right)^2 \\
-      &J_2(\f)  = \int_0^1 (\f^{\pr\pr})^2(x) \rd x
-    \end{split}\]
-
-    \equref{equ: 曲线拟合}得
-    \[
-      \min_{f\in K} J(y) = \sum_{i=1}^{n-1}\frac{h_i + h_{i+1}}{2}
-      \left( \widetilde{y}_i - \f(x_i) \right)^2 + \alpha
-      \int_0^1 (\f^{\pr\pr})^2(x) \rd x
-    \]
-    其中，（可以不妨设两端点精确，否则可以设$Y(x) = y(x)+\widetilde{y}_0
-    +()....$）
-    \[
-      K = \{\f\in\ms{C}^1[0,1], \int_0^1\f^{\pr\pr}\rd x<\infty,
-      \f(x_0) = y_0, \f(x_n) = y_n\}
-    \]
-
-    求解：$\delta J = 0$
-
-\newpage
-\section{变分方法与数据拟合}
 \subsection{绪论}
   若要求函数$\f(\mbf{x})$，$x\in\R^n$的最值点，根据
   Fermat引理，只需要求出所有成立$\nabla\f = 0$的点再
@@ -1685,11 +1500,82 @@
     todo
 
   \begin{thm}
-    对于任意$\alpha>0$，\equref{equ: 正则化曲线拟合}的解存在且唯一.
+    对于任意$\alpha>0$，\equref{equ: 正则化曲线拟合}的解为三次样条函数.
   \end{thm}
   \proof
-    设$\f_*$为式\equref{equ: 正则化曲线拟合}的解，则根据
-    \thmref{thm: Euler-Lagrange方程}，成立
+    设$\f_*$为式\equref{equ: 正则化曲线拟合}的解. \par
+    对于任意$\eta\in K_0$，$\vep\in R$，
+    \[
+      J(\f_*+\vep\eta) = \sum_{i=1}^{n-1}\frac{h_i + h_{i+1}}{2}
+      [\tilde{y}_i - f_*(x_i) - \vep\eta(x_i)]^2 + \alpha
+      \int_0^1(\f_*^{\pr\pr} + \vep\eta^{\pr\pr})\,\rd x.
+    \]
+    求它关于$\vep$的导数，成立
+    \[
+      \frac{\rd}{\rd\vep}J(\f_*+\vep\eta) =
+      -2\sum_{i=1}^{n-1}\frac{h_i+h_{i+1}}{2}[\tilde{y}_i-\f_*(x_i)-\vep\eta(x_i)]\eta(x_i)
+      +2\alpha\int_0^1 (\f_*^{\pr\pr}+\vep\eta^{\pr\pr})\eta^{\pr\pr} \,\rd x.
+    \]
+    根据\defref{def: 泛函的方向导数}中的\equref{equ: 方向导数为零}，上式在$\vep=0$时
+    值为零，即
+    \begin{equation}
+      \label{equ: 正则化证明1}
+      \frac{\rd}{\rd\vep}J(\f_*+\vep\eta)\bigg|_{\vep=0} =
+      -2\sum_{i=1}^{n-1}\frac{h_i+h_{i+1}}{2}[\tilde{y}_i-\f_*(x_i)]\eta(x_i)
+      +2\alpha\int_0^1\f_*^{\pr\pr}\eta^{\pr\pr}\,\rd x = 0.
+    \end{equation}
+    接下来分两步构造出$\f_*$.\\
+    \tbf{Step 1. }
+    由于$\eta$的选取是任意的，所以我们选择恰当的$\eta\in\ms{C}^\infty(x_i,x_{i+1})$，
+    使得成立
+    \[
+      \eta(x_i) = 0,\quad i = 1,2,\dots,n-1
+    \]
+    所以根据\equref{equ: 正则化证明1}，成立
+    \[
+      \int_{x_i}^{x_{i+1}}\f_*^{\pr\pr}\eta^{\pr\pr} = 0.
+    \]
+    对于上式进行两次分部积分，得到
+    \[
+      0 = \f_*^{\pr\pr}\eta\hp\bigg|_{x_i}^{x_{i+1}} -
+      \f_*^{(3)}\eta\bigg|_{x_i}^{x_{i+1}} +
+      \int_{x_i}^{x_{i+1}}\f_*^{(4)}\eta\rd x.
+    \]
+    同样因为$\eta$的选取是任意的，所以可以在原来的基础上，选取$\eta$使得成立
+    \[
+      \eta(x_i) = \eta\hp(x_i) = 0,\quad i = 1,2,\dots,n-1
+    \]
+    所以有
+    \[
+      \int_{x_i}^{x_{i+1}}\f_*^{(4)}\eta\rd x = 0.
+    \]
+    根据变分引理，即成立
+    \begin{equation}
+      \label{equ: 正则化证明2}
+      \f_*^{(4)}(x) = 0\quad\Rightarrow\quad \f\in P_3,\quad x\in(x_i,x_{i+1}).
+    \end{equation}
+    \tbf{Step 2. }
+    设$\eta\in\ms{C}^\infty[0, 1]$，同样的选取在$x_i(i=0,2,\dots,n)$处为零的$\eta$，
+    根据之前的推导可知（注意$\f_*^{(4)} = 0$）
+    \[\begin{split}
+      0 = \int_0^1\f_*^{\pr\pr}\eta^{\pr\pr}
+      &= \sum_{i=1}^{n-1} \f_*^{\pr\pr}\eta\hp\bigg|_{x_i}^{x_{i+1}}\\
+      &= -\f_*^{\pr\pr}(0)\eta\hp(0) +
+         \sum_{i=1}^{n-1}\left( \f_*^{\pr\pr}(x_i-)\eta\hp(x_i) - \f_*^{\pr\pr}(x_i+)\eta\hp(x_i) \right)
+         + \f_*^{\pr\pr}(1)\eta\hp(1).
+    \end{split}\]
+    由于$\eta\hp$也是任意的，所以上式意味着
+    \begin{equation}\begin{split}
+      \label{equ: 正则化证明3}
+      & \f_*^{\pr\pr}(0) = \f_*^{\pr\pr}(1) = 0\\
+      & \f_*^{\pr\pr}(x_i+) = \f_*^{\pr\pr}(x_i-),\quad i = 1,2,\dots,n-1
+    \end{split}\end{equation}
+    根据$\f_*(0) = y(0)$，$\f_*(1) = y(1)$的假设以及
+    \equref{equ: 正则化证明2}和\equref{equ: 正则化证明3}，可知$\f_*$
+    为三次样条函数. $\blacksquare$
+
+
+
 
 
 
