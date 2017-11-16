@@ -1257,13 +1257,13 @@
 \subsection{绪论}
   若要求函数$\f(\mbf{x})$，$x\in\R^n$的最值点，根据
   Fermat引理，只需要求出所有成立$\nabla\f = 0$的点再
-  逐一验证即可。变分是这一思想的推广，它所处理的是过程的优化。
-  下给出一个优化过程的例子，完整的解答见之后的章节。(todo: ref)
+  逐一验证即可. 变分是这一思想的推广，它所处理的是过程的优化.
+  下给出一个优化过程的例子，完整的解答见之后的章节. (todo: ref)
 
   \begin{exa}[最速降线]
     给定空中的一点$A=(0,0)$，地上一点$B=(x_1,y_1)$，求一条连接
     $A$和$B$的轨迹，使得假设在无阻力情况下，有小球沿轨道从$A$到$B$
-    所需要的时间最短。\par
+    所需要的时间最短. \par
     假设轨道曲线充分光滑，则问题可以转换为，设滑行轨道$y\in\ms{C}^2$的方程为
     \[
       y=y(x), \quad y(0)=0,\quad y(x_1) = y_1.
@@ -1337,7 +1337,7 @@
       \f^* = \agm_{\f\in K}J(\f),
     \]
     则对于任意$\eta\in K_0$，$\f^*$也是$J(\f)$在集合$K(\f^*,\eta)$
-    中的最小值点。所以成立
+    中的最小值点. 所以成立
     \[
       \f^* = \agm_{\vep\in\R}J(\f^* + \vep\eta).
     \]
@@ -1353,28 +1353,35 @@
   \end{defi}
   \remark
     这里采用的是分析学中一个常见思想，将一个在高维空间中的问题
-    转化为一个低维空间中的问题。一个更加简单的例子是，证明若
+    转化为一个低维空间中的问题. 一个更加简单的例子是，证明若
     $k$维欧式空间中的函数$\f$在凸集$K$中的各偏导数恒为零，则
-    它在$K$中为常量。一个证法是取定$K$中任意一点(向量)$\mbf{x}_0$，
+    它在$K$中为常量. 一个证法是取定$K$中任意一点(向量)$\mbf{x}_0$，
     则对于任意$\mbf{x}\in K$，则对于任意直线段$xx_0$，有方程
     \[
       y = \mbf{x_0}t + \mbf{x}(1-t).
     \]
     上式是一个一元实函数，对它求导并利用一元函数微分学中的知识，可以
-    知道在这条直线段上$\f$的函数值不变。由于$\mbf{x}_0$和$\mbf{x}$
-    的选取是任意的，所以在$K$上$\f$的值不变。\par
-    在这里采用的是同样的思想，只是把欧式空间换成了一个函数集合而已。
+    知道在这条直线段上$\f$的函数值不变. 由于$\mbf{x}_0$和$\mbf{x}$
+    的选取是任意的，所以在$K$上$\f$的值不变. \par
+    在这里采用的是同样的思想，只是把欧式空间换成了一个函数集合而已.
 
-  \begin{lemma}[变分引理]
+  \begin{lemma}[变分引理 I]
     \label{lemma: 变分引理}
-    设$\f\in\ms{C}[x_0,x_1]$，且对任意$\g\in K$，有
+    设$\f\in\ms{C}[a,b]$，且对任意满足$\g(a)=\g(b)=0$的
+    $\g\in\ms{C}^2[a,b]$，有
     \[
-      \int_{x_0}^{x_1}\f\g \rd x =0,
+      \int_{a}^{b}\f\g \rd x =0,
     \]
-    则成立
+    则在$[a,b]$上成立$\f\equiv 0$.
+  \end{lemma}
+
+  \begin{lemma}[变分引理 II]
+    设$\f\in\ms{C}[a, b]$，且对于任意满足$\eta(a) = \eta(b) = 0$的
+    $\eta\in\ms{C}^1(a, b)$都成立
     \[
-      \f(x)\equiv 0,\quad x\in[x_0, x_1].
+      \int_a^b\f\eta\hp\rd x = 0,
     \]
+    则在$[a, b]$上成立$\f\equiv \text{Const}$.
   \end{lemma}
 
   \begin{thm}[Euler-Lagrange方程]
@@ -1508,7 +1515,7 @@
     \[
       J(\f_*+\vep\eta) = \sum_{i=1}^{n-1}\frac{h_i + h_{i+1}}{2}
       [\tilde{y}_i - f_*(x_i) - \vep\eta(x_i)]^2 + \alpha
-      \int_0^1(\f_*^{\pr\pr} + \vep\eta^{\pr\pr})\,\rd x.
+      \int_0^1(\f_*^{\pr\pr} + \vep\eta^{\pr\pr})^2\,\rd x.
     \]
     求它关于$\vep$的导数，成立
     \[
@@ -1525,7 +1532,7 @@
       +2\alpha\int_0^1\f_*^{\pr\pr}\eta^{\pr\pr}\,\rd x = 0.
     \end{equation}
     接下来分两步构造出$\f_*$.\\
-    \tbf{Step 1. }
+  \tbf{Step 1. }
     由于$\eta$的选取是任意的，所以我们选择恰当的$\eta\in\ms{C}^\infty(x_i,x_{i+1})$，
     使得成立
     \[
@@ -1554,31 +1561,160 @@
       \label{equ: 正则化证明2}
       \f_*^{(4)}(x) = 0\quad\Rightarrow\quad \f\in P_3,\quad x\in(x_i,x_{i+1}).
     \end{equation}
-    \tbf{Step 2. }
-    设$\eta\in\ms{C}^\infty[0, 1]$，同样的选取在$x_i(i=0,2,\dots,n)$处为零的$\eta$，
-    根据之前的推导可知（注意$\f_*^{(4)} = 0$）
+  \tbf{Step 2. }
+    取满足$\eta(0)=\eta(1)=0$的$\eta\in\ms{C}^\infty[0, 1]$，分部积分得
+    （注意$\f_*^{(4)} = 0$）
     \[\begin{split}
-      0 = \int_0^1\f_*^{\pr\pr}\eta^{\pr\pr}
-      &= \sum_{i=1}^{n-1} \f_*^{\pr\pr}\eta\hp\bigg|_{x_i}^{x_{i+1}}\\
-      &= -\f_*^{\pr\pr}(0)\eta\hp(0) +
-         \sum_{i=1}^{n-1}\left( \f_*^{\pr\pr}(x_i-)\eta\hp(x_i) - \f_*^{\pr\pr}(x_i+)\eta\hp(x_i) \right)
-         + \f_*^{\pr\pr}(1)\eta\hp(1).
+      \int_0^1 \f_*^{\pr\pr}\eta^{\pr\pr}\rd x =&
+      \sum_{i=1}^{n-1}
+      \left(
+        -\f_*^{(3)}\eta\bigg|_{x_i-1}^{x_i}
+        +\f_*^{\pr\pr}\eta\hp\bigg|_{x_i-1}^{x_i}
+      \right) \\
+      =& \sum_{i=1}^{n-1}
+      ( \f_*^{(3)}(x_i+) - \f_*^{(3)}(x_i-))\eta(x_i) +
+      \sum_{i=1}^{n-1} ( \f_*^{\pr\pr}(x_i+) - \f_*^{\pr\pr}(x_i-))\eta\hp(x_i)\\
+      & + \f_*^{\pr\pr}(1)\eta\hp(1) - \f_*^{\pr\pr}(0)\eta\hp(0)
     \end{split}\]
-    由于$\eta\hp$也是任意的，所以上式意味着
+    将结果带入\equref{equ: 正则化证明1}，即
     \begin{equation}\begin{split}
       \label{equ: 正则化证明3}
-      & \f_*^{\pr\pr}(0) = \f_*^{\pr\pr}(1) = 0\\
-      & \f_*^{\pr\pr}(x_i+) = \f_*^{\pr\pr}(x_i-),\quad i = 1,2,\dots,n-1
+      0 =&
+      \f_*^{\pr\pr}(1)\eta\hp(1) - \f_*^{\pr\pr}(0)\eta\hp(0)\\
+      &+\sum_{i=1}^{n-1} \left(
+        -\frac{h_i+h_{i+1}}{2}[\tilde{y}_i - \f_*(x_i)]
+        + \alpha(\f_*^{(3)}(x_i+) - \f_*^{(3)}(x_i-))
+      \right)\eta(x_i) \\
+      &+\alpha\sum_{i=1}^{n-1} ( \f_*^{\pr\pr}(x_i+) - \f_*^{\pr\pr}(x_i-))\eta\hp(x_i)
     \end{split}\end{equation}
-    根据$\f_*(0) = y(0)$，$\f_*(1) = y(1)$的假设以及
-    \equref{equ: 正则化证明2}和\equref{equ: 正则化证明3}，可知$\f_*$
-    为三次样条函数. $\blacksquare$
+    由于$\eta$的选取是任意的，即意味着$\eta(x_i)$，$(i=1,2,\dots,n-1)$和
+    $\eta\hp(x_i)$，$(i=0,1,\dots,n)$的选取是任意的，所以需要选取适当的$\f$才可以使得
+    \equref{equ: 正则化证明3}中的每一项都恒为零. 为使第$1$、$3$项为零，需要满足
+    \[\begin{split}
+      & \f_*^{\pr\pr}(1) = \f^{\pr\pr}(0) = 0,\\
+      & \f_*^{\pr\pr}(x_i+) = \f_*^{\pr\pr}(x_i-).
+    \end{split}\]
+    同样的，根据不同的$\alpha$，选取恰当的$\f(x_i)$或
+    $\f^{(3)}(x_i)$使得第二项为零.
+    综合上式以及\equref{equ: 正则化证明2}，可知$\f_*$为三次样条函数，
+    且当$\alpha=0$时为样条插值函数. $\blacksquare$
 
+\iffalse
+\newpage
+\section{数值积分与数值微分}
+\subsection{绪论}
+  \begin{thm}[N-L公式]
+  \end{thm}
+  \remark
+    难以求解$F(x)$，所以需要数值方法.
 
+  \begin{pos}[中矩形公式]
+    \[
+      \int_a^b\f\rd x = \f(\xi)(b-a)\approx \f(\frac{a+b}{2})(b-a).
+    \]
+    其误差满足
+    \[\begin{split}
+      R(\f) &= \int_a^b\f(x)\rd x - (b-a)\f\left(\frac{a+b}{2}\right)\\
+            &= \int_a^b\left( \f(x)-\f\left(\frac{a+b}{2}\right) \right)\rd x \\
+            &= \int_a^b\left( \f\hp\left(\frac{a+b}{2}\right)\left(x-\frac{a+b}{2}\right)
+            + \frac{1}{2}\f^{\pr\pr}(\xi)(x-\frac{a+b}{2})^2 \right)\rd x \\
+            &= \frac{1}{2}\int_a^b\f^{\pr\pr}(\xi)(x-\frac{a+b}{2})^2 \rd x
+    \end{split}\]
+    记$m=\min\f^{\pr\pr}$，$M=\max\f^{\pr\pr}$，则
+    \[\begin{split}
+      &m\frac{1}{2}\int_a^b\left( (x-\frac{a+b}{2})^2 \right) \le R(\f) \le M\frac{1}{2}\int_a^b\left( (x-\frac{a+b}{2})^2 \right) \\
+      \Rightarrow\quad &m \le \frac{2R(\f)}{\int_a^b\left( (x-\frac{a+b}{2})^2 \right)\rd x} \le M
+    \end{split}\]
+    根据连续函数的介值定理，存在$\xi\in[a, b]$，使得
+    \[
+      MID = \f^{\pr\pr}(\xi)
+    \]
+    从而
+    \[
+      R(\f) = \f^{\pr\pr}(\xi)\frac{1}{2}... = ... = \frac{1}{24}(b-a)^3\f^{\pr\pr}(\xi)
+    \]
+  \end{pos}
+  \remark
+    由于$\xi = \xi(x)$的性质不能确定，所以不能直接使用积分中值定理.
 
+  \begin{pos}[梯形公式]
+    \[
+      \int_a^b\f(x)\rd x \approx \frac{\f(a)+\f(b)}{2}(b-a)
+    \]
+    其误差满足
+    \[\begin{split}
+      R(\f) &= \int_a^b \f(x) - (L_1\f(x)(x))\rd x \\
+            &= \frac{1}{2}\int_a^b\f^{\pr\pr}(\xi)(x-a)(x-b) \rd x\\
+            &= \frac{1}{2}\f^{\pr\pr}(\xi)\int_a^b(x-a)(x-b)\rd x
+          =  -\frac{1}{12}(b-a)^3\f^{\pr\pr}(\xi)
+    \end{split}\]
+  \end{pos}
+  \remark
+    即用Lagrange线性插值来近似原来的函数并积分插值函数. 同时这意味着
+    可以用插值多项式的积分来估计原函数的积分.
 
+  \begin{pos}[Simpson公式]
+    即用$a$，$b$，$(a+b)/2$处的值做二次Lagrange插值并用插值函数
+    的积分来近似原函数的积分.
+    \[
+      \frac{1}{6}(b-a)\left[ f(a)+4\f\left(\frac{a+b}{2}\right) + \f(b) \right]
+    \]
+    误差满足
+    \[
+      R(\f) = \int_a^b \frac{1}{6}\f^{(3)}(\xi)(x-a)(x-\frac{a+b}{2}(x-b))\rd x
+    \]
+    注意若$\f\in P_3$，则该公式精确成立. 记$H_3\in P_3$，使得在$a$，$(a+b)/2$，
+    $b$处的值和$\f$相等，且$H\hp(\frac{a+b}{2}) = \f\hp(\frac{a+b}{2})$. 误差满足
+    \[
+      \frac{\f^{(4)}(\xi)}{4!}(x-a)(x-\frac{a+b}{2})(x-b)
+    \]
+    而
+    \[
+      \int_a^b H_3(x)\rd x = ...
+    \]
+    则
+    \[\begin{split}
+      R(\f) &= \int_a^b\f(x) - H_3(x) \rd x \\
+            &= \frac{1}{6!}\int_a^b\f^{(4)}(\xi)(x-a)(x-\frac{a+b}{2})^2(x-b)\rd x
+    \end{split}\]
+  \end{pos}
 
+  \begin{defi}[代数精度]
+    \[
+      I(\f) = \int_a^b\f(x)\rd x.
+    \]
+    有数值积分公式
+    \begin{equation}
+      \label{equ: 数值积分}
+      I(\f) = \approx Q(\f).
+    \end{equation}
+    若当$\f\in P_n$时，\equref{equ: 数值积分}精确成立，
+    $\f\in P_{n+1}$时，不精确成立. 则称该求积公式有$n$阶
+    代数精度.
+  \end{defi}
+  \remark
+    数值积分希望有更高的代数精度.
 
+\subsection{机械求积公式和插值求积公式}
+  \begin{pos}[机械求积公式]
+    \[
+      \int_a^b \f(x)\rd x \approx
+      \sum_{k=0}^n A_k\f(x_k)
+    \]
+    其中$A_k$称为求积系数，$x_k$称为求积节点. 目的在于取
+    $\{A_k\}$和$\{x_k\}$使得公式有最高的代数精度.
+  \end{pos}
+  \remark
+    基本求积公式的一般化.
+
+  \begin{pos}[插值求积公式]
+    用$n$次插值多项式的积分来近似.
+  \end{pos}
+
+\subsection{Newton-Cotes公式}
+  将区间$[a, b]$ $n$等分，得79
+
+\fi
 \newpage
 \section{附录}
 \subsection{不等式}
