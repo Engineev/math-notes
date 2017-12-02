@@ -168,28 +168,59 @@
     即$\varphi(x)$在$O_\delta(x_*)$上是压缩映射，从而对任意$x_0\in
     O_\delta(x_*)$，\equref{equ: 迭代法}收敛至$x_*$. $\blacksquare$
 
+  \begin{pos}[不局部收敛的条件]
+    设$x_*$是$\varphi(x)\in\ms{C}^1[a, b]$的不动点，若
+    $\varphi(x)$在$[a, b]$上单调且$|\varphi\hp(x_*)|\ge h>1$，则
+    $\varphi(x)$不局部收敛.
+  \end{pos}
+  \proof
+    由于$\varphi\hp(x_*)>1$且连续，所以存在$\delta>0$，使得在$O_\delta(x_*)$
+    中成立
+    \[
+      |\varphi(x)-x_*| = |\varphi\hp(\xi)(x-x_*)| \ge h|x-x_*|.
+    \]
+    所以对任意的$0<\vep<\delta$，对任意的$x_0\in O_\delta(x_*)
+    \backslash\{x_*\}$，迭代
+    足够多次后成立$|x_n-x_*|>\vep$. 由于$\varphi(x)$单调，所以仅有
+    $x=x_*$满足$\varphi(x)=x_*$. 从而若存在$x_0\in[a, b]$，使迭代数列收敛
+    至$x_*$，则对任意$\vep>0$，存在$n$，使得$x_n\in O_{\vep}(x_*)\backslash\{x_*\}$.
+    对于这样的$n$，继续迭代足够多次后，成立$|x_m-x_*|>\vep$，与收敛矛盾，从而不存在
+    $x_0\in[a, b]$，使得迭代数列收敛. $\blacksquare$
+
   \begin{defi}[$p$阶收敛]
+    \label{defi: p阶收敛}
     设$x_*$是$\varphi(x)$的不动点，记迭代误差$e_k=x_k-x_*$，若
     当$k\to\infty$时，成立
     \[
       \frac{e_{k+1}}{e_k^p} \to C \ne 0.
     \]
-    则称\equref{equ: 迭代法}$p$阶收敛.
+    则称\equref{equ: 迭代法} $p$阶收敛.
   \end{defi}
   \remark
     此定义描述了迭代式收敛的速度.
 
   \begin{thm}[$p$阶收敛条件]
+    \label{thm: p阶收敛条件}
     设$x_*$是迭代过程$x_{n+1}=\varphi(x_n)$的不动点，若对正整数$p$，
     $\varphi^{(p)}$在$x_*$附加连续，且成立
     \[\begin{split}
       \varphi\hp(x_*) = \cdots = \varphi^{(p-1)}(x_*) = 0,\quad
       \varphi^{(p)}(x_*) \ne 0.
     \end{split}\]
-    则\equref{equ: 迭代法}在$x_*$附加$p$阶收敛.
+    则\equref{equ: 迭代法}在$x_*$附近$p$阶收敛.
   \end{thm}
   \proof
-    在$x_*$处将$\varphi$ Taylor展开即可.
+    在$x_*$处将$\varphi$ Taylor展开即可. 存在
+    $\xi$在$x_k$和$x_*$之间，成立
+    \begin{equation}
+      \label{equ: 导数为零情况余项}
+      \frac{x_{k+1}-x_*}{(x_k-x_*)^p} = \frac{\varphi^{(p)}(\xi)}{p!}.
+      \quad\blacksquare
+    \end{equation}
+  \remark
+    经实践证明，由于当$k\to\infty$时，$\xi\to x_*$，所以对于前$p-1$阶导数
+    为零的迭代式，使用\equref{equ: 导数为零情况余项}来计算\defref{defi: p阶收敛}中的常数是十分方便的.
+
 
   \begin{alg}[不动点法]
     对于方程$\f(x) = 0$，将其变形成等价的$x=\varphi(x)$的形式，
@@ -197,8 +228,82 @@
     $x_{n+1} = \varphi(x_n)$来求解方程的根.
   \end{alg}
 
+  \begin{alg}[Aitken $\Delta^2$加速法]
+    设$\{x_n\}$为一收敛的迭代数列，令
+    \[
+      \bar{x}_{k+1} = x_k - \frac{(x_{k+1}-x_k)^2}{x_k-2x_kx_{k+1}+x_{k+2}}
+      = x_k - \frac{(\Delta x_k)^2}{\Delta^2x_k}.
+    \]
+    $\{\bar{x}_k\}$收敛得比$\{x_k\}$更快，即满足
+    \[
+      \lim_{k\to\infty}\frac{\bar{x}_{k+1}-x_*}{x_k-x_*} = 0.
+    \]
+  \end{alg}
+  \remark
+    这一加速法的思路在于
+    \[
+      x_{n+1}-x_* = \varphi(x_n) - \varphi(x_*) = \varphi\hp(\xi)(x_n-x_*).
+    \]
+    当区间足够小以至$\varphi\hp$变化不大时，可以近似地将$\varphi\hp(\xi)$看作常量.
+
+  \begin{alg}[Steffensen迭代法]
+    \[\begin{cases}
+      y_k = \varphi(x_k),\quad z_k = \varphi(y_k), \\
+      x_{k+1} = x_k - \dfrac{(y_k-x_k)^2}{z_k-2y_k+x_k}.
+    \end{cases}\]
+  \end{alg}
+  \remark
+    对于不收敛的$\varphi$，应用Steffensen迭代法仍是可能收敛的.
+
+  \begin{thm}[Steffensen迭代法]
+    若$x_*$是迭代函数
+    \[
+      \psi = x - \frac{(\varphi - x)^2}{\varphi\circ\varphi - 2\varphi + x}
+    \]
+    的不动点，则$x_*$也是$\varphi$的不动点. 反之，若$x_*$是$\varphi$的不动点，
+    $\varphi^{\pr\pr}$存在，且$\varphi\hp(x_*)\ne 1$，则$x_*$也是$\psi$的
+    不动点，且Steffensen迭代法二阶收敛.
+  \end{thm}
+
 \subsection{Newton法}
-  
+  \begin{thm}[Newton法]
+    设$x_*$是$\f(x)$的零点且$\f\hp(x_*)\ne 0$，则
+    \[
+      \varphi(x) = x - \frac{\f(x)}{\f\hp(x)}
+    \]
+    在$x_*$处局部平方收敛.
+  \end{thm}
+  \remark
+    Newton法的动机在于在零点附近，用一个线性函数来近似原函数，即
+    \[
+      \f(x) \approx \f(x_k) + \f\hp(x_k)(x-x_k) \quad\Rightarrow\quad
+      x_{k+1} = x = x_k - \frac{\f(x_k)}{\f\hp(x_k)}.
+    \]
+    则该线性方程的解是原方程的一个近似解. 证明只需利用
+    \thmref{thm: p阶收敛条件}即可.
+
+  \begin{alg}[Newton法]
+    Newton法求根的步骤如下：
+    \begin{enumerate}
+      \item 选定初值$x_0$，计算$\f(x_0)$和$\f\hp(x_0)$；
+      \item 按照公式$x_{n+1} = x_n - \f_n/\f\hp_n$，并
+            计算$\f(x_{n+1})$和$\f\hp(x_{n+1})$；
+      \item 如果$x_n$满足$|\delta|<\vep_1$或$|\f|<\vep_2$，则
+        终止迭代，以$x_n$作为所求根，否则进入步骤4. 此处
+        $\vep_1$，$\vep_2$是允差，而
+        \[
+          \delta =
+          \begin{cases}
+            |x_{n}-x_{n-1}|, & |x_1|<C \\
+            \dfrac{|x_n-x_{n-1}|}{x_n}, |x_1|\ge C
+          \end{cases}
+        \]
+        其中$C$是取绝对误差或相对误差的控制常数，一般取$C=1$.
+      \item 如果迭代次数达到预先规定的$N$，或$\f\hp_n=0$，则方法
+        失败，否则继续迭代.
+    \end{enumerate}
+  \end{alg}
+
 
 
 \newpage
@@ -254,6 +359,20 @@
       \bigg\vert_a^b + (-1)^{n+1}\int_a^bu^{(n+1)}v\rd x.
     \]
   \end{lemma}
+
+\newpage
+\subsection{特殊函数}
+  \begin{defi}[处处连续且不可导]
+    称
+    \[
+      \f(x) = \sum_{n=0}^\infty a^n\cos(b^n\pi x)
+    \]
+    为Weierstrass函数，其中$0<a<1$，$b$为正奇数，且满足
+    \[
+      ab > 1 + \frac{3}{2}\pi.
+    \]
+    它处处连续且处处不可导.
+  \end{defi}
 
 \newpage
 \input{-3-Euler-Maclaurin.tex}
