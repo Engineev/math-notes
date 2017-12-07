@@ -245,6 +245,9 @@
       x_{n+1}-x_* = \varphi(x_n) - \varphi(x_*) = \varphi\hp(\xi)(x_n-x_*).
     \]
     当区间足够小以至$\varphi\hp$变化不大时，可以近似地将$\varphi\hp(\xi)$看作常量.
+    另外，这一做法实际上只是数据的后处理，实际上如果我需要的是$\bar{x}_{n+1}$，那无需计算
+    $\bar{x}_1$，$\dots$，$\bar{x}_n$，而只需利用$x_{n}$，$x_{n+1}$，$x_{n+2}$
+    来计算$\bar{x}_{n+1}$即可.
 
   \begin{alg}[Steffensen迭代法]
     \[\begin{cases}
@@ -253,7 +256,8 @@
     \end{cases}\]
   \end{alg}
   \remark
-    对于不收敛的$\varphi$，应用Steffensen迭代法仍是可能收敛的.
+    这一算法实际上只是将Aitken加速法中的$\bar{x}_n$也加入了
+    迭代序列中.
 
   \begin{thm}[Steffensen迭代法]
     若$x_*$是迭代函数
@@ -264,6 +268,9 @@
     $\varphi^{\pr\pr}$存在，且$\varphi\hp(x_*)\ne 1$，则$x_*$也是$\psi$的
     不动点，且Steffensen迭代法二阶收敛.
   \end{thm}
+  \remark
+    这一定理表明，就算$\varphi$所对应的迭代序列不收敛，但是对应
+    的Steffensen迭代法的迭代序列还是有可能收敛的.
 
 \subsection{Newton法}
   \begin{thm}[Newton法]
@@ -271,7 +278,7 @@
     \[
       \varphi(x) = x - \frac{\f(x)}{\f\hp(x)}
     \]
-    在$x_*$处局部平方收敛.
+    当$\f\hp(x_*)\ne 0$时，在$x_*$处局部平方收敛，否则线性收敛.
   \end{thm}
   \remark
     Newton法的动机在于在零点附近，用一个线性函数来近似原函数，即
@@ -304,6 +311,115 @@
     \end{enumerate}
   \end{alg}
 
+  \begin{thm}[重根情况的Newton法]
+    设$x_*$是$\f(x)$的$m$重根，则根据
+    \[
+      \varphi(x) = x - m \frac{\f(x)}{\f\hp(x)}
+    \]
+    所得的迭代序列，在$x_*$附近平方收敛.
+  \end{thm}
+
+  \begin{thm}[重根情况的Newton法]
+    设$x_*$是$\f(x)$的根，则根据
+    \[
+      \varphi(x) = x - \frac{\f\f\hp}{(\f\hp)^2 - \f\f^{\pr\pr}}
+    \]
+    所得的迭代序列在$x_*$附近平方收敛.
+  \end{thm}
+  \remark
+    这一函数实际上是令
+    \[
+      \mu(x) = \frac{(x-x_*)\g(x)}{m\g(x) + (x-x_*)\g\hp(x)}.
+    \]
+    在考虑$\varphi(x) = x - \mu/\mu\hp$所得到的. 其缺点在于
+    涉及了$\f$的二阶导数.
+
+  \begin{thm}[Newton法的收敛区间]
+    设$\f\in\ms{C}^2[a, b]$，且满足$\f(a)\f(b)<0$，在$[a, b]$上
+    $\f\hp(x)\ne 0$，且$\f^{\pr\pr}$不变号，以及初值$x_0$使得
+    $\f(x_0)\f^{\pr\pr}(x_0)>0$成立. 则Newton法所得序列单调收敛于
+    唯一根$x_*$.
+  \end{thm}
+
+  \begin{pos}[方程组情况的推广]
+    对于$\mbf{F}:\,\R^n\to\R^n$，设$\mbf{x}_0$是它的近似根，
+    则可以构造方程组的Newton方法
+    \[
+      \mbf{x}_{k+1} = \mbf{x}_k - [\mbf{F}\hp(\mbf{x}_k)]^{-1}\mbf{F}(\mbf{x}_k).
+    \]
+    其中$\mbf{F}\hp$为$\mbf{F}$的Jacobi矩阵.
+  \end{pos}
+  \remark
+    这一算法的最大工作量在于求解Jacobi矩阵的逆，即求解线性方程组.
+
+\newpage
+\section{解线性方程组的直接/间接方法}
+\subsection{绪论}
+  本章讨论的问题是线性方程组
+  \begin{equation}
+    \label{equ: 线性方程组}
+    A\mbf{x} = B,\quad A\in\R^{m\times n},\,\mbf{x}\in\R^n,\,B\in\R^m
+  \end{equation}
+  的求解. 讨论问题在于
+  \begin{enumerate}
+    \item \equref{equ: 线性方程组}是否可解.
+    \item 若可解，则如何求解.
+    \item 若无解，则如何求近似.
+  \end{enumerate}
+  其中不可解的情况对应$B$为带有误差的的测量数据，求解$X$使得$A\mbf{x}$
+  在特定含义下距离$B$尽可能接近. 例如考虑最小二乘法，即求解
+  \begin{equation}
+    \label{equ: 最小二乘法}
+    \mbf{x}^* = \agm \frac{1}{2}\|A\mbf{x}-B\|^2_2
+  \end{equation}
+  这一问题实际上就是求解极值.
+
+  \begin{thm}[可解性条件]
+    设$A=(\alpha_1\,\dots\,\alpha_n)$，其中$\alpha_i$为列向量，
+    则以下命题等价
+    \begin{enumerate}
+      \item $A\mbf{x}=B$有解.
+      \item $r(A) = r(\bar{A})$.
+      \item $B\in\spn\{\alpha_1,\dots,\alpha_n\}$.
+    \end{enumerate}
+    其中$r(A)$为$A$的秩，$\bar{A}$为$A$的增广矩阵.
+  \end{thm}
+
+  \begin{lemma}[梯度的定价定义]
+    \label{lemma: 梯度的等价定义}
+    $\f$的梯度$\nabla\f$为对任意方向向量$v$都满足如下条件的函数
+    \[
+      \langle\nabla\f,\,v\rangle = \JD_v\f = \frac{\rd}{\rd\vep}\f(x+\vep v)
+      \bigg|_{\vep=0}.
+    \]
+  \end{lemma}
+
+  \begin{thm}
+    $\f(\mbf{x}) = \frac{1}{2}\|A\mbf{x}-B\|_2^2$的梯度
+    可以被表示为
+    \[
+      \nabla\f(\mbf{x}) = A\tr(A\mbf{x}-B).
+    \]
+  \end{thm}
+  \proof
+    下利用\lemmaref{lemma: 梯度的等价定义}证明. 已知
+    \[
+      \f(\tbf{x}+\vep v) = \frac{1}{2}\langle A\x-B+\vep v,\, A\x-B+\vep v\rangle
+      = \frac{1}{2}\|A\x-B\|_2^2 + \vep\langle A\x-B,\,Av \rangle + \frac{1}{2}\vep^2
+      \|Av\|_2^2.
+    \]
+    所以，在该处对任意方向向量$v$成立
+    \[\begin{split}
+      &\langle\nabla\f(\x),v\rangle = \frac{\rd}{\rd\vep}\f(\x+\vep v)\bigg|_{\vep=0}
+      = \langle A\x-B,\,Av\rangle = \langle A\tr(A\x-B),\, v \rangle.
+    \end{split}\]
+    比较上式的$\lhs$和$\rhs$，可以得
+    \[
+      \nabla\f = A\tr(A\x-B).\quad\blacksquare
+    \]
+
+  \paragraph{todo}
+    $m \ll n$情况
 
 
 \newpage
