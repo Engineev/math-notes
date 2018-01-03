@@ -1,0 +1,100 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$4a$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\section{习题}
+
+\noindent8. 对权函数$\rho(x)=1+x^2$……
+\ans
+  设$\psi_n = x^n$，$\eta_n = \varphi_n / \|\varphi_n\|$，则
+  \begin{align*}
+    \psi_0 &= 1, & \varphi_0 &= 1, & \eta_0 &= \frac{3}{8}, \\
+    \psi_1 &= x, & \varphi_1 &= x, & \eta_1 &= \frac{15}{16}x, \\
+    \psi_2 &= x^2, & \varphi_2 &=  x^2-\frac{2}{5}, & \eta_2 &= \frac{525}{136}\left(x^2-\frac{2}{5}\right), \\
+    \psi_3 &= x^3, & \varphi_3 &= x^3-\frac{9}{14}x. & &
+  \end{align*}
+
+\vspace{1cm}
+\par\noindent10. 证明对每一个Chebyshev多项式……
+\proof
+  \[
+    P = \int_{-1}^1\frac{T^2_n(x)}{\sqrt{1-x^2}}\rd x
+    = \int_{-1}^1\cos^2(n\arccos x)\rd \arccos x
+  \]
+  另$x = \cos t$，$u = nt$，根据$\cos^2x$的周期性，有
+  \[
+    P = \int_0^\pi \cos(nt) \rd t =
+    \int_0^{n\pi}\cos^2u\rd \frac{u}{n} =
+    \int_0^\pi\cos^2u\rd u = \frac{\pi}{2}.\quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent11. 用$T_3(x)$的零点做插值点……
+\ans
+  $T_3$的零点为
+  \[
+    x_1 = \cos\frac{\pi}{6} = \frac{\sqrt{3}}{2},\quad
+    x_2 = \cos\frac{\pi}{2} = 0,\quad
+    x_3 = \cos\frac{5\pi}{6} = -\frac{\sqrt{3}}{2}.
+  \]
+  在零点处的函数值分别为
+  \[
+    \f_1 = e^{\sqrt{3}/2},\quad \f_2 = 1,\quad \f_3 = e^{-\sqrt{3}/2}.
+  \]
+  则二次插值多项式为
+  \[\begin{split}
+    P_2(x) &= \f[x_1] + \f[x_1,x_2](x-x_1) +
+    \f[x_1, x_2, x_3](x-x_1)(x-x_2) \\
+    &= e^{\sqrt{3}/2} + \frac{e^{\sqrt{3}/2}-1}{\sqrt{3}/2}(x-\frac{\sqrt{3}}{2})
+    + \frac{2}{3}\left(e^{\sqrt{3}/2} - 2 + e^{-\sqrt{3}/2}\right)(x-\frac{\sqrt{3}}{2})x\\
+    &= \frac{2}{3}\left( e^{\frac{\sqrt{3}}{2}} + e^{-\frac{\sqrt{3}}{2}} - 2\right)x^2
+    + \left( \frac{e^{\frac{\sqrt{3}}{2}} - e^{-\frac{\sqrt{3}}{2}}}{\sqrt{3}} \right)x + 1
+  \end{split}\]
+  对于它的误差，满足
+  \[
+    \vep \le \frac{1}{2^2(2+1)!}\|(e^x)^{(3)}\|_{\infty}
+    = \frac{e}{24} \quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent12. 设$\f(x) = x^2 + 3x + 2$……
+\ans
+  另$x=\frac{1}{2}(t+1)$，则
+  \[
+    \f(x) = \g(t) = \frac{1}{4}t^2+2t+\frac{15}{4},\quad t\in[-1, 1].
+  \]
+  设$\widetilde{P}_n$是首项为$1$的Legendre多项式，$\g^*$
+  为$\g$的在$S_2 = \spn\{1,x\}$上的最佳平方逼近函数，则
+  \[\begin{split}
+    & \g-\g^* = \frac{1}{4} \widetilde{P}_2\quad
+    \Rightarrow\quad \g^* = \g-\frac{1}{4}\widetilde{P}_2
+    =\frac{1}{4}t^2+2t+\frac{15}{4} - \frac{1}{4}(t^2-\frac{1}{3})
+    = 2t + \frac{23}{6}
+  \end{split}\]
+  又$t = 2x-1$，所以$\f$的在$S_2$上的最佳平方逼近函数为
+  \[
+    \f_2^* = 4x + \frac{11}{6}.
+  \]
+  易知，$\f$在$S_3 = \spn\{1,x,x^2\}$上的最佳平方逼近函数为
+  \[
+    \f_3^* = \f = x^2 + 3x + 2.\quad\blacksquare
+  \]
+
+\end{document}

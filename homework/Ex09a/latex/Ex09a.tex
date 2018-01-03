@@ -1,0 +1,138 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$9a$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\newcommand{\y}{\mbf{y}}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\noindent 2. 设$\A=(a_{ij})_n$是对称正定阵……
+\ans
+(1) 因为$\A$正定，所以对于任意$\x\ne 0$，成立$\x\tr\A\x >0$. 取
+    $\x=\mbf{e}_i$，则有
+    \[
+      a_{ii} = \mbf{e}_i\tr\A\mbf{e}_i > 0.\quad\blacksquare
+    \]
+(2) 由于$\A$为对称阵，所以有
+    \begin{equation}
+      \label{equ2}
+      \begin{pmatrix}
+        a_{11}  &  \mbf{a}_1\tr \\
+        \mbf{0} & \A_2
+      \end{pmatrix} =
+      \begin{pmatrix}
+          1        &  \mbf{0} \\
+          -\mbf{a}_1/a_{11} &  \mbf{E}_{n-1}
+      \end{pmatrix}
+      \begin{pmatrix}
+        a_{11}    & \mbf{a}_1\tr \\
+        \mbf{a}_1 & \A_1
+      \end{pmatrix}
+      = \mbf{P}\tr\A
+    \end{equation}
+    因此成立
+    \[\begin{split}
+      \A_2
+       = -\frac{1}{a_{11}}\mbf{a_1}\mbf{a}_1\tr + \A_1. \\
+    \end{split}\]
+    同时$\A_1\tr = \A_1$，所以$\A_2$是对称阵. 对\equref{equ2}两边
+    同乘$\mbf{P}$，有
+    \[
+      \begin{pmatrix}
+        a_{11} & \mbf{0} \\
+        \mbf{0} & \A_2
+      \end{pmatrix} =
+      \mbf{P}\tr\A\mbf{P}
+    \]
+    考虑$\mbf{P}\tr\A\mbf{P}$的特征值$\lambda$和对应的特征向量
+    $(x_1, \mbf{x}\tr)\tr$. 对于$\lhs$，成立
+    \[
+      \begin{pmatrix}
+        a_{11} & \mbf{0} \\
+        \mbf{0} & \A_2
+      \end{pmatrix}
+      \begin{pmatrix}
+        x_1 \\
+        \x
+      \end{pmatrix}=
+      \begin{pmatrix}
+        a_{11}x_1 \\
+        \A_2\x
+      \end{pmatrix} = \lambda
+      \begin{pmatrix}
+        x_1 \\
+        \x
+      \end{pmatrix}
+    \]
+    即$\lambda$也是$\A_2$的特征值. 对于$\rhs$，成立
+    \[
+      \mbf{P}\tr\A\mbf{P}\x = \lambda\x
+      \quad\Rightarrow\quad
+      \x\tr\mbf{P}\tr\A\mbf{P}\x = \x\tr\lambda\x
+      \quad\Rightarrow\quad
+      0 < \lambda\|\x\|_2^2
+      \quad\Rightarrow\quad
+      \lambda > 0.
+    \]
+    又由于$\A_2$是对称的，所以$\A_2$是对称正定阵. $\quad\blacksquare$
+
+\vspace{1cm}
+\par\noindent 4. 试推导矩阵$\A$的Crout分解……
+\ans
+  只需要利用$\A\tr = \mbf{U}\tr\mbf{L}\tr$，即可归化为Doolittle分解.
+  因此只需把对应公式中的$u$和$l$，以及下标互换即可. 所以计算公式为，
+  \[\begin{split}
+    & l_{i1} = a_{i1},\quad u_{1i} = a_{1i} / l_{11},\\
+    & l_{ir} = a_{ir} - \sum_{k=1}^{r-1} u_{kr}l_{ik}, \\
+    & u_{ri} = \left( a_{ri} - \sum_{k=1}^{r-1}u_{ki}l_{rk} \right) / l_{rr}.
+    \quad\blacksquare
+  \end{split}\]
+
+\vspace{1cm}
+\par\noindent 16. 设$\A$为非奇异矩阵，求证……
+\proof
+  因为$\A$非奇异，所以对任意$0\ne\x\in\R^n$，存在$\y\ne 0$，
+  成立$\A\y = \x$，同时当$\x$取遍$\R^{n}\backslash\{0\}$时，
+  $\y$也取遍$\R^{n}\backslash\{0\}$，且反之亦成立. 同时由于
+  $\|\A\|_{\infty} = \max_{1\le i\le n}\sum_{j=1}^n|a_{ij}|$，
+  所以最值总是可以取到的，且$\A$非奇异，所以不为零. 因此有
+  \begin{equation}
+    \label{equ1}
+    \|\A^{-1}\|_\infty = \max_{\x\ne 0}\frac{\|\A^{-1}\x\|_\infty}{\|\x\|_\infty}
+     = \max_{\y\ne 0}\frac{\|\A^{-1}(\A\y)\|_\infty}{\|\A\y\|_\infty}
+     = \max_{\y\ne 0}\frac{\|\y\|_\infty}{\|\A\y\|_\infty}.
+  \end{equation}
+  根据\equref{equ1}，有
+  \[
+    \frac{1}{\|A^{-1}\|_{\infty}}
+    = \min_{\y\ne 0}\frac{\|\A\y\|_{\infty}}{\|\y\|_{\infty}}.
+    \quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent 20. 是$\A,\mbf{B}\in\R^{n\times n}$……
+\proof
+  \[\begin{split}
+    \text{cond}(\A\mbf{B}) &= \|(\A\mbf{B})^{-1}\|\|(\A\mbf{B})\| \\
+    &\le \|\A^{-1}\|\|\A\|\,\|\mbf{B}^{-1}\|\|\mbf{B}\|
+    = \text{cond}(\A)\text{cond}(\mbf{B}).
+    \quad\blacksquare
+  \end{split}\]
+
+
+\end{document}

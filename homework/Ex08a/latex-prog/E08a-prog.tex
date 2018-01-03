@@ -1,0 +1,202 @@
+\input{../../def.tex}
+
+\title{E08a 编程作业解答}
+\author{姓名：任云玮$\quad$学号：516030910586}
+\date{}
+
+\usepackage{titlesec}
+
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+\titleformat*{\subsubsection}{\small\bfseries}
+\newcommand{\ilc}{\texttt}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+
+\section{问题1的解答}
+  求解下列方程的实根
+  \begin{align}
+    & x^2-3x+2-e^x = 0 \\
+    & x^3+2x^2+10x-20 =0
+  \end{align}
+\subsection{设计不动点迭代}
+  对方程(1)和(2), 分别设计不动点迭代，即给出相应的$\varphi(x)$，并说明其收敛性.
+  \paragraph{(1)}
+    \[
+      \varphi(x) = \frac{1}{3}\left(x^2 +2 -e^x\right).
+    \]
+    令$\f(x) = x^2 - 3x + 2 -e^2$，$\f(0.25)\approx -0.028 > 0$，
+    $\f(0.3)\approx -0.16 < 0$，所以零点$x_*$在$[0.25, 0.3]$中. 而
+    在该区间上$\varphi\hp(x) = (2x - e^x)/3 \in (-0.3, -0.2)$.
+    所以一阶收敛. $\quad\blacksquare$
+  \paragraph{(2)}
+    \[
+      \varphi(x) = -\frac{1}{20}(x^3+2x^2-20x-20).
+    \]
+    令$\f(x)=x^3+2x^2+10x-20$，$\f(1)=-7<0$，$\f(1.5)=2.875>0$，
+    所以零点$x_*$在$[1, 1.5]$中. 而在该区间上$\varphi\hp(x)
+    =-(3x^2 + 4x - 20)/20 \in (0.3, 0.7)$. 所以一阶收敛. $\quad\blacksquare$
+
+\vspace{1cm}
+\subsection{Steffensen加速迭代}
+\subsubsection{对之前设计的不动点迭代格式，编写直接迭代的程序，命名为direct\_iteration.m，
+迭代停止准则为$|x_k - x_{k-1}| < 10^{-8}$；}
+  \lstinputlisting{../src/sec121.m}
+  \lstinputlisting{../src/direct_iteration.m}
+
+\subsubsection{编写Steffensen加速程序，命名为Steffensen.m, 在相同条件下重复方程（1）的计算：
+给出不同初值下，加速前和加速后的迭代步数（列出表格）.}
+  \lstinputlisting{../src/sec122.m}
+  \lstinputlisting{../src/Steffensen.m}
+  \begin{table}[htbp]
+    \caption{迭代步数比较}
+    \centering
+    \begin{tabular}{c|cc}
+      \toprule
+      $x_0$ & direct iteration & Steffensen \\
+      \midrule
+      0	& 14	& 4 \\
+      0.1	& 14	& 4 \\
+      0.2	& 13	& 3\\
+      0.3	& 13	& 3\\
+      0.4	& 14&	3 \\
+      0.5	& 14&	4\\
+      0.6	&14	&4 \\
+      0.7	&15	&4\\
+      0.8	&15	&4\\
+      0.9	&15	&4 \\
+      1	  &15	&4 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+\vspace{1cm}
+\subsection{Newton迭代}
+\subsubsection{针对方程（2），讨论其实根的范围,并判断其是单根还是重根；}
+  \paragraph{解}
+    对于(2)的$\f(x)=\lhs$. 由于$\f(1) = -7 <0$，$\f(2) = 16 > 0$. 所以
+    在$(1, 2)$上有一实根. 同时有
+    \[
+      \f\hp(x) = 3x^2 + 4x + 10
+    \]
+    其判别式$\Delta<0$，所以$\f\hp(x)>0$恒成立. 从而仅有一实根，且为单根.
+
+\subsubsection{编写基于课本P227式(4.14)的Newton迭代程序，命名为Newton\_iteration.m, 迭代停止准则同前;}
+  \lstinputlisting{../src/sec132.m}
+  \lstinputlisting{../src/Newton_iteration.m}
+
+\subsubsection{在相同条件下，比较Steffensen加速法与Newton迭代法的迭代步数.}
+  \lstinputlisting{../src/sec133.m}
+  \begin{table}[htbp]
+    \caption{迭代步数比较}
+    \centering
+    \begin{tabular}{c|cc}
+      \toprule
+      $x_0$ & Newton iteration & Steffensen \\
+      \midrule
+      1	& 5	& 8 \\
+      1.1&	4&	7\\
+      1.2&	4&	7 \\
+      1.3&	4&	8\\
+      1.4&	4&	5\\
+      1.5&	4&	6\\
+      1.6&	4&	7\\
+      1.7&	5&	9\\
+      1.8&	5&	11\\
+      1.9&	5&	13\\
+      2  & 	5&	15 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+\subsubsection{选做：若方程有复根，应如何求解？可能的话，求出方程(2)的一个复根.}
+  \paragraph{解}
+    由于压缩映射定理对于$\R^n$都是成立的，所以对于用于迭代的映射$\varphi$，
+    只需要在不动点$x_*$附近满足$\nabla\varphi(x) \le l < 1$，即可保证局部收敛.
+    从而只需要选择恰当的$\varphi$和复平面上的恰当初始点$x_0$，即可求得一个复根.
+    对于方程(2)，取初始点$x_0 = -1+3i$，得复根$x_* \approx -1.6844 + 3.4313i$.
+
+
+\newpage
+\section{问题2的解答}
+  多项式求根是一个病态问题，考虑多项式
+  \[
+    p(x) = (x-1)(x-2)\cdots(x-10) = a_0 + a_1x + \cdots + a_9x^9 + x^{10}
+  \]
+  求解扰动方程$p(x) + \vep x^9 = 0$.
+
+\subsection{病态性分析}
+  任意给定系数，对$\vep = 10^{-6},\,10^{-8},\,10^{-10}$，
+  用MATLAB求根函数计算扰动方程的根，分析$\vep$对根的影响（注意MATLAB多项式的存储方式）.
+  \paragraph{解}
+    代码与求解结果如下.
+    \lstinputlisting{../src/sec221.m}
+    \begin{table}[htbp]
+      \centering
+      \caption{扰动方程的根}
+      \begin{tabular}{c|ccc}
+        \toprule
+        $\varepsilon$ & $10^{-6}$ & $10^{-8}$ & $10^{-10}$ \\
+        \midrule
+        $x_{10}$ & 9.99722948588222 & 9.99997244092440 & 9.99999972451783  \\
+        $x_9$ & 9.00954408664740 & 9.00009608123229 & 9.00000096030286  \\
+        $x_8$ & 7.98668735225904 & 7.99986684514984 & 7.99999866983353  \\
+        $x_7$ & 7.00940116158683 & 7.00009342012864 & 7.00000093241953  \\
+        $x_6$ & 5.99651655390372 & 5.99996500763840 & 5.99999965125337  \\
+        $x_5$ & 5.00067909066280 & 5.00000678245187 & 5.00000006736228  \\
+        $x_4$ & 3.99993932906276 & 3.99999939306495 & 3.99999999402577  \\
+        $x_3$ & 3.00000195269050 & 3.00000001953720 & 3.00000000018562  \\
+        $x_2$ & 1.99999998730198 & 1.99999999987237 & 1.99999999999926  \\
+        $x_1$ & 1.00000000000276 & 1.00000000000006 & 0.999999999999987 \\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+    对于每一个零点$r_i = i$，相对于$a_9 = -55$的相对条件数成立公式
+    \[
+      \kappa_i = \frac{|a_9\times r_i^8|}{|p\hp(r_i)|}.
+    \]
+    所以每个零点对应的条件数为，
+    \[
+      \kappa_1 = 1.51\times 10^{-4},\quad
+      \kappa_2 = 0.3492,\quad\dots,\quad
+      \kappa_9 = 9.15\times 10^4,\quad
+      \kappa_{10} = 1.51\times 10^4.
+    \]
+    首先在原多项式的零点处，$p\hp(x)$都没有十分小或十分大，同时$a_9=-55$的大小也可以接收.
+    所以条件数的大小主要由$r_i^8$决定.
+    当$r_i$较小，为$1$或$2$时，条件数较小，由系数的扰动而产生的误差较小. 而
+    当$r_i$较大时，由于有$r_i^8$的存在，条件数十分大，从而有微小扰动产生的误差亦会十分大.
+
+\subsection{解决方案思考}
+  选做：可能的话提出一个稳定化求解的策略（可以查阅文献）.
+  \paragraph{解}
+    设多项式被表示为
+    \[
+      p(x) = \sum_{i=0}^n b_ip_i(x).
+    \]
+    其中$\{p_i\}$是一组基. 则多项式零点$r$相对于系数$b_i$的相对条件数成立公式
+    \[
+      \kappa = \frac{|b_i p_i(r)|}{|rp\hp(r)|}.
+    \]
+    由于$p\hp(x)$是给定的，无法修改，所以考虑选取恰当的基使得在零点处的$p_i(r)$的
+    取值较小即可. 从而可以选取Chebyshev多项式作为基，然后测量对应的系数即可.\footnote{
+      参考文献: Tsai, Edison, "A Method for Reducing Ill-Conditioning of Polynomial
+       Root Finding Using a Change of Basis" (2014). University Honors Theses. Paper 109.
+    }
+
+
+\end{document}

@@ -1,0 +1,100 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$6c$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\noindent11. 用$n=2,3$的Gauss-Legrende公式计算……
+\ans
+  令$t=x-2$，则所求积分为
+  \[
+    I = \int_{-1}^1 \f(x)\rd x = \int_{-1}^1 e^{x+2}\sin(x+2)\rd x.
+  \]
+  \paragraph{$\mbf{n = 2}$}
+    在$[-1, 1]$上的$3$次Legrende多项式及对应零点为
+      \[
+        P_3 = \frac{5}{2}x^3 - \frac{3}{2}x \quad\Rightarrow\quad
+        x_0 = -\frac{\sqrt{15}}{5},\,x_1 = 0,\,x_2 = \frac{\sqrt{15}}{5}
+      \]
+    对应的函数值及系数为
+    \[
+      \begin{cases}
+        \f(x_0) = e^{-\sqrt{15}/5+2}\sin(-\frac{\sqrt{15}}{5}+2),\\
+        \f(x_1) = e^{2}\sin 2 \\
+        \f(x_2) = e^{\sqrt{15}/5+2}\sin(\frac{\sqrt{15}}{5}+2),
+      \end{cases}
+      \begin{cases}
+        A_0 = 5/9, \\
+        A_1 = 8/9, \\
+        A_2 = 5/9
+      \end{cases}
+    \]
+    从而
+    \[
+      Q_3(\f) \approx 10.94840.\quad\blacksquare
+    \]
+  \paragraph{$\mbf{n = 3}$}
+      在$[-1, 1]$上的$4$次Legrende多项式及对应零点为
+        \[
+          P_4 = \frac{1}{8}\left( 35x^4 - 30x^2 + 3 \right) \quad\Rightarrow\quad
+          x_{0(3)} = \mp0.86114,\, x_{1(2)} = \mp0.33998
+        \]
+      对应的函数值及系数为
+      \[
+        \begin{cases}
+          \f(x_0) = 2.83636,\\
+          \f(x_1) = 5.23850,\\
+          \f(x_2) = 7.45854,\\
+          \f(x_3) = 4.83870
+        \end{cases}
+        \quad
+        \begin{cases}
+          A_0 = A_3 = 0.347855\\
+          A_1 = A_2 = 0.652145
+        \end{cases}
+      \]
+      从而
+      \[
+        Q_4(\f) \approx 10.95011.\quad\blacksquare
+      \]
+
+\vspace{1cm}
+\par\noindent12. 地球卫星轨道是一个椭圆……
+\ans
+  根据条件，有
+  \[
+    a = 7782.5,\quad c = 972.5,
+  \]
+  即轨道周长为
+  \[
+    S = 31130 \int_0^{\pi/2}\sqrt{1-0.015615\sin^2\theta}\rd\theta.
+  \]
+  设所需达到的精度为$\vep = 1(\text{km})$. 用复化Simpson方法计算，
+  结果如下表
+  \[\begin{array}{ c c c c}
+    \hline
+    \quad n\qquad & \qquad h_n\qquad & \qquad S_n\qquad &\qquad |S_n - S_{n-1}| \quad\\ \hline
+    1 & \pi/2 & 48707.50  & \\
+    2 & \pi/4 & 48707.44  & 0.06 \\ \hline
+  \end{array}\]
+  即
+  \[
+    S = 48707\,(km)\quad\blacksquare
+  \]
+
+\end{document}

@@ -1,0 +1,223 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$7a$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\begin{lemma}
+  \label{lemma}
+  设$x_*$是$\varphi(x)\in\ms{C}^1[a, b]$的不动点，若
+  $\varphi(x)$在$[a, b]$上单调且$|\varphi\hp(x_*)|\ge h>1$，则
+  $\varphi(x)$不局部收敛.\footnote{
+    关于这一引理的条件：之所以我要加上单调（单射）条件，是因为我觉得可能会出现，
+    在$x_*$的某一领域中的点，被映射到某个这一领域外的点集内，而这个点集内的点都被直接映射到$x_*$上
+    的情况.
+    而之所以加上常数$h>1$而非直接大于$1$，主要是为了证明方便，否则在说明迭代足够多次
+    后，有$|x_m-x_*|>\vep$时，可能会出现$\varphi\hp(\xi)\to 1$，则可能虽然每一次
+    误差确实都在增大，但最后的结果却并没有超过$\vep$的情况，即
+    $\prod_{k=1}^\infty \varphi(\xi_k) = \text{Constant}$的情况.
+  }
+\end{lemma}
+\tbf{证明: }
+  由于$\varphi\hp(x_*)>1$且连续，所以存在$\delta>0$，使得在$O_\delta(x_*)$
+  中成立
+  \begin{equation}
+    \label{h}
+    |\varphi(x)-x_*| = |\varphi\hp(\xi)(x-x_*)| \ge h|x-x_*|.
+  \end{equation}
+  所以对任意的$0<\vep<\delta$，对任意的$x_0\in O_\delta(x_*)
+  \backslash\{x_*\}$，迭代
+  足够多次后成立$|x_n-x_*|>\vep$. 由于$\varphi(x)$单调，所以仅有
+  $x=x_*$满足$\varphi(x)=x_*$. 从而若假设存在$x_0\in[a, b]$，使迭代数列收敛
+  至$x_*$，则对任意$\vep>0$，存在$N$，使得任意$n>N$，有$x_n\in O_{\vep}(x_*)\backslash\{x_*\}$.
+  对于这样的$n$，根据\equref{h}，继续迭代足够多次后，成立$|x_m-x_*|>\vep$，与收敛矛盾，从而不存在
+  $x_0\in[a, b]$，使得迭代数列收敛. $\blacksquare$
+
+\vspace{1cm}
+\noindent2. 为求方程$x^3-x^2-1=0$……
+\ans
+  令$\f(x) = x^3-x^2-1$，则$\f(1.4)=-0.216<0$，
+  $\f(1.5)=0.125>0$，由于$\f$在$[1.4,1.5]$上连续，所以在
+  $[1.4, 1.5]$中存在零点$x_*$.
+\paragraph{(1)}
+  \[
+    \varphi(x) = 1 + \frac{1}{x^2} \quad\Rightarrow\quad
+    \varphi\hp(x) = -\frac{2}{x^3}.
+  \]
+  在$[1.4, 1.5]$上，$|\varphi\hp(x)|\le|\varphi\hp(1.4)|<0.75$. 从而
+  $\varphi\hp(x_*)\le 0.75<1$且连续，从而在$x_*$处局部收敛. $\blacksquare$
+\paragraph{(2)}
+  \[
+    \varphi(x) = \sqrt[3]{1+x^2}\quad\Rightarrow\quad
+    \varphi\hp(x) = \frac{2}{3}x(1+x^2)^{-2/3}.
+  \]
+  在$[1.4, 1.5]$上，$|\varphi\hp(x)|\le 0.5$且连续，从而
+  在$x_*$处局部收敛. $\blacksquare$
+\paragraph{(3)}
+  若$x_0\le 1$或$x_0\ge 2$，则$x_{k+1}$或$x_{k+2}$不存在，所以
+  仅需考虑$x_0\in(1, 2)$. 由于$\varphi(x)$在$(1, 2)$上单调减，
+  且$\varphi\hp(x) = -0.5(x-1)^{-3/2}$，在$[1.4, 1.5]$上恒
+  大于$1.1$，从而$\varphi\hp(x_*)>1.1$. 根据\lemref{lemma}，
+  $\varphi(x)$不局部收敛. $\blacksquare$
+\paragraph{计算}
+  设$\varphi(x) = \sqrt[3]{1+x^2}$，取$x_0 = 1.5$，压缩常数
+  $l=0.5$，从而约需要迭代$10$次，计算过程见\tabref{table}，结果为
+  \[
+    \tilde{x} = 1.46558.\quad\blacksquare
+  \]
+  \begin{table}[htbp]
+    \centering
+    \caption{$n-x_n$表}
+    \label{table}
+    % \begin{adjustbox}{width=1\textwidth}
+    \begin{tabular}{c|ccccccccccc}
+    \hline
+    $n$    & 0   & 1        & 2  & $\cdots$ & 8       & 9       & 10      \\ \hline
+    $x_n$ & 1.5 & 1.48125 & 1.47271 & $\cdots$ & 1.46563 & 1.46560 & 1.46558 \\ \hline
+    \end{tabular}
+  % \end{adjustbox}
+  \end{table}
+
+
+\vspace{1cm}
+\par\noindent 5. 用Steffensen迭代法计算……
+\ans
+  计算结果见\tabref{计算结果}.
+  \begin{table}[htbp]
+    \centering
+    \caption{计算结果}
+    \label{计算结果}
+    \begin{tabular}{c|ccc}
+      \toprule
+      \multicolumn{4}{c}{$x_{k+1} = \sqrt[3]{1+x^2}$} \\
+      \midrule
+      $k$ & $x_k$ & $y_k$ & $z_k$ \\ \hline
+      $0$ & $1.5$ & $1.481248$ & $1.472706$ \\
+      $1$ & $1.465558$ & $1.465565$ & $1.465569$ \\
+      $2$ & $1.465571$ & $1.465571$ &	$1.465571$ \\
+      $3$ & $1.46557$ && \\ \bottomrule
+    \end{tabular}
+    $\qquad$
+    \begin{tabular}{c|ccc}
+      \toprule
+      \multicolumn{4}{c}{$x_{k+1} = 1/\sqrt{x_k-1}$} \\
+      \midrule
+      $k$ & $x_k$ & $y_k$ & $z_k$ \\ \hline
+      $0$ & $1.500000$ & $1.414214$ & $1.553774$ \\
+      $1$ & $1.467342$ & $1.462792$	& $1.469966$ \\
+      $2$ & $1.465576$ & $1.465564$ &	$1.465583$ \\
+      $3$ & $1.46557$ & & \\ \bottomrule
+    \end{tabular}
+  \end{table}
+
+\vspace{1cm}
+\par\noindent 6. 设$\varphi(x) = $……
+\ans
+  设$\f(x_*)=0$，则只需要满足$\varphi\hp(x_*) = 0$且
+  $\varphi^{\pr\pr}(x_*) = 0$，即至少三阶收敛.
+  \[\begin{split}
+     & \varphi\hp(x) = 1-p\hp\f - p\f\hp - q\hp\f^2 - 2q\f\f\hp \\
+     \Rightarrow\quad &
+     \varphi\hp(x_*) = 1 - p(x_*)\f\hp(x_*) = 0 \\
+     \Rightarrow\quad &
+     p = \frac{1}{\f\hp}.
+  \end{split}\]
+  将结果代回，得
+  \[\begin{split}
+    & \varphi\hp(x) = \frac{\f^{\pr\pr}}{(\f\hp)^2}\f - q\f^2-2q\f\f\hp \\
+    \Rightarrow\quad &
+    \varphi^{\pr\pr}(x_*) = \left(\frac{\f^{\pr\pr}}{\f\hp} - 2q(\f\hp)^2\right)
+    \bigg|_{x=x_*} = 0 \\
+    \Rightarrow\quad &
+    q = \frac{\f^{\pr\pr}}{2(\f\hp)^3}.
+  \end{split}\]
+  综上
+  \[
+    \varphi = x - \frac{\f}{\f\hp} - \frac{\f^{\pr\pr}\f^2}{2(\f\hp)^3}.
+    \quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent 10. 对于$\f(x)=0$的牛顿公式……
+\proof
+  由于Newton公式二阶收敛，所以有
+  \begin{equation}
+    \label{sim}
+    \frac{x_{k+1}-x_*}{x_k-x_*} \to 0 \quad\Rightarrow\quad
+    \frac{x_{k+1}-x_k}{x_k-x_*} \to -1.
+  \end{equation}
+  记$U_{k+1} = (x_{k+1}-x_*)/(x_k-x_*)^2$，则根据\equref{sim}
+  \begin{equation}
+    \label{RU}
+    \begin{split}
+    \frac{R_k}{U_{k-1}} &= \frac{x_k-x_{k-1}}{(x_{k-1}-x_{k-2})^2}
+    \frac{(x_{k-2}-x_*)^2}{x_{k-1}-x_*} \\
+    & = \frac{x_k-x_{k-1}}{x_{k-1}-x_*}\left(
+      \frac{x_{k-2} - x_*}{x_{k-1} - x_{k-2}}
+    \right)^2 \to -1\times(-1)^2 = -1.
+  \end{split}\end{equation}
+  而对于$U_{k+1}$，存在$\xi$位于$x_*$和$x_k$之间，成立
+  \begin{equation}
+    \label{lim}
+    \lim_{k\to\infty} U_{k+1} = \lim_{\xi\to x_*}\frac{\varphi^{\pr\pr}(\xi)}{2}
+    = \frac{\varphi^{\pr\pr}(x_*)}{2} = \frac{\f^{\pr\pr}(x_*)}{2\f\hp(x_*)}.
+  \end{equation}
+  结合\equref{RU}和\equref{lim}，有
+  \[
+    \lim_{k\to\infty}R_k = -\lim_{k\to\infty}U_k = -\frac{\f^{\pr\pr}(x_*)}{2\f\hp(x_*)}.
+    \quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent 14. 应用Newton法于方程……
+\ans
+\paragraph{(1)}
+  \[
+    \f(x) = x^n - a \quad\Rightarrow\quad
+    \varphi(x) = \frac{1}{n}\left( (n-1)x + \frac{a}{x^{n-1}} \right).
+  \]
+  $\varphi$在$\sqrt[n]{x}$处的一阶、二阶导数分别为
+  \[\begin{split}
+    \varphi\hp(\sqrt[n]{a}) &= \left(1-\frac{1}{n}\right)\left(1-\frac{a}{x^n}\right)
+    \bigg|_{x=\sqrt[n]{a}} = 0, \\
+    \varphi^{\pr\pr}(\sqrt[n]{a}) &= \frac{(n-1)a}{x^{n+1}}\bigg|_{x=\sqrt[n]{a}} \ne 0.
+  \end{split}\]
+  从而极限为
+  \[
+    \lim_{k\to\infty}\frac{\sqrt[n]{a} - x_{k+1}}{(\sqrt[n]{a}-x_k)^2}
+    = -\lim_{\xi\to\sqrt[n]{a}}\frac{\varphi^{\pr\pr}(\xi)}{2}
+    = \frac{1-n}{2\sqrt[n]{a}}.\quad\blacksquare
+  \]
+\paragraph{(2)}
+  \[
+    \f(x) = 1 - \frac{a}{x^n} \quad\Rightarrow\quad
+    \varphi(x) = \frac{a(n+1)x - x^{n+1}}{an}.
+  \]
+  $\varphi$在$\sqrt[n]{x}$处的一阶、二阶导数分别为
+  \[\begin{split}
+    \varphi\hp(\sqrt[n]{a}) &= \frac{(n+1)(a-x^n)}{an}\bigg|_{x=\sqrt[n]{a}} = 0, \\
+    \varphi^{\pr\pr}(\sqrt[n]{a}) &= \frac{(n+1)(a-nx^{n-1})}{an}\bigg|_{x=\sqrt[n]{a}} \ne 0.
+  \end{split}\]
+  从而极限为
+  \[
+    \lim_{k\to\infty}\frac{\sqrt[n]{a} - x_{k+1}}{(\sqrt[n]{a}-x_k)^2}
+    = -\lim_{\xi\to\sqrt[n]{a}}\frac{(n+1)(a-nx^{n-1})}{an}
+    = \frac{n+1}{n}\left(\frac{n}{\sqrt[n]{a}} -1\right).\quad\blacksquare
+  \]
+
+\end{document}

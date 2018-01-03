@@ -1,0 +1,199 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$2$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{thm}[唯一性]
+  \label{thm1}
+  设$p, q\in P_n$在$x_i(i=0,\dots,n)$处相等，则$p\equiv q$.
+\end{thm}
+\textbf{证明 }
+  设$r(x) = p(x) - q(x)$，它在$x=x_i$处值为$0$，设
+  $r(x) = \sum_{i=0}^na_ix^i$，则有
+  \[
+    AX =
+    \begin{pmatrix}
+      1 & x_0 & \cdots & x_0^n \\
+      1 & x_1 & \cdots & x_1^n \\
+      \vdots & \vdots & & \vdots \\
+      1 & x_n & \cdots & x_n^n \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      a_0 \\
+      a_1 \\
+      \vdots \\
+      a_n
+    \end{pmatrix} = 0
+  \]
+  $A$为Vandermonde矩阵，由于$x_i$互异，所以$\det A\ne0$，从而$X=0$，
+  即$p(x) - q(x) = r(x)\equiv 0$，$p\equiv q$。$\blacksquare$
+
+\begin{lemma}
+  \label{lemma2}
+  若$\f(x)$是次数为$n$的多项式，则当$k>n$时，$\f[x_0,\dots,x_k] = 0$.
+  且$\f[x_0,\dots,x_n] = a_n$，$a_n$为$n$次项的系数。
+\end{lemma}
+\textbf{证明 }
+  对$\f(x)$插值，由于$\f\in P_n$，所以成立
+  \[\begin{split}
+    \f(x) =& \f[x_0] + \cdots + \f[x_0,\dots,x_n](x-x_0)\cdots(x-x_{n-1}) \\
+    &+ \f[x_0,\dots,x_{n+1}](x-x_0)\cdots(x-x_n) + \cdots \\
+    &+ \f[x_0,\dots,x_k](x-x_0)\cdots(x-x_{k-1}).
+  \end{split}\]
+  因为$\f\in P_n$，所以$x^k(k>n)$项系数为零，同时比较$n$次项系数，得
+  \[\begin{split}
+    \f[x_0,\dots,x_k] &= 0,\\
+    \f[x_0,\dots,x_n] &= a_n.\quad\blacksquare
+  \end{split}\]
+
+\vspace{1cm}
+\noindent4. 设$x_j$为互异节点……
+\ans
+ (1) 成立$$\lhs(x_i)=\sum_{j=0}^nx_j^k\delta_{ij}=x_i^k=\rhs(x_i),$$
+  即两边在$x_i$处相等，根据\thmref{thm1}，$\lhs\equiv\rhs.\quad\blacksquare$\\
+ (2) 成立
+  \[
+    \lhs(x_i) = \sum_{j=0}^n(x_j-x)^k\delta_{ij} = (x_j-x_j)^k = 0
+    = \rhs(x_i),
+  \]
+  即两边在$x_i$处相等，根据\thmref{thm1}，$\lhs\equiv\rhs.\quad\blacksquare$
+
+\vspace{1cm}
+\par\noindent8. $\f(x) = x^7 + x^4 + 3x + 1$，……
+\ans
+  设$x_k = 2^k(k = 0,\dots,8)$，对$\f$进行插值，有
+  \[\begin{split}
+    \f(x) =& \f[x_0] + \f[x_0,x_1](x-x_0) + \cdots +
+    \f[x_0,\dots,x_7](x-x_0)\cdots(x-x_6)\\
+    &+ \f[x_0,\dots,x_8](x-x_0)\cdots(x-x_7)
+  \end{split}\]
+  由于$\f$为$7$次多项式，所以根据\lemref{lemma2}，得
+  \[
+    \f[x_0,\dots,x_7] = 1,\quad
+    \f[x_0,\dots,x_8] = 0.\quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent9. 证明$\Delta(\f_k\g_k)=$……
+\ans
+  \[\begin{split}
+    \Delta(\f_k\g_k) &= \f_{k+1}\g_{k+1} - \f_k\g_k
+    = \f_{k+1}\g_{k+1} - \f_k\g_{k+1} + \f_k\g_{k+1} - \f_k\g_k \\
+    &= \g_{k+1}(\f_{k+1}-\f_k) + \f_k(\g_{k+1} - \g_k)
+    = \f_k\Delta\g_k + \g_{k+1}\Delta\f_k.\quad\blacksquare
+  \end{split}\]
+
+\vspace{1cm}
+\par\noindent10. 证明Abel变换
+\ans
+  \[\begin{split}
+    \sum_{k=0}^{n-1}\f_k\Delta\g_k &=
+    \f_{n-1}\g_n + \sum_{k=0}^{n-2}\f_k\g_{k+1}
+    - \sum_{k=1}^{n-1}\f_k\g_k - \f_0\g_0 \\
+    &= (\f_{n-1}-\f_n+\f_n)\g_n + \sum_{k=0}^{n-2}\f_k\g_{k+1}
+    - \sum_{k=0}^{n-2}\f_{k+1}\g_{k+1} - \f_0\g_0 \\
+    &= -\Delta\f_{n-1}\g_n + \f_n\g_n +
+    \sum_{k=0}^{n-2}(\f_k - \f_{k+1})\g_{k+1} - \f_0\g_0 \\
+    &= \f_n\g_n - \f_0\g_0 - \sum_{k=0}^{n-1}\g_{k+1}\Delta\f_k.
+    \quad\blacksquare
+  \end{split}\]
+\correct
+  此题更加方便的证明方法是利用第9题的结论，移项后两边求和. 这一
+  做法实际上是由“Abel变换是离散分部积分”而自然导出的.
+
+\vspace{1cm}
+\par\noindent12. 若$\f(x) = a_0 + a_1x + \cdots + a_nx^n$有……
+\ans
+  根据条件可知，$\f(x_j) = 0$，$\f(x) = A(x-x_1)\cdots(x-x_n)$.
+  \[\begin{split}
+   \lhs &= \sum_{j=1}^m\lim_{x\to x_j} \frac{x_j^k(x-x_j)}{\f(x)-\f(x_j)} \\
+   &= \sum_{j=1}^m\lim_{x\to x_j}\frac{x_j^k(x-x_j)}{A(x-x_1)\cdots(x-x_n)} \\
+   &= \frac{1}{A}\sum_{j=1}^m\frac{x_j^k}{\prod_{i\ne j}(x_j-x_i)}
+  \end{split}\]
+  记$\g_k(x) = x^k/A$，则$\lhs = \g_k[x_1,\dots,x_n]$，因为
+  $\g_k\in P_k$，所以根据\lemref{lemma2}，当$k<n-1$时候，
+  $\lhs = 0$. 当$k=n-1$时，$\g_k[x_1,\dots,x_n]$为$x^k$项系数，即$\lhs=A^{-1}$.
+  又
+  \[
+    A(x-x_1)\cdots(x-x_n) = a_0 + \cdots + a_nx^n,
+  \]
+  对上式两端求$n$阶导数，得到$A = a_n$. 从而此时$\lhs=a_n^{-1}.\quad\blacksquare$
+
+\vspace{1cm}
+\par\noindent1. 设$\f(x)\in P_n$，且对$k = 0,\,1,\,\dots,\,n$成立
+  $\f(k) = \dfrac{k}{k+1}$，求f(x)。
+\ans
+  设
+  \[
+    \g(x) = (x+1)\f(x) - x\in P_{n+1}.
+  \]
+  根据条件，可知$0,1,\dots,n$是$\g(x)$的$n+1$个零点，所以有
+  \[
+    \g(x) = Ax(x-1)\cdots(x-n).
+  \]
+  根据上面两式，成立
+  \[
+    (x+1)\f(x) = Ax(x-1)\cdots(x-n) + x
+  \]
+  下确定恰当的$A$，使得$x=-1$是$\rhs$的一个根，从而$\rhs/(x+1)\in P_n$.
+  令$\rhs(-1)=0$，得
+  \[
+    A(-1)(-2)\cdots(-1-n) - 1 = 0 \quad\Rightarrow\quad
+    A = \frac{(-1)^{n+1}}{(n+1)!}
+  \]
+  综上，
+  \[
+    \f(x) = \frac{\frac{(-1)^{n+1}}{(n+1)!}x(x-1)\cdots(x-n)+x}{x+1}.
+    \quad\blacksquare
+  \]
+
+\vspace{1cm}
+\noindent2.任给节点$x_0 < x_1 <\cdots< x_n$，记$h = \max$……
+\ans
+  设$x\in[x_k, x_{k+1}]$，则对于该区间成立
+  \begin{equation}
+    \label{equ: x_k}
+    |(x-x_k)(x-x_{k+1})| \le \left[\frac{(x_{k+1}-x) + (x-x_k)}{2}\right]^2
+    \le \frac{(x_{k+1}-x_k)^2}{4} \le \frac{h^2}{4}.
+  \end{equation}
+  对于除去$k$和$k+1$以外的$n-1$个$j$，成立
+  \begin{equation}
+    \label{equ: x_j}
+    |x-x_j| \le
+    \begin{cases}
+      (k-j+1)h,&\quad(j<k)\\
+      (j-k)h,&\quad(j>k+1)
+    \end{cases}
+  \end{equation}
+  分别取遍$2h,\dots,(k+1)h$和$2h,\dots,(n-k)h$。
+  根据式\equref{equ: x_k}和\equref{equ: x_j}，成立
+  \[\begin{split}
+    & |(x-x_0)(x-x_1)\cdots(x-x_k)(x-x_{k+1})\cdots(x-x_n)| \\
+    \le& \frac{h^2}{4}\times n!h^{n-1} = \frac{n!h^{n+1}}{4}
+    \quad\blacksquare
+  \end{split}\]
+
+
+  由于结论只与$x_k$之间的相对位置有关，所以不妨设$x_0 = 0$，下证等距的情况。
+  根据齐次性，不妨设$h = 1$（否则令$y = x / h$即可）。所以只需证明
+  \[
+    x(x-1)\cdots(x-n) \le \frac{n!}{4}
+  \]
+  对于$n=1$的情况，根据均值不等式，成立，
+  \[
+    |x(x-1)| = x(1-x) \le \frac{1}{4}.
+  \]
+  假设对于$n$的情况成立，考虑$n+1$的情况。若$x\in[0, n]$，则
+  \[
+    \lhs \le \frac{n!}{4}\times(n+1-x) \le \frac{(n+1)!}{4}.
+  \]
+  若$x\in[n, n+1]$，结合$n=1$的情况，成立
+  \[
+    \lhs \le (n+1)n(n-1)\cdots\frac{1}{4} = \frac{(n+1)!}{4}
+  \]
+
+\end{document}

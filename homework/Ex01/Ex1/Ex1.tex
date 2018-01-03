@@ -1,0 +1,191 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$1$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent1、$\sqrt{7}$可由下列迭代算法计算……
+\ans
+  下证引理
+  \begin{lemma}
+    \label{lemma1}
+    对于任意正数$x$，设$x_1>\sqrt{x}$，对于$n>1$，满足
+    \begin{equation}
+      \label{equ1}
+      x_{n+1} = \frac12(x_n + \frac{x}{x_n}),
+    \end{equation}
+    则$\lim_{n\to\infty}x_n = \sqrt{x}$. 记$\vep_n = x_n - \sqrt{x}$，
+    则成立
+    \[
+      \vep_{n+1} = \frac{\vep_n^2}{2x_n}
+    \]
+  \end{lemma}
+  \textbf{证明 }
+    对于$n>0$，根据基本不等式，成立
+    \[
+      x_{n+1}=\frac{1}{2}(x_n+\frac{x}{x_n})\ge\sqrt{x}.
+    \]
+    并且，
+    \[\begin{split}
+      x_n-x_{n+1} &= x_n - \frac{1}{2}(x_n+\frac{x}{x_n}) \\
+      &= \frac12(x_n - \frac{x}{x_n}) \\
+      &> \frac12(\sqrt{x} - \frac{x}{\sqrt{x}}) = 0
+    \end{split}\]
+    所以$\{x_n\}$单调减且下有界，所以存在极限，记为$A$，对\equref{equ1}
+    两边取极限，成立
+    \[
+      A = \frac{1}{2}(A+\frac{x}{A})\quad\Rightarrow\quad
+      A = \sqrt{x}.
+    \]
+    对于余项$\vep_n$，成立
+    \[\begin{split}
+      \vep_{n+1} - \sqrt{x} &= \frac{1}{2}(x_n + \frac{x}{x_n}) - \sqrt{x} \\
+      &= \frac{x_n^2 - 2\sqrt{x}x_n + x}{2x_n} \\
+      &= \frac{(x_n - \sqrt{x})^2}{2x_n} = \frac{\vep_n^2}{2x_n}.
+      \quad\blacksquare
+    \end{split}\]
+  (1) 易知$x_1>\sqrt{7}$成立。应用\lemref{lemma1}，取$x=7$，
+  得$\lim x_n = x^* = \sqrt{7}$.\\
+  (2) 设$x_n = 0.a_1a_2\dots a_n\times10$. $x_n$有$n$位
+  有效数字，即成立
+  \[
+    \vep_n \le \frac12\times^{1-n}
+  \]
+  应用\lemref{lemma1}，则对于$\vep_{n+1}$，成立
+  \[\begin{split}
+    \vep_{n+1} &\le \frac{\frac{1}{4} \times 10^{2-2n}}{2x_n}
+    < \frac{5\times10^{1-2n}}{4\sqrt{7}}
+    < \frac{1}{2} \times 10^{1-2n}
+  \end{split}\]
+  所以$x_{n+1}$至少具有$2n$位有效数字。 $\blacksquare$
+
+\par\noindent2、已知$(\sqrt{2}-1)^6$……
+\ans
+  设$x=\sqrt{2}$，$x^*=1.4$为其近似值。并且
+  \[\begin{split}
+    \f_1(x) &= (x-1)^6,\quad
+    \f_2(x) = (3-2x)^3,\quad
+    \f_3(x) = 99-70x, \\
+    \f_4(x) &= \frac{1}{(1+x)^6},\quad
+    \f_5(x) = \frac{1}{(3+2x)^3},\quad
+    \f_6(x) = \frac{1}{99+70x}
+  \end{split}\]
+  它们的导数在$x=1.4$处的取值分别为
+  \[\begin{split}
+    &\f_1\hp(1.4) = 0.06144,\quad
+    \f_2\hp(1.4) = -0.24,\quad
+    \f_3\hp(1.4) = -70,\\
+    &\f_4\hp(1.4) \approx -0.1308,\quad
+    \f_5\hp(1.4) \approx 5.3020 \times 10^{-3},\quad
+    \f_6\hp(1.4) \approx -1.804 \times 10^{-3}
+  \end{split}\]
+  根据公式$\vep(\f(x^*)) \approx |\f\hp(x^*)|\vep(x^*)$可知，
+  采用最后一个算式所得结果最精确。$\blacksquare$
+
+\par\noindent3、试改变下列表达式使计算结果比较精确……
+\ans
+  (1)
+  \[
+    \frac{1}{1+2x} - \frac{1-x}{1+x} =
+    \frac{1+x - (1-x)(1+2x)}{(1+2x)(1+x)} =
+    \frac{2x^2}{(1+2x)(1+x)}\quad\blacksquare
+  \]
+  (2)
+  \[
+    \sqrt{x+\frac{1}{x}}-\sqrt{x-\frac{1}{x}} =
+    \frac{x+\frac{1}{x} - (x-\frac{1}{x})}
+    {\sqrt{x+\frac{1}{x}}+\sqrt{x-\frac{1}{x}}}
+    = \frac{2}{x
+    (\sqrt{x+\frac{1}{x}} + \sqrt{x-\frac{1}{x}})}
+    \quad\blacksquare
+  \]
+
+\par\noindent4、找至少两种方法计算
+  \[
+    \f(x) = \frac{1-\cos x}{x^2},\,x\ne0,\,|x|\ll1.
+  \]
+\ans
+  \[
+    \f(x) = \frac{2\sin^2(x/2)}{x^2}
+  \]
+  对$\sin y$进行Taylor展开，至第$n$项，则有
+  \[
+    \f_n(x) = \frac{1}{2}
+    \left(\sum_{k=0}^n (-1)^k\frac{x^{2k}}{(2k+1)!} + O(x^{2n+1})\right)^2
+    \quad\blacksquare
+  \]
+\ans
+  直接对$\cos x$进行Taylor展开，至第$n$项，则有
+  \[\begin{split}
+    \f(x) &= \frac{1}{x^2} - \frac{1}{x^2}
+    \left( 1-\frac{x^2}{2} +
+    \sum_{k=2}^n\frac{(-1)^kx^{2k}}{(2k)!} + O(x^{2n+1})
+    \right) \\
+    &= \frac{1}{2} - \sum_{k=2}^n\frac{(-1)^kx^{2k}}{(2k)!} + O(x^{2n+1})
+    \blacksquare
+  \end{split}\]
+
+\par\noindent5、设$Y_0 = 28$，按递推公式……
+\ans
+  (1) 记$\vep(x^*) = \sqrt{783} - 27.982$. 因为$\{Y_n\}$为
+  等差数列，所以可知
+  \[\begin{split}
+    Y_{100} &= Y_0 - \sqrt{783} \\
+    Y_{100}^* &= Y_0 - x^*
+  \end{split}\]
+  所以
+  \[
+    |Y_{100} - Y_{100}^*| = |\sqrt{783} - x^*| = \vep(x^*).
+  \]
+  (2)
+  \[\begin{split}
+    &Y_n = Y_{n-1}-\frac{1}{100}\sqrt{783}
+    \,\Rightarrow\,
+    Y_n - \frac{1}{100}\sqrt{783} = 2\left(Y_{n-1} - \frac{1}{100}\sqrt{783}\right)\\
+    \Rightarrow\, &
+    Y_n = \left(28 - \frac{1}{100}\sqrt{783}\right)2^n
+    + \frac{1}{100}\sqrt{783}
+  \end{split}\]
+  对于取$\sqrt{783} = 27.982$的情况同理，所以有
+  \[\begin{split}
+    Y_{100} &= \left(28 - \frac{1}{100}\sqrt{783}\right)2^{100}
+    + \frac{1}{100}\sqrt{783} \\
+    Y_{100}^* &= \left(28 - \frac{1}{100}27.982\right)2^{100}
+    + \frac{1}{100}27.982
+  \end{split}\]
+  从而对于误差，成立
+  \[
+    |Y_{100}-Y_{100}^*| =
+    \vep(x^*)\frac{2^{100}}{100} + \frac{\vep(x^*)}{100}
+    \quad\blacksquare
+  \]
+
+\par\noindent6、给定$n$个矩阵……
+\ans
+  设矩阵$A_1,\,A_2,\,\dots,A_n$的大小分别为$a_0\times a_1,\,
+  a_1\times a_2,\,\dots,a_{n-1}\times a_n.$ 大小为$a\times b$
+  和$b\times c$的矩阵相乘，操作次数$\f(a, b, c)$为
+  \[
+    \f(a, b, c) = ac(2b-1)
+  \]
+  设将第$i$个至第$j$个矩阵相乘所需的最小操作次数为$F(i, j)$，则有
+  \[
+    F(i, j) =
+    \begin{cases}
+      0,\quad & i = j \\
+      \min\limits_{i \le k < j}
+      \{ F(i, k) + F(k+1, j) + \f(a_{i-1}, a_k, a_j) \},
+      \quad & i \ne j
+    \end{cases}
+  \]
+  所以$F(1,n)$即为最少操作次数。在递归求解$F(1,n)$的同时，设
+  $k_{ij}$为取出$F(i, j)$中$\min$所对应的$k$，则计算顺序为
+  最后计算$A_1A_2\cdots A_{k_{1n}}$和$A_{k_{1n}+1}\cdots A_n$
+  的乘积，其次最后计算$A_1\cdots A_{k_{1k_{1n}}}$和
+  $A_{k_{1k_{1n}}+1}\cdots A_{k_{1n}}$的乘积。依此类推。
+  $\blacksquare$
+
+\end{document}

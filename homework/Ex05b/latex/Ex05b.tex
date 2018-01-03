@@ -1,0 +1,189 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$5b$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\begin{lemma}
+  \label{lemma: 变分引理2}
+  设$\f\in\ms{C}[a, b]$，且对于任意满足$\eta(a) = \eta(b) = 0$的
+  $\eta\in\ms{C}^1(a, b)$都成立
+  \[
+    \int_a^b\f\eta\hp\rd x = 0,
+  \]
+  则在$[a, b]$上成立$\f\equiv \text{Const}$.
+\end{lemma}
+\paragraph{证明}
+  由于$\f\in\ms{C}[a, b]$，所以$\f\in\ms{R}[a, b]$，令$c\in\R$满足
+  \[
+    \int_a^b (\f(x)-c) \rd x = 0.
+  \]
+  同时令
+  \[
+    \eta(x) = \int_a^x \left( \f(t)-c \right)\rd t.
+  \]
+  显然$\eta$满足$\eta(a) = \eta(b) = 0$且$\eta\in\ms{C}^1(a, b)$.
+  则根据条件，成立
+  \[
+    0 = \int_a^b(\f-c)\eta\hp\rd x = \int_a^b(\f-c)^2\rd x
+    \,\Rightarrow\,
+    \f \equiv c.\quad\blacksquare
+  \]
+
+
+\vspace{2cm}
+\noindent1. 已知$\f\in\ms{C}[a, b]$，……
+\proof
+  假设存在$x_0\in(a, b)$，成立$\f(x_0)\ne0$，不妨设$\f(x_0)>0$.
+  则由于$\f\in\ms{C}[a, b]$，所以存在足够小的$\delta>0$，使得
+  \[
+    \f(x) > 0,\quad x\in I = (x_0-\delta, x_0+\delta).
+  \]
+  不妨设$I = (-1, 1)$，否则只需另
+  $t = -1 + \frac{1}{\delta}(x-x_0+\delta)$即可. 令$\g$
+  为冲击函数
+  \[
+    \g(x) =
+    \begin{cases}
+      e^{\frac{1}{x^2-1}},\quad &x\in(-1, 1) \\
+      0,                         & |x|\ge 1.
+    \end{cases}
+  \]
+  可知$\g\in\ms{C}^\infty(\R)$，且在$(-1, 1)$外取值为零. 从而
+  \[
+    \int_a^b\f\g\rd x = \int_{-1}^{1}\f\g\rd x > 0.
+  \]
+  与已知条件矛盾，从而假设不成立，即有
+  \[
+    \f(x) = 0, \quad x\in[a, b].\quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent2. 证明如下变分问题无解……
+\proof
+  （反证）令
+  \[
+    J(\f) = \int_{-1}^{1}x^2\left( \f\hp(x)\right)^2\rd x.
+  \]
+  假设$J$有极值，设极值点为$\f_*$，对于任意$\eta\in\ms{C}_0^1[-1,1]$，
+  成立
+  \[\begin{split}
+    0 = \frac{\rd}{\rd \vep}J(\f_*+\vep\eta)\bigg|_{\vep=0} = 2\int_{-1}^1 x^2\f_*\hp\eta\hp\rd x
+  \end{split}\]
+  又因为$x^2\f_*\hp\in\ms{C}[-1, 1]$，且$\eta$的选取是任意的，
+  由\lemref{lemma: 变分引理2}可知，
+  \[
+    x^2\f_*\hp \equiv \text{Const}.
+  \]
+  令$x=0$，得$c = 0$，从而$\f_*\hp\equiv 0$，即$\f$为常值函数.
+  与已知$\f(\pm 1) = \pm 1$矛盾，从而假设不成立，即该变分问题无解.
+  $\blacksquare$
+
+
+\vspace{1cm}
+\par\noindent3. 对于求解最速降线问题……
+\ans
+  \[
+    y(1+(y\hp)^2) = c\,\Rightarrow\,
+    y\hp = \sqrt{\frac{c-y}{y}} \,\Rightarrow\,
+    \sqrt{\frac{y}{c-y}}\rd y = \rd x.
+  \]
+  对两边积分，得
+  \[\begin{split}
+    x = \int_0^y \sqrt{\frac{t}{c-t}}\rd t
+  \end{split}\]
+  令$u = \sqrt{t/(c-t)}$，即$t=c(1-(1+u^2)^{-1})$，同时令$u=\tan v$，则
+  \[\begin{split}
+    x &= 2c\int_0^{\sqrt{\frac{y}{c-y}}} \frac{u^2}{(1+u^2)^2}\rd u \\
+      &= 2c\int_0^{\arctan\sqrt{\frac{y}{c-y}}} \frac{\tan^2v}{1+\tan^2v}\frac{1}{\cos^2v}\rd v \\
+      &= 2c\int_0^{\arctan\sqrt{\frac{y}{c-y}}} \sin^2v\rd v \\
+      &= c\left( x - \frac{1}{2}\sin 2x \right)\bigg|_0^{\arctan\sqrt{y/(c-y)}}\\
+      &= c\arctan\sqrt{\frac{y}{c-y}}
+      - \frac{c}{2}\sin\left( 2\arctan\sqrt{\frac{y}{c-y}} \right).
+  \end{split}\]
+  其中$c$满足
+  \[
+    x_1 = c\arctan\sqrt{\frac{y_1}{c-y_1}}
+    - \frac{c}{2}\sin\left( 2\arctan\sqrt{\frac{y_1}{c-y_1}} \right).\quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent4. 已知函数$y=\f(x)$在节点……
+\ans
+  不妨设在两端，近似值精确成立.
+  设$h_i = x_i-x_{i-1}$，定义
+  \[
+    J_1(\f) = \sum_{i=1}^{n-1}\frac{h_i+h_{i+1}}{2}
+    \left( \tilde{y}_i - \f(x_i) \right)^2, \quad
+    J_2(\f) = \int_0^1 (\f\hp(x))^2\rd x,
+  \]
+  下最小化
+  \[
+    J(\f) = J_1(\f) + \alpha J_2(\f).
+  \]
+  设$\f_*$是所要求的解，则对于任意$\eta\in\ms{C}_0^2[0, 1]$，成立
+  \begin{equation}\begin{split}
+    \label{equ: 导数为零}
+    0 &= \frac{\rd}{\rd\vep}J(\f_*+\vep\eta)\bigg|_{\vep=0} =
+    -2\sum_{i=1}^{n-1}\frac{h_i+h_{i+1}}{2}[\tilde{y}_i-\f_*(x_i)]\eta(x_i)
+    +2\alpha\int_0^1\f_*\hp\eta\hp\rd x.
+  \end{split}\end{equation}
+\tbf{Step I. }
+  对于每一个区间$I_k = [x_{k-1}, x_k]$，
+  取满足$\eta(x_{k-1}) = \eta(x_k) =0$的$\eta$，则对于每个区间
+  分部积分得，
+  \[
+    0 = \int_{x_{i-1}}^{x_i}\f_*\hp\eta\hp\rd x
+    = \f_*\hp\eta\bigg|_{x_{i-1}}^{x_i}
+     - \int_{x_{i-1}}^{x_i}\f_*^{\pr\pr}\eta\rd x
+     = - \int_{x_{i-1}}^{x_i}\f_*^{\pr\pr}\eta\rd x.
+  \]
+  根据变分引理，成立
+  \[
+    \label{equ: 线性}
+    \f_*^{\pr\pr} = 0 \,\Rightarrow\,
+    \f\in P_1,\quad x\in(x_{i-1}, x_i).
+  \]
+  从而在区间$I_k$上，成立
+  \[
+    \f_*\hp = c_k,\quad k = 1,2,\dots,n.
+  \]
+\tbf{Step II. }
+  取$\eta\in\ms{C}^2_0[0, 1]$，成立
+  \[\begin{split}
+    \int_0^1 \f_*\hp\eta\hp \rd x &=
+    \sum_{i=1}^{n-1} \left(
+        \f_*\hp\eta\bigg|_{x_{i-1}}^{x_i}
+    \right)\,\rd x = \sum_{i=1}^{n=1} \left(
+      c_{i-1} - c_i
+    \right)\eta(x_i)
+  \end{split}\]
+  代入\equref{equ: 导数为零}，由于$\eta(x_i)$，$(i=1,\dots,n-1)$
+  的选取是任意的，所以成立
+  \[
+    \alpha(c_{i-1}-c_i) - \frac{h_i+h_{i+1}}{2}[\tilde{y}_i - \f_*(x_i)] = 0
+  \]
+\tbf{结论 }
+  综上，$\f_*$是一个分段线性的函数，设每段上斜率为$c$，则$\f_*$满足
+  \[\begin{split}
+    &\f_*(0) = y_0,\quad f_*(1) = y_1, \\
+    &\alpha(c_{i-1} - c_i) - \frac{h_i+h_{i+1}}{2}[\tilde{y}_i-\f_*(x_i)] = 0,
+    \quad i = 1,2,\dots,n-1\quad\blacksquare
+  \end{split}\]
+
+\end{document}

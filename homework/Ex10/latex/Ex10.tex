@@ -1,0 +1,173 @@
+\input{../../def.tex}
+
+\title{科学计算作业$\,$练习$10$}
+\author{\small 任云玮\\\small2016级ACM班\\\small516030910586}
+\date{}
+
+\newcommand{\y}{\mbf{y}}
+\newcommand{\J}{\mbf{J}}
+\newcommand{\D}{\mbf{D}}
+
+\begin{document}
+\lstset{
+  numbers=left,
+  basicstyle=\scriptsize,
+  numberstyle=\tiny\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\noindent 2. 设线性方程组……
+\proof
+(1) 即证：对于$\mbf{J}=\mbf{D}^{-1}(\mbf{L}+\mbf{U})$，
+  $\mbf{G}=(\mbf{D}-\mbf{L})^{-1}\mbf{U}$，$\rho(\mbf{J})<1$
+  成立当且仅当$\rho(\mbf{D})<1$成立. 因为
+  \[\begin{split}
+    &\mbf{J}=
+    \begin{pmatrix}
+      a_{11} & 0\\
+      0 & a_{22}
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        0 & -a_{12} \\
+        -a_{21} & 0
+    \end{pmatrix}
+    = \begin{pmatrix}
+         0 & -a_{12}/a_{11} \\
+        -a_{21}/a_{22} & 0
+    \end{pmatrix} \quad\Rightarrow\quad
+    \lambda_1^2 = \frac{a_{12}a_{21}}{a_{11}a_{22}}, \\
+    &\mbf{G}=
+    \begin{pmatrix}
+      a_{11} & 0 \\
+      a_{21} & a_{22} \\
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        0 & -a_{12} \\
+        0 & 0
+    \end{pmatrix} =
+    \begin{pmatrix}
+      0 & -a_{12}/a_{11} \\
+      0 & a_{12}a_{21} / (a_{11}a_{22})
+    \end{pmatrix}\quad\Rightarrow\quad
+    \lambda_2 = 0 \text{ 或 }\lambda_2 = \frac{a_{12}a_{21}}{a_{11}a_{22}}.
+  \end{split}\]
+  所以$|\lambda_1| < 1$，当且仅当$|\lambda_2| = |\lambda_1^2| < 1$，
+  所以Jacobi迭代法和GS迭代法同时收敛或发散. $\blacksquare$\\
+(2) 两者的渐进收敛速度之比为
+  \[
+    \frac{R(\mbf{J})}{R(\mbf{G})} = \frac{1}{2}.
+    \quad\blacksquare
+  \]
+
+\vspace{1cm}
+\par\noindent 4. 设$A=$……
+\ans
+  \[\begin{split}
+    \J = \D^{-1}(\mbf{L}+\mbf{U}) &=
+    \begin{pmatrix}
+      0.1 & & \\
+      & 0.1 & \\
+      && 0.2
+    \end{pmatrix}
+    \begin{pmatrix}
+      0 & -a & 0 \\
+      -b & 0 & -b \\
+      0 & -a & 0
+    \end{pmatrix} =
+    \begin{pmatrix}
+      0 & -0.1a & 0 \\
+      -0.1b & 0 & -0.2b \\
+      0 & -0.1a & 0
+    \end{pmatrix}\\
+    \Rightarrow\quad
+    0 = |\lambda\mbf{E} - \J| &=
+    \begin{vmatrix}
+        \lambda & 0.1a & 0 \\
+        0.1b & \lambda & 0.2b \\
+        0 & 0.1a & \lambda
+    \end{vmatrix} =
+    \lambda^3 - \frac{3}{100}ab \quad\Rightarrow\quad
+    \lambda = \sqrt[3]{\frac{3ab}{100}}
+  \end{split}\]
+  从而Jacobi迭代法收敛当且仅当$|ab| < 100/3$.\par
+  \[\begin{split}
+    \mbf{G} = (\D-\mbf{L})^{-1}\mbf{U} &=
+    \begin{pmatrix}
+      0.1 & & \\
+      -0.01b & 0.1 & \\
+      0.002ab& -0.02a & 0.2
+    \end{pmatrix}
+    \begin{pmatrix}
+      & a & \\
+      &  & b\\
+      & &
+     \end{pmatrix} =
+     \begin{pmatrix}
+        0 & 0.1a & 0 \\
+        0 & -0.01ab & 0.1b \\
+        0 & 0.002a^2b & -0.02ab
+     \end{pmatrix} \\ \quad\Rightarrow\quad
+     0 = |\lambda\mbf{E}-\mbf{G}| &=
+     \begin{vmatrix}
+       \lambda & -0.1a & 0 \\
+       0 & \lambda + 0.01ab & -0.1b \\
+       0 & -0.002a^2b & \lambda + 0.02ab
+     \end{vmatrix} = \lambda^2(\lambda+0.03ab)
+  \end{split}\]
+  从而GS迭代法收敛当且仅当$|ab|<100/3.\quad\blacksquare$
+
+\vspace{1cm}
+\par\noindent 6. 用Jacobi迭代与GS迭代解线性方程组……
+\proof
+  \[\begin{split}
+    \mbf{J} =
+    \begin{pmatrix}
+      0 & 0 &  -2/3 \\
+      0 & 0 & 1/2 \\
+      -1. & 1/2 & 0
+    \end{pmatrix} \quad&\Rightarrow\quad
+    \lambda(\mbf{J}) = 0\,\text{或}\,\pm\frac{\sqrt{33}}{6},\\
+    \mbf{G} =
+    \begin{pmatrix}
+      0 & 0 & -2/3 \\
+      0 & 0 & 1/2 \\
+      0 & 0 & 11/12
+    \end{pmatrix} \quad&\Rightarrow\quad
+    \lambda(\mbf{G}) = 0 \,\text{或}\,\frac{11}{12}.
+  \end{split}\]
+  从而两种迭代法都收敛. 且$\rho(\mbf{G}) < \rho(\mbf{J})$，从而GS迭代法
+  收敛更快. $\quad\blacksquare$
+
+\vspace{1cm}
+\par\noindent 9. 设线性方程组$\A\x=\mbf{b}$，其中$\A$为对称正定阵…
+\proof
+  迭代式为
+  \begin{equation}
+    \label{equ9}
+    \x^{(k+1)} = \left(\mbf{E}-\omega\A\right)\x^{(k)}+\omega\x^{(k)}.
+  \end{equation}
+  设$\lambda$为$\mbf{B}=\mbf{E}-\omega\A$的特征值，则
+  \[
+    (\mbf{E}-\omega\A)\x=\lambda\x\quad\Rightarrow\quad
+    \A\x = \frac{1-\lambda}{\omega}\x.
+  \]
+  即$(1-\lambda)/\omega$为$\A$的特征值. 由于$\A$正定，所以
+  \[
+    \frac{1-\lambda}{\omega} > 0 \quad\Rightarrow\quad
+    \lambda < 1.
+  \]
+  同时又有
+  \[
+    \frac{1-\lambda}{\omega} \le\beta \quad\Rightarrow\quad
+    1-\lambda \le \beta\omega < 2 \quad\Rightarrow\quad \lambda > -1.
+  \]
+  综上，$|\lambda| < 1$，即$\rho(\mbf{B})<1$，从而\equref{equ9}收敛. $\blacksquare$
+
+\end{document}
