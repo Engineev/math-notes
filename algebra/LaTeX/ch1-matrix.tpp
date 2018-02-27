@@ -1,0 +1,281 @@
+\section{矩阵}
+\subsection{基础操作}
+
+  \begin{defi}[逆]
+    设$A\in\mbf{F}^{n\times n}$，若存在方阵$B$，使得
+    \begin{equation*}
+      AB=I \quad \text{且} \quad BA=I,
+    \end{equation*}
+    则称$A$可逆并称$B$是$A$的逆矩阵，记作$A^{-1}$.
+  \end{defi}
+  \remark
+    逆矩阵相关基础性质略.
+
+  \begin{lemma}[不可逆]
+    存在全为零的行或列的矩阵不可逆.
+  \end{lemma}
+
+  \begin{defi}[矩阵元\protect\footnotemark]
+    \footnotetext{Matrix Units}
+    \label{defi: 矩阵元}
+    定义如下特殊的矩阵$e_{ij}\in\mbf{F}^{n\times m}$，它仅在
+    第$i$行第$j$列为$1$，在其他位置全为$0$.
+  \end{defi}
+  \remark
+    左乘$e_{ij}$相当于把原矩阵的第$j$行移到第$i$行并将其他行清零. 可以
+    按照如下方式来考虑左乘一个矩阵$P$产生的影响：首先明确左乘是行变换；
+    之后考虑$P$的每一个行$P_i = (p_{i1},\dots,p_{in})$，它表明了
+    矩阵$PA$的第$i$行的构成：是由$A$的第$1$行的$p_{i1}$倍加到第$n$行
+    的第$p_{in}$倍.
+
+  \begin{pos}[矩阵元的性质]
+    \label{pos: 矩阵元的性质}
+    $\,$
+    \begin{enumerate}
+      \item 矩阵$A=(a_{ij})$可以写成$A=\sum_{ij}a_{ij}e_{ij}$的形式.
+      \item $e_{ij}e_{jl} = e_{il},\quad\text{且}\quad e_{ij}e_{kl}=0
+            \,\text{若}\,j\ne k$.
+      \item 对于$\R^n$的标准基$\{e_i\}$，成立$e_{ij}e_j=e_i,\quad\text{且}
+            \quad e_{ij}e_k=0\,\text{若}\, j\ne k$.
+    \end{enumerate}
+  \end{pos}
+  \remark
+    在某些时候，可以将矩阵和向量的乘法写为$(\sum_{ij}a_{ij}e_{ij})(\sum_ib_ie_i)$
+    的形式，之后再利用此命题进行化简.
+
+  \begin{thm}[幂零元\protect\footnotemark]
+    \footnotetext{nilpotent. 习题1.13}
+    称方阵$A$是幂零的，若存在正整数$k$，使得$A^k=0$成立.
+    若方阵$A$幂零，则$I+A$可逆.
+  \end{thm}
+  \proof
+    可以通过构造出逆的方法证$I+A$可逆，即找$B$，使得$(I+A)B=I$
+    成立. 从trivial的情况开始考虑，若$k=1$，则$B=I$；若$k=2$，
+    则应该尝试构造出$A^2$，同时让交错项互相消去，可以发现$B=I-A$；
+    基于上述想法，我们可以猜测，$B$应该满足$1\pm A\pm A^2\pm\cdots
+    \pm A^{k-1}$的形式. 因为这样恰可以通过乘$I$和乘$A$，实现错位
+    相消并让最后一项为零. 经验证，如下式的$B$确实满足条件
+    \[
+      B=\sum_{n=0}^{k-1}(-1)^nA^n.\quad\blacksquare
+    \]
+
+\subsection{行消元}
+
+  \begin{defi}[初等矩阵\protect\footnotemark]
+    \footnotetext{Elementary Matrix}
+    初等矩阵是指如下三类同单位矩阵十分相近的矩阵：其中$a\ne0$，$i\ne j$，
+    \begin{enumerate}
+      \item $I+ae_{ij}$.
+      \item 交换$I$的第$i$，$j$行.
+      \item 将$I$的$(i, i)$位置换为$a$.
+    \end{enumerate}
+    将它们左乘到矩阵$A$上，则它们分别对应了一种初等行变换：
+    \begin{enumerate}
+      \item 将第$j$行乘以$a$加到第$i$行上.
+      \item 交换$A$的第$i$，$j$行.
+      \item 将$A$的第$i$行乘$a$.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    初等矩阵相关性质略. 对于这些操作的对应关系，可以按照\defref{defi: 矩阵元}的
+    评注中的内容来理解. 也可以按照如下方式来记忆：如何从$I$通过行变换得到对应的初等
+    阵，那这个初等阵就对于它所左乘的矩阵进行了何种操作.
+
+  \begin{defi}[行规范形矩阵\protect\footnotemark]
+    \footnotetext{Reduced Row Echelon Form; Row Canonical Form}
+    称$A\in\mbf{F}^{n\times m}$为行规范形矩阵，如果它满足
+    \begin{enumerate}
+      \item 如果第$i$行全为$0$，则对于任意$j>i$，第$j$行也全为$0$.
+      \item 如果第$i$行不全为$0$，则它的第一个非零元素为$1$. 称该位置为主元.
+      \item 主元一定在上一个主元右侧.
+      \item 主元上方的位置都为$0$.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    这一定义可以看作是单位阵的弱化. 单位阵对角线上为$1$，因此要求主元处为$1$. 同时
+    由于在消元的过程中可能会出现将某一行消为$0$的情况，因此仅要求矩阵为阶梯形. 而
+    要求主元上方为$0$对应了单位阵只有对角线上有元素.\par
+    可以证明，所有的矩阵都可以通过初等行变换化为行规范形矩阵.
+
+  \begin{thm}[Gauss消元]
+    设$P$为$k$个初等矩阵的乘积，$A\in\F^{m\times n}$，$B\in\F^{m}$，则
+    线性方程组$AX=B$与$(PA)X=PB$同解.
+  \end{thm}
+  \remark
+    证明略. 这一定理给出了消元法解线性方程组的方法，只需要对方程组的两边施相同
+    的行变换，化为行规范形矩阵的形式，即可以直接求解.
+
+  \begin{lemma}[齐次线性方程组解的存在性]
+    设$m<n$，$A\in\F^{m\times n}$，则齐次线性方程组$AX=0$必有非零解.
+  \end{lemma}
+  \remark
+    TODO: 用法
+
+  \begin{lemma}[行规范形]
+    一个行规范行矩阵或是单位阵，或它的最后一行为零.
+  \end{lemma}
+  \remark
+    这是一条十分有用的引理. 由于所有的矩阵都可以通过初等行变换化为行规范形，
+    所以只需要设$A\hp=PA$为$A$的行规范形即可以得到一个行规范行矩阵，再分
+    析$A\hp$的最后一行，就可以知道$A\hp$的情况了. 另注意最后一行为零意味着
+    $A$是不可逆的.
+    相关习题：习题2.8
+
+  \begin{thm}[可逆的等价条件]
+    对于方阵$A$，下述命题等价：
+    \begin{enumerate}
+      \item $A$可以通过初等行变换化为单位阵.
+      \item $A$是一系列初等矩阵的乘积.
+      \item $A$可逆.
+    \end{enumerate}
+  \end{thm}
+
+  \begin{pos}
+    对于方阵$A$，若$B$是它的左逆元或右逆元，则$A$可逆且$B$是它的逆.
+  \end{pos}
+
+  \begin{thm}[线性方程组]
+    对于方阵$A$，以下命题等价：
+    \begin{enumerate}
+      \item $A$可逆.
+      \item 对于任意列向量$B$，线性方程组$AX=B$有唯一解.
+      \item 齐次线性方程组$AX=0$有且仅有零解.
+    \end{enumerate}
+  \end{thm}
+  \remark
+    轮转证明即可. 其中[3.]与[2.]等价意味着一般可以通过研究对应
+    的齐次线性方程组的方式来研究线性方程组.
+
+  \begin{pos}\footnote{习题2.10}
+    对于方阵$A$，若线性方程组$AX=B$对于某个特定的$B$有唯一解，
+    则对于任意的其他$B$，它也有唯一解.
+  \end{pos}
+
+\subsection{矩阵的转置}
+   \begin{pos}\footnote{习题 3.2}
+     若$A$，$B$分别是$n\times n$的对称阵，则$AB$是对称阵的
+     充要条件为$AB=BA$.
+   \end{pos}
+
+\subsection{行列式}
+
+  \paragraph{二阶行列式的几何含义}
+    首先，“乘上一个二阶矩阵”实际上是从$\R^2$到$\R^2$的映射。考虑
+    单位向量$(1,0)$和$(0,1)$，它们构成的平行四边形面积为$1$，经
+    过矩阵$A$映射后，它们变为$(a_1,b_1)$，$(a_2,b_2)$，由两个
+    新的向量构成的平行四边形的有向面积就是$\det A$的值。即行列式
+    的值代表了面积的变化比例。
+
+  \begin{thm}[行列式的唯一性\protect\footnotemark]
+    \footnotetext{证明需要用到之后的命题.}
+    设$\delta$是定义在$n\times n$方阵全体上的函数，若它满足
+    \begin{enumerate}
+      \item $\delta(I)=1$；
+      \item $\delta$关于方阵$A$的行是线性的；
+      \item 若方阵$A$又相邻两行相等，则$\delta(A)=0$；
+    \end{enumerate}
+    则称$\delta$是一个行列式. 这样的函数是唯一的.
+  \end{thm}
+
+  \begin{thm}
+    对于方阵$A$和$B$，成立$\det(AB)=\det A\det B$.
+  \end{thm}
+  \proof
+    可以利用\corref{cor: 行列式与初等矩阵}和行规范形来证明.
+
+  \begin{thm}[行列式的性质]
+    设$\delta$是定义在$n\times n$矩阵全体上的行列式函数，则成立
+    \begin{enumerate}
+      \item 若$A\hp$由将$A$的第$j$行乘上常数$c$加到第$i$行上
+        得到，且$i\ne j$，则$\delta(A\hp) = \delta(A)$.
+      \item 若$A\hp$由交换$A$的两行得到，则$\delta(A\hp)
+        =-\delta(A)$.
+      \item 若$A\hp$由将$A$的第$i$行乘上$c$得到，则$\delta(A\hp)
+        =c\delta(A)$.
+      \item 若$A$的第$i$行是第$j$行的$c$倍且$i\ne j$，则$\delta
+        (A)=0$.
+    \end{enumerate}
+  \end{thm}
+  \proof
+    首先证明[3.]，接下来证明[1. 2. 3.]对于相邻的$i$，$j$行成立，
+    最后再通过反复交换相邻两行的方法，证明[1. 2. 3.]对于任意的
+    $i\ne j$成立.$\quad\blacksquare$
+
+  \begin{cor}[行列式与初等矩阵]
+    \label{cor: 行列式与初等矩阵}
+    设$\delta$是定义在全体$n\times n$矩阵上的行列式函数，
+    $E$是初等矩阵. 则对任意方阵$A$，成立$\delta(EA)
+    =\delta(E)\delta(A)$，同时有
+    \begin{enumerate}
+      \item 若$E$为第一类，则$\delta(E)=1$.
+      \item 若$E$为第二类，则$\delta(E)=-1$.
+      \item 若$E$为第三类，则$\delta(E)=c$.
+    \end{enumerate}
+  \end{cor}
+  \remark
+    关于用法，可以设$A\hp$是$A$的规范形，则$A=(\prod E_k)A\hp$，
+    有$\delta(A)=(\prod\delta(E_k))\delta(A\hp)$.\par
+    虽然通过先定义初等矩阵的行列式来定义行列式看上去是符合直觉的，
+    但是由于将一个矩阵拆分成初等矩阵和规范形时，初等矩阵的顺序和
+    类型都是不定的，要说明不同的拆法的结果一样实际上并不方便.
+
+  \begin{defi}[行列式]
+    一种行列式的计算方法为按照第一列展开，具体公式略. 可以
+    通过对矩阵的大小施归纳法证明这是一个行列式函数.
+  \end{defi}
+
+  \begin{cor}
+    $\,$
+    \begin{enumerate}
+      \item 方阵$A$可逆当且仅当$\det A\ne 0$. 且若$A$可逆，
+        则成立$\det(A^{-1}) = (\det A)^{-1}$.
+      \item $\det A = \det A\tr$.
+    \end{enumerate}
+  \end{cor}
+
+  \begin{lemma}[分块矩阵行列式]
+    设$A$和$D$都是方阵，则
+    \[
+      \det \begin{pmatrix}
+        A & B \\
+        0 & D
+      \end{pmatrix} = (\det A)(\det D).
+    \]
+  \end{lemma}
+
+\subsection{置换}
+
+  \begin{defi}[置换\protect\footnotemark]
+    \footnotetext{Permutation.}
+    集合$S$的一个置换是指一个从$S$到$S$的双射.
+  \end{defi}
+  \remark
+    一般而言，仅考虑$S$为有限集的情况，所以常常可以认为
+    $S={1,2,\dots,n}$或是$S={x_1,x_2,\dots,x_n}$.
+
+  \begin{defi}[置换矩阵]
+    对于每一个置换$p$，称矩阵$P$为其对应的置换矩阵，如果
+    将$P$左乘到一个向量上的效果，等效于用$p$对对应分量置换.
+  \end{defi}
+  \remark
+    有如下显式公式
+    \[\begin{split}
+      P &= \sum_i e_{pi,i}, \\
+      PX &= \sum_i e_{pi}x_i = \sum_k e_k x_{p^{-1}k}.
+    \end{split}\]
+    即，新的第$k$位元素为原来的第$p^{-1}(k)$位的元素. 只需要
+    利用\posref{pos: 矩阵元的性质}即可以验证上述公式.
+
+  \begin{pos}[置换矩阵]
+    $\,$
+    \begin{enumerate}
+      \item 置换矩阵$P$在每一行（列）上都有且仅有一个$1$，其他
+        位置都为零. 同时，这样的矩阵也都是置换矩阵.
+      \item 置换矩阵的行列式为$\pm 1$.
+      \item 若置换$p$，$q$对应的置换矩阵为$P$和$Q$，则置换
+        $pq$对应的置换矩阵为$PQ$.
+    \end{enumerate}
+  \end{pos}
+  \remark
+    关于[2.]，定义置换的符号$\sgn p = \det P$，若$\sgn p = 1$，
+    则称为偶置换，否则称为奇置换.
