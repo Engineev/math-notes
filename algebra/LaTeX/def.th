@@ -36,6 +36,7 @@
 \DeclareMathOperator{\sft}{E}
 \DeclareMathOperator{\idt}{I}
 \DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\sgn}{sign}
 \DeclareMathOperator*{\agm}{arg\,min}
 \newcommand{\pr}{\prime}
 \newcommand{\F}{\mbf{F}}

@@ -4,6 +4,10 @@
 \author{任云玮}
 \date{}
 
+% TODO:
+% * 分块行操纵对应的“初等矩阵”
+% * P34 5.1, 5.2, misc
+
 \begin{document}
 \maketitle
 \tableofcontents
@@ -45,6 +49,7 @@
     的第$p_{in}$倍.
 
   \begin{pos}[矩阵元的性质]
+    \label{pos: 矩阵元的性质}
     $\,$
     \begin{enumerate}
       \item 矩阵$A=(a_{ij})$可以写成$A=\sum_{ij}a_{ij}e_{ij}$的形式.
@@ -181,7 +186,8 @@
     新的向量构成的平行四边形的有向面积就是$\det A$的值。即行列式
     的值代表了面积的变化比例。
 
-  \begin{thm}[行列式的唯一性]
+  \begin{thm}[行列式的唯一性\protect\footnotemark]
+    \footnotetext{证明需要用到之后的命题.}
     设$\delta$是定义在$n\times n$方阵全体上的函数，若它满足
     \begin{enumerate}
       \item $\delta(I)=1$；
@@ -194,6 +200,8 @@
   \begin{thm}
     对于方阵$A$和$B$，成立$\det(AB)=\det A\det B$.
   \end{thm}
+  \proof
+    可以利用\corref{cor: 行列式与初等矩阵}和行规范形来证明.
 
   \begin{thm}[行列式的性质]
     设$\delta$是定义在$n\times n$矩阵全体上的行列式函数，则成立
@@ -202,11 +210,94 @@
         得到，且$i\ne j$，则$\delta(A\hp) = \delta(A)$.
       \item 若$A\hp$由交换$A$的两行得到，则$\delta(A\hp)
         =-\delta(A)$.
+      \item 若$A\hp$由将$A$的第$i$行乘上$c$得到，则$\delta(A\hp)
+        =c\delta(A)$.
       \item 若$A$的第$i$行是第$j$行的$c$倍且$i\ne j$，则$\delta
         (A)=0$.
     \end{enumerate}
   \end{thm}
   \proof
-    
+    首先证明[3.]，接下来证明[1. 2. 3.]对于相邻的$i$，$j$行成立，
+    最后再通过反复交换相邻两行的方法，证明[1. 2. 3.]对于任意的
+    $i\ne j$成立.$\quad\blacksquare$
+
+  \begin{cor}[行列式与初等矩阵]
+    \label{cor: 行列式与初等矩阵}
+    设$\delta$是定义在全体$n\times n$矩阵上的行列式函数，
+    $E$是初等矩阵. 则对任意方阵$A$，成立$\delta(EA)
+    =\delta(E)\delta(A)$，同时有
+    \begin{enumerate}
+      \item 若$E$为第一类，则$\delta(E)=1$.
+      \item 若$E$为第二类，则$\delta(E)=-1$.
+      \item 若$E$为第三类，则$\delta(E)=c$.
+    \end{enumerate}
+  \end{cor}
+  \remark
+    关于用法，可以设$A\hp$是$A$的规范形，则$A=(\prod E_k)A\hp$，
+    有$\delta(A)=(\prod\delta(E_k))\delta(A\hp)$.\par
+    虽然通过先定义初等矩阵的行列式来定义行列式看上去是符合直觉的，
+    但是由于将一个矩阵拆分成初等矩阵和规范形时，初等矩阵的顺序和
+    类型都是不定的，要说明不同的拆法的结果一样实际上并不方便.
+
+  \begin{defi}[行列式]
+    一种行列式的计算方法为按照第一列展开，具体公式略. 可以
+    通过对矩阵的大小施归纳法证明这是一个行列式函数.
+  \end{defi}
+
+  \begin{cor}
+    $\,$
+    \begin{enumerate}
+      \item 方阵$A$可逆当且仅当$\det A\ne 0$. 且若$A$可逆，
+        则成立$\det(A^{-1}) = (\det A)^{-1}$.
+      \item $\det A = \det A\tr$.
+    \end{enumerate}
+  \end{cor}
+
+  \begin{lemma}[分块矩阵行列式]
+    设$A$和$D$都是方阵，则
+    \[
+      \det \begin{pmatrix}
+        A & B \\
+        0 & D
+      \end{pmatrix} = (\det A)(\det D).
+    \]
+  \end{lemma}
+
+\subsection{置换}
+
+  \begin{defi}[置换\protect\footnotemark]
+    \footnotetext{Permutation.}
+    集合$S$的一个置换是指一个从$S$到$S$的双射.
+  \end{defi}
+  \remark
+    一般而言，仅考虑$S$为有限集的情况，所以常常可以认为
+    $S={1,2,\dots,n}$或是$S={x_1,x_2,\dots,x_n}$.
+
+  \begin{defi}[置换矩阵]
+    对于每一个置换$p$，称矩阵$P$为其对应的置换矩阵，如果
+    将$P$左乘到一个向量上的效果，等效于用$p$对对应分量置换.
+  \end{defi}
+  \remark
+    有如下显式公式
+    \[\begin{split}
+      P &= \sum_i e_{pi,i}, \\
+      PX &= \sum_i e_{pi}x_i = \sum_k e_k x_{p^{-1}k}.
+    \end{split}\]
+    即，新的第$k$位元素为原来的第$p^{-1}(k)$位的元素. 只需要
+    利用\posref{pos: 矩阵元的性质}即可以验证上述公式.
+
+  \begin{pos}[置换矩阵]
+    $\,$
+    \begin{enumerate}
+      \item 置换矩阵$P$在每一行（列）上都有且仅有一个$1$，其他
+        位置都为零. 同时，这样的矩阵也都是置换矩阵.
+      \item 置换矩阵的行列式为$\pm 1$.
+      \item 若置换$p$，$q$对应的置换矩阵为$P$和$Q$，则置换
+        $pq$对应的置换矩阵为$PQ$.
+    \end{enumerate}
+  \end{pos}
+  \remark
+    关于[2.]，定义置换的符号$\sgn p = \det P$，若$\sgn p = 1$，
+    则称为偶置换，否则称为奇置换.
 
 \end{document}
