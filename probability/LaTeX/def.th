@@ -47,13 +47,11 @@
 \newcommand{\mn}{\mathnormal}
 \newcommand{\tbf}{\textbf}
 \newcommand{\mbf}{\mathbf}
-\newcommand{\fl}{\mathnormal{fl}}
 \newcommand{\f}{\mathnormal{f}}
+\newcommand{\p}{\mathrm{P}}
 \newcommand{\g}{\mathnormal{g}}
 \newcommand{\R}{\mathbf{R}}
 \newcommand{\Q}{\mathbf{Q}}
-\newcommand{\JD}{\textbf{D}}
-\newcommand{\rd}{\mathrm{d}}
 \newcommand{\str}{^*}
 \newcommand{\vep}{\varepsilon}
 \newcommand{\lhs}{\text{L.H.S}}

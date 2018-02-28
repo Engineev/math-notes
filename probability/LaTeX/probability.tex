@@ -9,6 +9,79 @@
 \tableofcontents
 \newpage
 
+\section{样本空间与概率}
 
+\subsection{概率模型}
+
+  \begin{defi}
+    $\,$
+    \begin{enumerate}
+      \item 对于一次实验，定义其可能产生的结果的全体为\tbf{样本空间}$\Omega$.
+      \item 称一个集合$A$为\tbf{事件}，若它是样本空间$\Omega$的一个子集.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    对于样本空间，在选取的时候需要注意结果需要是良定义的（无歧义的），同时需要
+    实验的所有结果都在$\Omega$中.
+
+  \begin{defi}[概率律]
+    \label{defi: 概率律}
+    设$\Omega$是一个样本空间，称定义在$\Omega$中事件全体上的函数$\p$
+    为\tbf{概率律}，若它成立
+    \begin{enumerate}
+      \item 非负性. 对任意事件$A$，$\p(A)\ge 0$.
+      \item 可加性. 对任意不相交的$A$和$B$，成立$\p(A\cup B)=\p(A)+P(B)$.
+        或者更一般的，对于两两互不相交的$\{A_n\}_{n=1}^\infty$，成立
+        $\p(A_1\cup A_2\cup\cdots) = \p(A_1) + \p(A_2) + \cdots$.
+      \item 归一性. $\p(\Omega)=1$.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    显然成立$\p(\varnothing) = 0$. 另外，一般在讨论概率律的时候，
+    不区分只包含一个结果的事件和该结果本身.
+
+  \begin{thm}[概率律的性质]
+    \label{thm: 概率律的性质}
+    给定概率律$\p$，事件$A$，$B$，$C$，则
+    \begin{enumerate}
+      \item 若$A\subset B$，则$\p(A)\le \p(B)$.
+      \item $\p(A\cup B) = \p(A) + \p(B) - \p(A\cap B)$.
+      \item $\p(A\cup B) \le \p(A) + \p(B)$.
+      \item $\p(A\cup B\cup C) = \p(A) + \p(A^c\cap B) +
+        \p(A^c \cap B^c \cap C)$.
+    \end{enumerate}
+  \end{thm}
+  \remark
+    这些式子的证明都是trivial的，其中[3.]至少可以推广至有限个事件. 对于
+    [4.]，它实际上演示了一个将重合的事件拆分成不相交事件的方法.
+
+  \begin{lemma}[Bonferroni不等式]
+    设有事件$A_1, A_2, \dots, A_n$，则成立
+    \[
+      \p\left(\bigcap_{i=1}^n A_i\right) \ge \sum_{i=1}^n\p(A_i) - (n-1).
+    \]
+  \end{lemma}
+  \proof
+    对$n$施归纳法，利用\thmref{thm: 概率律的性质} [2.]即可.
+
+  \begin{thm}[容斥原理]
+    设$A_1,A_2,\dots, A_n$为样本空间$\Omega$的事件，则
+    \[
+      \p\left( \bigcup_{i=1}^n A_i \right) =
+      \sum_{k=1}^n (-1)^k
+      \sum_{\substack{I\subset{1,\dots,n}\\|I|=k}}\p(A_I).
+    \]
+  \end{thm}
+
+  \begin{thm}[连续概率]
+    设有事件序列$\{A_n\}_{n=1}^\infty$，成立$A_n\subset A_{n+1}$. 令
+    $A=\bigcup_{n=1^\infty}A_n$，则$\p(A)=\lim_{n\to\infty}\p(A_n)$.
+  \end{thm}
+  \proof
+    考虑将$\p(\bigcup_{n=1}^\infty A_n)$拆分成级数的形式. 定义$B_0=\varnothing$，
+    $B_n = A_n - A_{n-1}$，则只需证明$\bigcup_{k=1}^\infty B_k = A$，再利用
+    \defref{defi: 概率律}拆分$\lhs$即可.$\quad\blacksquare$
+  \remark
+    对于“单调减”的事件序列，把并换成交，可以有类似的结论.
 
 \end{document}
