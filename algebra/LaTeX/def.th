@@ -27,17 +27,22 @@
 
 \theoremstyle{margin}
 \theorembodyfont{\normalfont}
+
 \newtheorem{thm}{定理}
 \newtheorem{cor}[thm]{推论}
 \newtheorem{pos}[thm]{命题}
 \newtheorem{lemma}[thm]{引理}
 \newtheorem{defi}[thm]{定义}
-\newtheorem{ex}[thm]{习题}
+\newtheorem{exa}[thm]{例}
+\newcommand{\remark}{\paragraph{评注}}
+\newcommand{\proof}{\paragraph{证明}}
+
 \DeclareMathOperator{\sft}{E}
 \DeclareMathOperator{\idt}{I}
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\sgn}{sign}
 \DeclareMathOperator*{\agm}{arg\,min}
+
 \newcommand{\pr}{\prime}
 \newcommand{\F}{\mbf{F}}
 \newcommand{\tr}{^\intercal}
@@ -50,8 +55,11 @@
 \newcommand{\fl}{\mathnormal{fl}}
 \newcommand{\f}{\mathnormal{f}}
 \newcommand{\g}{\mathnormal{g}}
-\newcommand{\R}{\mathbf{R}}
-\newcommand{\Q}{\mathbf{Q}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+
 \newcommand{\JD}{\textbf{D}}
 \newcommand{\rd}{\mathrm{d}}
 \newcommand{\str}{^*}
@@ -72,6 +80,3 @@
 \newcommand\corref[1]{推论~\ref{#1}}
 \newcommand\exaref[1]{例~\ref{#1}}
 \newcommand\algref[1]{算法~\ref{#1}}
-\newcommand{\remark}{\paragraph{评注}}
-\newcommand{\example}{\paragraph{例}}
-\newcommand{\proof}{\paragraph{证明}}
