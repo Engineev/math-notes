@@ -7,6 +7,7 @@
 % TODO:
 % * 分块行操纵对应的“初等矩阵”
 % * P34 5.1, 5.2, misc
+% * 扩展Euclid
 
 \begin{document}
 \maketitle
@@ -61,6 +62,103 @@
   \remark
     逆元是取定复合律，取定$S$中一元素后，所对应的$S$中（另）一元素.
     在此略去了逆元的一些性质. 需要注意，单侧逆元的存在不能保证该元素
-    可逆.
+    可逆. 同时注意，逆表现出了类似于交换律的现象.
+
+\subsection{群}
+
+  \begin{defi}[群]
+    称定义了复合律的集合$G$为群，若它满足如下性质：
+    \begin{enumerate}
+      \item 该复合律满足结合律.
+      \item $G$包含单位元.
+      \item $G$中的每个元素都可逆.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    常常的，$G$是一个映射的集合而复合律为映射的复合. 另外在有些情况下，
+    需要先证明$G$在给定的运算下是封闭的，即该运算确实是一个复合律.
+
+  \begin{defi}[阶]
+    对于一个有限群，定义它所包含的元素个数为阶.
+  \end{defi}
+
+  \begin{pos}[消去律]
+    群有消去律. 即对于群$G$以及$a,b,c\in G$，若$ab=ac$，则$b=c$.
+  \end{pos}
+
+  \begin{defi}[对称群]
+    定义$n$阶对称群$S_n$为$\{1,2,\dots,n\}$上的置换全体，以及置换
+    的复合所组成的群.
+  \end{defi}
+
+  \begin{pos}[$2$阶对称群]
+    TODO
+  \end{pos}
+
+  \begin{defi}[子群]
+    称群$G$的子集$H$为一个子群，若它满足
+    \begin{enumerate}
+      \item 闭合：若$a,b\in H$，则$ab\in H$.
+      \item 单位元：$1\in H$.
+      \item 逆：若$a\in H$，则$a^{-1}\in H$.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    实际上可以证明，如果$H$有单位元，则它一定是$G$的单位元. 对于逆也是一样的.
+
+\subsection{整数加法群的子群}
+
+  \begin{thm}
+    定义$\Z a=\{n\in\Z\,|\,n=ka,\,k\in\Z\}$. 设$S$是加法群
+    $\Z^+$的一个子群，则$S$或是$\{0\}$，或有形式$\Z a$，其中
+    $a$是$S$中最小的正整数.
+  \end{thm}
+  \proof
+    首先处理trivial的情况；并证明$S$中有正整数；设$a$是$S$中最小
+    正整数，并证明$\Z a$和$S$互相包含，在证明中可以利用带余数除法.
+    $\quad\blacksquare$
+
+  \begin{defi}[最大公约数]
+    定义$S=\Z a+\Z b=\{n\in\Z\,|\,n=ra+sb,\,r,s\in\Z\}$. 由于
+    $S$是$\Z^+$的一个子群，所以若$a,b\ne 0$，则$S=\Z d$. 称$d$为
+    $a$，$b$的最大公约数.
+  \end{defi}
+  \remark
+    要证明$a$和$b$互素，只需要证明$\Z a+\Z b = \Z$即可.
+
+  \begin{thm}[最大公约数]
+    设$a,b\ne 0$，$d=\gcd(a, b)$，则成立
+    \begin{enumerate}
+      \item $d$整除$a$和$b$.
+      \item 若$e$整除$a$和$b$，则$e$整除$d$.
+      \item 存在$r,s\in\Z$，成立$d=ra+sb$.
+    \end{enumerate}
+  \end{thm}
+  \remark
+    这一定理表明了将$d$称为最大公约数的原因，其中[3.]一定程度上来说
+    十分好用.
+
+  \begin{cor}[互素]
+    $a$，$b$互素的充要条件为存在$r,s\in\Z$，成立$ra+sb=1$.
+  \end{cor}
+  \proof
+    必要性是显然的. 对于充分性，设$S=\Z a+\Z b$，因为$1\in S$，
+    所以$S=\Z$，从而$\gcd(a, b)=1$.$\quad\blacksquare$
+
+  \begin{cor}
+    设$p$是一个素数且$p\,|\,ab$，则$p\,|\,a$或$p\,|\,b$.
+  \end{cor}
+  \proof
+    若$p$不整除$a$，由于$p$是素数，则$\gcd(a,p)=1$，即存在
+    $r,s\in\Z$，成立
+    \[
+      ra+sp = 1 \quad\Rightarrow\quad rab+spb=b.
+    \]
+    由于$p\,|\,rab$，$p\,|\,spb$，所以$p\,|\,b$.$\quad\blacksquare$
+
+  \begin{defi}[最小公倍数]
+    称$d$为$0\ne a,b\in\Z$的最小公倍数，若$\Z a\cap\Z b=\Z d$.
+    相关性质略.
+  \end{defi}
 
 \end{document}
