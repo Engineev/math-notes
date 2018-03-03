@@ -41,6 +41,7 @@
 \DeclareMathOperator{\idt}{I}
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\sgn}{sign}
+\DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator*{\agm}{arg\,min}
 
 \newcommand{\pr}{\prime}
