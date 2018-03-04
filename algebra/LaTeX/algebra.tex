@@ -274,6 +274,8 @@
   \begin{cor}[单射]
     同态$\varphi$是单射当且仅当$\ker\varphi = \{1\}$.
   \end{cor}
+  \remark
+    在证明一个同态是单射的时候，这一命题是常用的.
 
   \begin{defi}[正规子群]
     称$N$是$G$的正规子群，若对任意$a\in N$，$g\in G$，共轭$gag^{-1}\in N$.
@@ -306,6 +308,50 @@
   \remark
     一般而言，在检验和可逆矩阵相关的性质的时候，可以先在初等矩阵检验.
 
+\subsection{同构}
+
+  \begin{defi}[同构\protect\footnote{Isomorphism}]
+    若一个群的同态是双射，则称它为一个同构. 若在群$G$和$G\hp$
+    中存在一个同构，则称它们是同构的.
+  \end{defi}
+
+  \begin{lemma}
+    若$\varphi:G\to G\hp$是同构，则$\varphi^{-1}$也是一个同构.
+  \end{lemma}
+  \proof
+    双射的反函数是双射是显然的，所以需要证明的是$\varphi^{-1}$是一个同态.
+  \remark
+    这一引理表明了，对于同构的两个群，我们无法仅通过它们的运算过程来
+    区分两者.
+
+  \begin{defi}[同构类]
+    称和给定的群$G$同构的群的全体为$G$的同构类.
+  \end{defi}
+
+  \begin{defi}[自同构\protect\footnote{Automorphism}]
+    称从群自身到自身的同构为自同构.
+  \end{defi}
+  \remark
+    显然$I$是自同构. $g$的共轭作用$\varphi(x)=gxg^{-1}$也是一个自同构.
+    一般而言，确认两个元素$x$，$y$是否共轭即尝试求解方程$yg=gx$.
+
+  \begin{lemma}[交换子]
+    设$a,b$是群$G$中的两个元素，$ab=ba$当前仅当$aba^{-1}=b$，当且仅当
+    $aba^{-1}b^{-1}=1$. 称$aba^{-1}b^{-1}$为交换子.
+  \end{lemma}
+
+  \begin{pos}
+    \footnote{习题2.6.2}
+    同态$\varphi:\Z^{+}\to\Z^+$只可能是$\varphi(x)=kx$的形式，
+    其中$k\in\Z$.
+  \end{pos}
+  \proof
+    首先由于$\varphi$是同态，所以$\varphi(0)=0$. 对于正整数$x$，
+    $\varphi(x) = \varphi(1)x$，$\varphi(-x)=-\varphi(x)=
+    \varphi(1)(-x)$. $\quad\blacksquare$
+  \remark
+    取$k=1$，则$\varphi$是同构. 对于$k\ne 0$，$\varphi$都是单射.
+    对于$k=\pm 1$，$\varphi$是满射.
 
 \subsection{等价关系与划分}
 
@@ -314,6 +360,58 @@
     纤维是陪集$aK$. 这些陪集构成了$G$的一个划分，它们分别对应了$\varphi(G)$
     中的一个元素.
   \end{pos}
+
+\subsection{陪集}
+
+  \begin{pos}
+    设$H$是$G$的子群，则$H$的陪集是同余关系下的等价类. 其中定义
+    同余关系为
+    \[
+      a\equiv b\quad\text{若}\quad\exists h\in H\,\st\, b = ah.
+    \]
+  \end{pos}
+  \remark
+    若要验证这一命题，首先需要验证如此定义的同余关系确实是一个等价关系，
+    接下来需要证明对于任意$x,y\in aH$，存在$h\in H$，成立$x=yh$.
+
+  \begin{cor}
+    子群$H$的左陪集构成了$G$的一个划分.
+  \end{cor}
+
+  \begin{defi}[指数\protect\footnote{指数}]
+    定义子群$H$的左陪集的个数为$H$在$G$中的指数.
+  \end{defi}
+
+  \begin{lemma}[左陪集与阶]
+    $G$的子群$H$的所有左陪集$aH$的阶数都相等.
+  \end{lemma}
+  \proof
+    $h\leadsto ah$是一个双射，所以所有左陪集的阶数都与$H$相同.$\quad\blacksquare$
+
+  \begin{thm}[Lagrange]
+    设$H$是有限群$G$的一个子群，则$H$的阶数整除$G$的阶数.
+  \end{thm}
+  \remark
+    实际上由之前的引理可知，$G$的阶数为$H$的阶数和指数的乘积，即
+    \begin{equation}
+      \label{equ: 阶、指数}
+      |G| = |H|[G:H].
+    \end{equation}
+
+  \begin{cor}
+    \label{cor: 元素与群的阶}
+    有限群$G$的元素$x$的阶数整除$G$的阶数.
+  \end{cor}
+
+  \begin{cor}
+    设$G$的阶数$p$为素数，而$a\in G$不是单位元，则$G=\langle a\rangle$.
+  \end{cor}
+  \proof
+    根据\corref{cor: 元素与群的阶}，$\langle a \rangle$的阶数为$p$，
+    因此$\langle a\rangle$的指数为$1$. 所以它的唯一左陪集，即它本身，
+    构成了$G$的一个划分，即$G=\langle a\rangle$. $\quad\blacksquare$
+  \remark
+    这一推论说明了，所有的阶数为素数$p$的群都是同构的.
 
 
 \end{document}
