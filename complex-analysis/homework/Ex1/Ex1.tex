@@ -7,7 +7,39 @@
 \begin{document}
 \maketitle
 
-\noindent 1、计算：
+\noindent 1、计算：\\
+(1) $(1+\iu)\pm(1-2\iu)$，(并作图)
+\ans
+  图见\figref{fig1}.
+  \[\begin{split}
+    (1+\iu)+(1-2\iu) &= 2 - \iu\\
+    (1+\iu)-(1-2\iu)&=  3\iu \quad\blacksquare
+  \end{split}
+  \]
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=8cm]{./image/W1_1_1.png}
+    \caption{}
+    \label{fig1}
+  \end{figure}
+\\(2) $\dfrac{\iu}{(\iu-1)(\iu-2)(\iu-3)}$.
+\ans
+  \[
+    \frac{\iu}{(\iu-1)(\iu-2)(\iu-3)}=
+    \frac{\iu}{\iu^3 + \iu^2(-1-2-3) + \iu(6+3+2) + 1\times 2\times3}
+    =\frac{\iu}{\iu 10} = \frac{1}{10}.\quad\blacksquare
+  \]
+\\(3) $\sqrt{2}(\cos\alpha + \iu\sin\alpha)(\cos\beta+\iu\sin\beta)$，
+  其中$0<\alpha,\beta<\pi/2$，$\alpha=\arctan2$，$\beta=\arctan3$.
+\ans
+  已知$\tan(\alpha+\beta)=-1$，
+  $\cos(\alpha+\beta)=-\sqrt{1/(\tan^2(\alpha+\beta))}=-1/\sqrt{2}$，
+  $\sin(\alpha+\beta)=\sqrt{1-\cos^2(\alpha+\beta)}=1/\sqrt{2}$，所以
+  \[\begin{split}
+    \sqrt{2}(\cos\alpha + \iu\sin\alpha)(\cos\beta+\iu\sin\beta)
+    = \sqrt{2}(\cos(\alpha+\beta) + \iu\sin(\alpha+\beta))
+    = -1+\iu.\quad\blacksquare
+  \end{split}\]
 
 \vspace{1cm}
 \par\noindent 3、证明：\\
@@ -138,11 +170,15 @@
     |P_1N| = \frac{2}{\sqrt{1+|z_1|^2}}.
   \]
 \proof
-  设$S(0, 0, -1)$，则由于$\angle z_1ON = \angle NP_1S = \pi / 2$，
-  $\angle z_1NS = \angle SNz_1$，所以$\angle NSP_1 = \angle Nz_1O$.
-  所以$\sin\angle NSP_1 = \sin\angle Nz_1O = 1/\sqrt{1+|z_1|^2}$，
+  记$S(0, 0, -1)$，$\angle Nz_iO=\theta_i$. 则由于$\angle z_1ON = \angle NP_1S = \pi / 2$，
+  $\angle z_1NS = \angle SNz_1$，所以$\angle NSP_1 = \theta_1$.
+  所以$\sin\angle NSP_1 = \sin\theta_1 = 1/\sqrt{1+|z_1|^2}$，
   从而$|P_1N| = |NS|\sin\angle NSP_1 = 2 / \sqrt{1+|z_1|^2}$.\par
   而对于$|P_1P_2|$，设$\theta$为$P_1N$与$P_2N$的夹角，则
+  \[\begin{split}
+    \cos\theta &= \cos(\theta_1 - \theta_2) =
+      \sqrt{(1-\sin^2\theta_1)(1-\sin^2\theta_2)} - \sin\theta_1\sin\theta_2
+  \end{split}\]
   \[\begin{split}
     |P_1P_2|^2 &= |P_1N|^2 + |P_2N|^2 - 2|P_1N||P_2N|\cos\theta \\
      &= \frac{2}{1+|z_1|^2} + \frac{2}{1+|z_2|^2} -
