@@ -201,7 +201,12 @@
   \end{pos}
   \remark
     这一命题描述了$\langle x\rangle$中的元素的性质. 其中[3.]给出了
-    $x$以外的元素的计算方法. TODO:证明
+    $x$以外的元素的计算方法.
+  \proof
+    下证明[3.]. 设$x^k$的阶为$m$. 由于
+    $x^{mk}=1$，所以$n\,|\,mk$，从而$n/d\,|\,mk/d$，而$d=\gcd(n, k)$，
+    因此$n/d\,|\, m$，即$n/d \le m$. 同时$x^{k(n/d)} = x^{(k/d)n}=1$，
+    所以$n/d \ge m$. 综上，$n/d = m$.$\quad\blacksquare$
 
 \subsection{同态}
 
@@ -300,6 +305,15 @@
     $\quad\blacksquare$
   \remark
     一般而言，在检验和可逆矩阵相关的性质的时候，可以先在初等矩阵检验.
+
+
+\subsection{等价关系与划分}
+
+  \begin{pos}[核的陪集]
+    设$K$是同态$\varphi:G\to G\hp$的核. 则包含了元素$a$的$\varphi$的
+    纤维是陪集$aK$. 这些陪集构成了$G$的一个划分，它们分别对应了$\varphi(G)$
+    中的一个元素.
+  \end{pos}
 
 
 \end{document}
