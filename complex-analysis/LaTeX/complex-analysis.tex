@@ -1,3 +1,4 @@
+%!TEX program = xelatex
 \input{def.th}
 
 \title{复分析$\,$笔记}
@@ -92,11 +93,34 @@
       &= \sum_{j=1}^n|z_j|^2 - \big| \sum_{j=1}^nz_jw_j \big|^2
     \end{split}\]
     移项后即得Lagrange等式.$\quad\blacksquare$
-  \remark
-    TODO: $\sum\eta$的几何解释.
 
   \begin{cor}[Cauchy不等式]
     设$z_i, w_i \in \mC$，则$|\sum z_jw_j|^2 \le (\sum|z_j|^2)(\sum|w_j|^2)$.
   \end{cor}
+
+\subsection{复球面} % (fold)
+  
+  \begin{pos}[复球面坐标]
+    考虑球心在坐标原点的复球面，复平面上的点$z$对应的球面上的点$(x, y, u)$为
+    \[
+      x = \frac{z+\bar{z}}{|z|^2+1},\quad
+      y = \frac{z-\bar{z}}{\iu(|z|^2+1)},\quad
+      y = \frac{|z|^2-1}{|z|^2+1}.
+    \]
+  \end{pos}
+
+  \begin{pos}[复球面上距离]
+    考虑球心在坐标原点的复球面，设有限复数$z_1$和$z_2$在复球面上对应的点为$P_1$和$P_2$，
+    设复球面的极点为$N$，则
+    \[
+      |P_1P_2| = \frac{2|z_1-z_2|}{\sqrt{(1+|z_1|^2)(1+|z_2|^2)}},\quad
+      |P_1N| = \frac{2}{\sqrt{1+|z_1|^2}}
+    \]
+  \end{pos}
+  \proof
+    对于第一个式子，考虑三角形$OP_1P_2$，施余弦定理即可. 而第二个式子可以通过令第一个式子
+    中的$z_2\to\infty$得到.$\quad\blacksquare$
+
+% subsection 复球面 (end)
 
 \end{document}

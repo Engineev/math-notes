@@ -1,3 +1,4 @@
+%!TEX program = xelatex
 \input{../def.tex}
 
 \title{复分析作业$\,$W1}
@@ -67,8 +68,8 @@
     \frac{z-1}{z+1} = 1 - \frac{2}{a+1+\iu b} =
     1 - \frac{2(a+1) - \iu 2b}{(a+1)^2 + b^2} \quad\Rightarrow\quad
     \begin{cases}
-      \Re\left(\dfrac{z-1}{z+1}\right) = 1-\dfrac{2(a+1)}{(a+1)^2+b^2}\\
-      \Im\left(\dfrac{z-1}{z+1}\right) = -\dfrac{2b}{(a+1)^2+b^2}.
+      \Re\left(\dfrac{z-1}{z+1}\right) = \dfrac{a^2+b^2-1}{(a+1)^2+b^2}\\
+      \Im\left(\dfrac{z-1}{z+1}\right) = \dfrac{2b}{(a+1)^2+b^2}.
     \end{cases}\quad\blacksquare
   \]
 
@@ -92,18 +93,19 @@
   \]
 (3) $|z_1+z_2|^2 + |z_1-z_2|^2 = 2(|z_1|^2 + |z_2|^2)$，并说明其几何意义.
 \proof
+  几何意义：平行四边形的两对角线长度的平方和等于四边长度的平方和.
   \[
     |z_1+z_2|^2 + |z_1-z_2|^2 = |z_1|^2+|z_2|^2 + 2\Re(z_1\bar{z}_2)
     + |z_1|^2+|z_2|^2 - 2\Re(z_1\bar{z}_2) = 2(|z_1|^2+|z_2|^2).
+    \quad\blacksquare
   \]
-  几何意义：平行四边形的两对角线长度的平方和等于四边长度的平方和.$\quad\blacksquare$
 
 \vspace{1cm}
 \par\noindent 8、如果$|z_1|=|z_2|=|z_3|=1$，且$z_1+z_2+z_3=0$，证明
   $z_1$，$z_2$，$z_3$是内接于单位元内的一个正三角形的顶点.
 \proof
   由于$|z_i|=1$，所以$z_i$在单位圆上. $z_1+z_2+z_3 = 0$，所以
-  $|z_1+z_2| = |-z_3| = 3$. 而
+  $|z_1+z_2| = |-z_3| = 1$. 而
   \[
     |z_1+z_2|^2+|z_1-z_2|^2 = 2(|z_1|^2+|z_2|^2) = 4
     \quad\Rightarrow\quad
@@ -134,14 +136,14 @@
 (A) 将$|z|=1$代入\equref{eq1}，得
   \[
     |z-z_0|^2 = 1 + |z_0|^2 - 2\Re(\bar{z}_0z) = |1-\bar{z}_0z|^2
-    \quad\Rightarrow\quad \frac{z-z_0}{1-\bar{z}_0z} = 1. \quad\blacksquare
+    \quad\Rightarrow\quad \left|\frac{z-z_0}{1-\bar{z}_0z}\right| = 1. \quad\blacksquare
   \]
 (B1) 将$|z|<1$代入\equref{eq1}，有
   \begin{gather*}
     |z-z_0|^2 - |1-\bar{z}_0z|^2 = |z|^2 + |z_0|^2 - 1 - |z_0|^2|z|^2
      = (|z_0|^2-1)(1-|z|^2) < 0 \\
     \Rightarrow\quad
-    \frac{z-z_0}{1-\bar{z}_0z} < 1.\quad\blacksquare
+    \left|\frac{z-z_0}{1-\bar{z}_0z}\right| < 1.\quad\blacksquare
   \end{gather*}
 (B2) 将\equref{eq1}代入$\lhs$，得
   \[
