@@ -281,6 +281,8 @@
   \begin{defi}[正规子群]
     称$N$是$G$的正规子群，若对任意$a\in N$，$g\in G$，共轭$gag^{-1}\in N$.
   \end{defi}
+  \remark
+    若$G$是阿贝尔群，则$N$必然是一个正规子群.
 
   \begin{thm}
     同态的核是一个正规子群.
@@ -365,7 +367,7 @@
 \subsection{陪集}
 
   \begin{pos}
-    设$H$是$G$的子群，则$H$的陪集是同余关系下的等价类. 其中定义
+    设$H$是$G$的子群，则$H$的左陪集是同余关系下的等价类. 其中定义
     同余关系为
     \[
       a\equiv b\quad\text{若}\quad\exists h\in H\,\st\, b = ah.
@@ -374,6 +376,7 @@
   \remark
     若要验证这一命题，首先需要验证如此定义的同余关系确实是一个等价关系，
     接下来需要证明对于任意$x,y\in aH$，存在$h\in H$，成立$x=yh$.
+    对于右陪集，也有类似的结论，只是它们所确定的划分并非同一个.
 
   \begin{cor}
     子群$H$的左陪集构成了$G$的一个划分.
@@ -413,6 +416,125 @@
     构成了$G$的一个划分，即$G=\langle a\rangle$. $\quad\blacksquare$
   \remark
     这一推论说明了，所有的阶数为素数$p$的群都是同构的.
+
+  \begin{pos}
+    $[G:\ker\varphi] = |\im\varphi|$.
+  \end{pos}
+  \remark
+    这一命题描述了$\ker\varphi$的陪集和$\im\varphi$中的元素一一对应
+    这一事实.
+
+  \begin{cor}
+    设$\varphi: G\to G\hp$是有限群的同态，则
+    \begin{enumerate}
+      \item $|G|=|\ker\varphi||\im\varphi|$.
+      \item $|\ker\varphi|$整除$|G|$.
+      \item $|\im\varphi|$整除$|G|$和$|G\hp|$.
+    \end{enumerate}
+  \end{cor}
+
+  \begin{thm}[指数可乘性]
+    设$K\subset H\subset G$是群$G$的子群，则$[G:K]=[G:H][H:K]$.
+  \end{thm}
+  \proof
+    由于$G$不一定有限，所以不能够直接应用\equref{equ: 阶、指数}.
+    大致的思路是利用陪集构成了一个划分：$H$的陪集构成了$G$的一个划分，
+    而对于每一个陪集，利用$K$的陪集所产生$H$的划分，可以对于每个陪集
+    对应出一个划分. 将这两者拼在一起，就得到了$G$的令一个划分，而这个
+    划分中的每个集合，都是$K$的陪集.\par
+    虽然一定程度上，并不能直接说这个划分就是$K$的全体陪集，但是证明也
+    并不复杂，假设有$n+1$个陪集，分别则有$n+1$个代表元，把它们放入之前
+    的$n$个集合中，根据鸽巢原理，至少有两个落在同一个等价类中.\par
+    对于指数有无限的情况，证明是类似的.
+    $\quad\blacksquare$
+
+  \begin{thm}
+    \label{thm: 正规子群等价命题}
+    设$H$是群$G$的子群，记$gHg^{-1}=\{ghg^{-1}\,|\,g\in G,h\in H\}$.
+    则如下命题等价：
+    \begin{enumerate}
+      \item $H$是正规子群，即对于任意$g\in G$，$h\in H$，
+        成立$ghg^{-1}\in H$.
+      \item 对于任意$g\in G$，$gHg^{-1} = H$.
+      \item 对于任意$g\in G$，$gH = Hg$.
+      \item 任意$H$的左陪集也是一个右陪集.
+    \end{enumerate}
+  \end{thm}
+  \proof
+    假设[1.]成立，则显然有$gHg^{-1}\subset H$. 同理，$g^{-1}Hg\subset H$.
+    对前式子两边同时左乘$g$，右乘$g^{-1}$，得\footnotemark$H\subset gHg^{-1}$.
+    \footnotetext{这一操作的合法性由陪集的定义保证.} 所以[2.]成立. 同时，[2.]可
+    推出[1.]是显然的. 同样的[2. 3.]的等价性以及[3.]推出[4.]都是类似或显然的.\par
+    对于[4.]推出[3.]，我们所需要说明的是，[4.]中保证的$gH$所等于的右陪集恰好是
+    $Hg$. 设$gH = Hk$，取$1\in H$，可以发现$Hk$和$Hg$有共同元素$g$，根据等价类
+    的定义，成立$Hk = Hg$.$\quad\blacksquare$
+
+  \begin{pos}
+    设$G$的子群$H$是唯一一个阶为$r$的子群，则$H$正规.
+  \end{pos}
+  \proof
+    $H$，$gH$，$gHg^{-1}$的阶数都为$r$，所以$H=gHg^{-1}$.
+    根据\thmref{thm: 正规子群等价命题}，$H$正规.$\quad\blacksquare$
+
+\subsection{模运算}
+
+  \begin{pos}
+    $\,$
+    \begin{enumerate}
+      \item 同余关系是等价关系.
+      \item $a$模$n$的同余类为$\Z n$的左陪集$a+\Z n$.
+      \item 共有$n$个模$n$的同余类，分别为$\bar{0},\dots,\overline{n-1}$.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{thm}
+    在模$n$意义下，若$a\equiv a\hp$，$b\equiv b$，则
+    $a\hp + b\hp \equiv a + b$，$a\hp b\hp \equiv ab$.
+  \end{thm}
+  \remark
+    即，我们可以定义
+    \[
+      \overline{a+b} = \bar{a} + \bar{b},\quad
+      \overline{ab}  = \bar{a}\bar{b}.
+    \]
+    与此同时，可以证明它们满足分配律等性质.
+
+\subsection{对应定理}
+
+  \begin{pos}
+    \label{pos: 弱对应定理}
+    设同态$\varphi:G\to\mathcal{G}$的核为$K$，设$\mathcal{H}$是$\mathcal{G}$
+    的一个子群. 记$H=\varphi^{-1}(\mathcal{H})$. 则
+    \begin{enumerate}
+      \item $H$是$G$的一个包含$K$的子群.
+      \item 若$\mathcal{H}$是正规子群，则$H$也是.
+      \item 若$\varphi$是满射且$H$是正规子群，则$\mathcal{H}$也是.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{thm}[对应定理\protect\footnote{Correspondence Theorem}]
+    设满射同态$\varphi:G\to\mathcal{G}$的核为$K$. 则在$\mathcal{G}$
+    的子群与$G$的包含$K$的子群之间存在一个双射，它为
+    \[\begin{split}
+      K\subset H\subset G &\leadsto \varphi(H) \\
+      \mathcal{H} \subset \mathcal{G} &\leadsto \varphi^{-1}(\mathcal{H}).
+    \end{split}\]
+    且满足$H$是正规子群当且仅当$\mathcal{G}$为正规子群，以及$|H|=|\mathcal{H}||K|$.
+  \end{thm}
+  \remark
+    这一定理使得我们可以通过研究一个同态的群的子群来研究某个群本身的子群.
+  \proof
+    设$H$和$\mathcal{H}$分别是$G$和$\mathcal{G}$的子群，且$K\subset H$，
+    则证明包括对以下内容的验证：
+    \begin{enumerate}
+      \item $\varphi(H)$是$\mathcal{G}$的子群.
+      \item $\varphi^{-1}(\mathcal{H})$是$G$的子群，且包含$K$.
+      \item $\mathcal{H}$是正规子群当且仅当$H$是正规子群.
+      \item （双射）$\varphi(\varphi^{-1}(\mathcal{H}))=\mathcal{H}$，
+        $\varphi^{-1}(\varphi(H))=H$.
+      \item $|\varphi^{-1}(\mathcal{H})|=|\mathcal{H}||K|$.
+    \end{enumerate}
+    其中[1.]是显然的，而[2. 3.]由\posref{pos: 弱对应定理}保证.
 
 
 \end{document}
