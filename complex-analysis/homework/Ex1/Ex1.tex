@@ -170,20 +170,29 @@
     |P_1N| = \frac{2}{\sqrt{1+|z_1|^2}}.
   \]
 \proof
-  记$S(0, 0, -1)$，$\angle Nz_iO=\theta_i$. 则由于$\angle z_1ON = \angle NP_1S = \pi / 2$，
-  $\angle z_1NS = \angle SNz_1$，所以$\angle NSP_1 = \theta_1$.
-  所以$\sin\angle NSP_1 = \sin\theta_1 = 1/\sqrt{1+|z_1|^2}$，
-  从而$|P_1N| = |NS|\sin\angle NSP_1 = 2 / \sqrt{1+|z_1|^2}$.\par
-  而对于$|P_1P_2|$，设$\theta$为$P_1N$与$P_2N$的夹角，则
+  已知$\overrightarrow{OP_i} = (z_i+\bar{z}_i,-\iu(z_i-\bar{z}_i),|z_i|^2-1)/(|z_i|^2+1)$，
+  所以
   \[\begin{split}
-    \cos\theta &= \cos(\theta_1 - \theta_2) =
-      \sqrt{(1-\sin^2\theta_1)(1-\sin^2\theta_2)} - \sin\theta_1\sin\theta_2
+    |P_1P_2|^2 &= |OP_1|^2+|OP_2|^2 - 2\overrightarrow{OP_1}\cdot\overrightarrow{OP_2}
+                = 2(1-\overrightarrow{OP_1}\cdot\overrightarrow{OP_2})\\
+              &= \frac{2\left\{
+                (1+|z_1|^2)(1+|z_2|^2) - 4\Re(z_1)\Re(z_2) - 4\Im(z_1)\Im(z_2)
+                - (|z_1|^2-1)(|z_2|^2-1)\right\}}{(1+|z_1|^2)(1+|z_2|^2)}\\
+              &= \frac{4}{(1+|z_1|^2)(1+|z_2|^2)}(|z_1|^2+|z_2|^2
+                -2(\Re z_1\Re z_2 - \Im z_1\Im z_2)) \\
+              &= \frac{4|z_1-z_2|^2}{(1+|z_1|^2)(1+|z_2|^2)}.
   \end{split}\]
-  \[\begin{split}
-    |P_1P_2|^2 &= |P_1N|^2 + |P_2N|^2 - 2|P_1N||P_2N|\cos\theta \\
-     &= \frac{2}{1+|z_1|^2} + \frac{2}{1+|z_2|^2} -
-        \frac{2}{\sqrt{(1+|z_1|^2)(1+|z_2|^2)}}
-  \end{split}\]
+  同时，令$z_2\to\infty$，则有
+  \[
+    |P_1N|^2 = \lim_{z_2\to\infty} \frac{4|z_1-z_2|^2}{(1+|z_1|^2)(1+|z_2|^2)}
+    = \lim_{z_2\to\infty}\frac{4}{1+|z_1|^2}
+      \frac{|z_1|^2+|z_2|^2-2\Re(z_1\bar{z}_2)}{1+|z_2|^2}
+  \]
+  由于$|\Re(z_1\bar{z}_2)| \le |z_1||z_2|$，所以，
+  \[
+    |P_1N|^2 = \frac{4}{1+|z_1|^2} \quad\Rightarrow\quad
+    |P_1N| = \frac{2}{\sqrt{1+|z_1|^2}}.\quad\blacksquare
+  \]
 
 
 \end{document}
