@@ -1,0 +1,126 @@
+%!TEX program = xelatex
+\input{def.th}
+
+\title{复分析$\,$笔记}
+\author{任云玮}
+\date{}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{复数}
+
+\subsection{复数基础}
+
+  \begin{pos}
+    设$z=x+\iu y$，其中$x, y\in\R$，则
+    \[
+      x^2 + y^2 = |z|^2,\quad x = \frac{z+\bar{z}}{2},\quad
+      y = \frac{z-\bar{z}}{2i}.
+    \]
+  \end{pos}
+  \remark
+    在之后的内容中，将略去“$x,y\in\R$”.
+
+  \begin{pos}[三角表示法]
+    $z = x+\iu y = r(\cos\theta + \iu\sin\theta)$，其中
+    $r=|z|$，$\theta$满足$x=r\cos\theta$，$y=r\sin\theta$.
+    在此表示法下，乘法有公式
+    \[
+      |z_1z_2| = |z_1||z_2|,\quad \Arg(z_1z_2) = \Arg z_1 + \Arg z_2.
+    \]
+    对于除法也是类似的. 同时可以定义乘方为
+    \[
+      z^n = |z|^n(\cos(n\Arg z) + \iu\sin(n\Arg z)).
+    \]
+    对于$n\le 0$情况的定义是类似的.
+  \end{pos}
+
+  \begin{thm}[Moivre公式]
+    \label{thm: Moivre公式}
+    $(\cos\theta + \iu\sin\theta)^n = \cos n\theta + \iu\sin n\theta$.
+  \end{thm}
+  \remark
+    利用Moivre公式来证明三角恒等式时，一般可以利用诸如
+    $\cos\theta = \Re(\cos\theta + \iu\sin\theta)$，从而避免
+    使用Eular公式.
+
+  \begin{pos}\footnote{习题1.12}
+    $\prod\limits_{k=1}^{n-1}\sin\dfrac{k\pi}{n}=\dfrac{n}{2^{n-1}}$.
+  \end{pos}
+  \proof
+    考虑方程$(z+1)^n=1$的根，设它们为$z_k$，$k=0,1,\dots,n-1$，其中$z_0=0$.
+    有
+    \[
+      (z+1)^n-1 = z(z-z_1)\cdots(z-z_{n-1}).
+    \]
+    比较两边的一次项系数，得$z_1\cdots z_{n-1}=(-1)^{n-1}n$. 求解方程，
+    对于$k\ne 0$，有
+    \[\begin{split}
+      z_k &= \cos\frac{2k\pi}{n}-1 + \iu\sin\frac{2k\pi}{n}
+          = -2\sin\frac{k\pi}{n}(\sin\frac{k\pi}{n} - \iu\cos\frac{k\pi}{n}) \\
+          &= -2\sin\frac{k\pi}{n}(\cos(\pi/2-k\pi/n) + \iu\sin(k\pi/n-\pi/2)).
+    \end{split}\]
+    因此成立
+    \[\begin{split}
+      (-1)^{n-1}n = (-2)^{n-1}\prod_{k=1}^{n-1}\sin\frac{k\pi}{n}(\cos 0 + \iu\sin 0)
+      \quad\Rightarrow\quad \prod_{k=1}^{n-1}\sin\frac{k\pi}{n} = \frac{n}{2^{n-1}}.
+      \quad\blacksquare
+    \end{split}\]
+
+  \begin{thm}[Lagrange等式]
+    设$z_i, w_i \in \mC$，则
+    \[
+      |\sum_{j=1}^n z_jw_j|^2 = \left(\sum_{j=1}^n|z_j|^2\right)
+      \left(\sum_{j=1}^n|w_j|^2\right) - \sum_{1\le j<k\le n}
+      |z_j\bar{w}_k - z_k\bar{w}_j|^2.
+    \]
+  \end{thm}
+  \proof
+    由于齐次性，所以不妨设$\sum |w_i|^2 = 1$. 记$\eta(j, k) =
+    |z_j\bar{w}_k - z_k\bar{w}_j|^2$，显然成立
+    $\eta(j, k) = \eta(k, j)$，$\eta(k, k) = 0$且$\eta(j, k)=
+    |z_j\bar{w}_k|^2 + |z_k\bar{w}_j|^2 - z_j\bar{w}_k\bar{z}_kw_j
+    - \bar{z}_jw_kz_k\bar{w}_j$. 所以
+    \[\begin{split}
+      \sum_{1\le j<k\le n}\eta(j, k)
+      &= \frac{1}{2}\sum_{j=1}^n\sum_{k=1}^n\eta(j, k) \\
+      &= \sum_{j=1}^n\sum_{k=1}^n|z_j\bar{w}_j|^2
+          - \sum_{j=1}^n\sum_{k=1}^nz_jw_j\bar{z}_k\bar{w}_k \\
+      &= \sum_{j=1}^n|z_j|^2 - \big| \sum_{j=1}^nz_jw_j \big|^2
+    \end{split}\]
+    移项后即得Lagrange等式.$\quad\blacksquare$
+
+  \begin{cor}[Cauchy不等式]
+    设$z_i, w_i \in \mC$，则$|\sum z_jw_j|^2 \le (\sum|z_j|^2)(\sum|w_j|^2)$.
+  \end{cor}
+
+\subsection{复球面} % (fold)
+  
+  \begin{pos}[复球面坐标]
+    考虑球心在坐标原点的复球面，复平面上的点$z$对应的球面上的点$(x, y, u)$为
+    \[
+      x = \frac{z+\bar{z}}{|z|^2+1},\quad
+      y = \frac{z-\bar{z}}{\iu(|z|^2+1)},\quad
+      y = \frac{|z|^2-1}{|z|^2+1}.
+    \]
+  \end{pos}
+
+  \begin{pos}[复球面上距离]
+    考虑球心在坐标原点的复球面，设有限复数$z_1$和$z_2$在复球面上对应的点为$P_1$和$P_2$，
+    设复球面的极点为$N$，则
+    \[
+      |P_1P_2| = \frac{2|z_1-z_2|}{\sqrt{(1+|z_1|^2)(1+|z_2|^2)}},\quad
+      |P_1N| = \frac{2}{\sqrt{1+|z_1|^2}}
+    \]
+  \end{pos}
+  \proof
+    对于第一个式子，考虑三角形$OP_1P_2$，施余弦定理即可. 而第二个式子可以通过令第一个式子
+    中的$z_2\to\infty$得到.$\quad\blacksquare$
+
+% subsection 复球面 (end)
+
+\end{document}
