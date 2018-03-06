@@ -33,6 +33,7 @@
 \newtheorem{lemma}[thm]{引理}
 \newtheorem{defi}[thm]{定义}
 \newtheorem{ex}[thm]{习题}
+
 \DeclareMathOperator{\sft}{E}
 \DeclareMathOperator{\idt}{I}
 \DeclareMathOperator{\spn}{span}

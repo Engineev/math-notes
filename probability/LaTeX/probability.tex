@@ -22,7 +22,8 @@
   \end{defi}
   \remark
     对于样本空间，在选取的时候需要注意结果需要是良定义的（无歧义的），同时需要
-    实验的所有结果都在$\Omega$中.
+    实验的所有结果都在$\Omega$中. 对于一个实验，求解某个事件的概率，最基础的
+    步骤就是确定样本空间的组成.
 
   \begin{defi}[概率律]
     \label{defi: 概率律}
@@ -37,7 +38,8 @@
     \end{enumerate}
   \end{defi}
   \remark
-    显然成立$\p(\varnothing) = 0$. 另外，一般在讨论概率律的时候，
+    需要注意，概率律指的是特定的某一类函数，并非所有定义在样本空间上的函数都是概率律. 
+    对于概率律，显然成立$\p(\varnothing) = 0$. 另外，一般在讨论概率律的时候，
     不区分只包含一个结果的事件和该结果本身.
 
   \begin{thm}[概率律的性质]
@@ -74,6 +76,7 @@
   \end{thm}
 
   \begin{thm}[连续概率]
+    \label{thm: 连续概率}
     设有事件序列$\{A_n\}_{n=1}^\infty$，成立$A_n\subset A_{n+1}$. 令
     $A=\bigcup_{n=1^\infty}A_n$，则$\p(A)=\lim_{n\to\infty}\p(A_n)$.
   \end{thm}
@@ -82,6 +85,146 @@
     $B_n = A_n - A_{n-1}$，则只需证明$\bigcup_{k=1}^\infty B_k = A$，再利用
     \defref{defi: 概率律}拆分$\lhs$即可.$\quad\blacksquare$
   \remark
+    这一定理意味着，当事件单调增时，极限运算与$\p$可换序.
     对于“单调减”的事件序列，把并换成交，可以有类似的结论.
+
+\subsection{条件概率}
+  
+  \begin{defi}[条件概率]
+    对于一个样本空间$\Omega$、概率律$P$以及概率不为零的事件$B\subset\Omega$，
+    对于事件$A\subset\Omega$，定义在$B$发生下$A$发生的概率为
+    \[
+      \p(A|B) = \frac{\p(A\cap B)}{\p(B)}.
+    \]
+  \end{defi}
+  \remark
+    首先需要注意，$\p(A|B)$是一个关于事件$A$的函数，用更加符合一般函数的记法，它相当于
+    $\p_B(A)$，即$\p(A|B)$和$\p(A|C)$是完全不同的两个函数. 同时，我们可以验证，若
+    固定$B$，按照上述定义，$\p(A|B)$确实是一个概率律，即它满足\defref{defi: 概率律}.
+    另外，此定理的另一个同样十分常用的记法为
+    \[
+      \p(A\cap B) = \p(B)\p(A|B).
+    \]
+    它相当于将两个原本并列的事件安排了一个先后关系.
+
+  \begin{thm}[乘法法则]
+    $\p(\bigcap_{i=1}^n A_i) = \p(A_1)\p(A_2|A_1)\p(A_3|A_1\cap A_2)\cdots
+     \p(A_n|\bigcap_{i=1}^{n-1}A_i)$.
+  \end{thm}
+  \remark
+    此定理可以直接利用条件概率的定义证明. 这一定理描述了如果事件$A$发生的充要条件为
+    事件$A_1,\dots,A_n$都发生，那么可以将$A$看作$A_i$逐个依次发生的结果，反之亦然.
+
+  \begin{ex}[Monty Hall]
+    TODO
+  \end{ex}
+
+
+\subsection{全概率定理与Bayes准则}
+
+  \begin{thm}[全概率定理]
+    设$A_1,A_2,\dots,A_n$形成了样本空间的一个划分且$\p(A_i)>0$，则对于任意事件$B$，成立
+    \[
+      \p(B) = \sum_{i=1}^n\p(A_i\cap B) = \sum_{i=1}^n\p(A_i)\p(B|A_i)
+    \]
+  \end{thm}
+  \remark
+    证明是显然的. 这一定理常被用来求解事件的无条件概率，其关键点在于确定恰当的划分$\{A_i\}$.
+
+  \begin{thm}[Bayes准则]
+    设$A_1,\dots,A_n$形成样本空间的一个划分且$\p(A_i)>0$. 则对任意$B$，若$\p(B)>0$，
+    则成立
+    \[
+      \p(A_i|B) = \frac{\p(A_i)\p(B|A_i)}{\p(B)} 
+        = \frac{\p(A_i)\p(B|A_i)}{\sum_{j=1}^n \p(A_j)\p(B|A_j)}. 
+    \]
+  \end{thm}
+  \proof
+    \[
+      \p(B)\p(A_i|B) = \p(B\cap A_i) = \p(A_i)\p(B|A_i) \quad\Rightarrow
+      \p(A_i|B) = \frac{\p(A_i)\p(B|A_i)}{\p(B)}.
+    \]
+    将$\p(B)$用全概率公式展开即可完成证明.$\quad\blacksquare$
+  \remark
+    就数学角度而言，Bayes公式将条件概率$\p(A|B)$和$\p(B|A)$联系了起来. 而从实际含义的角度
+    而言，Bayes表示如果我们知道事件$A_i$导致事件$B$的概率，同时知道$B$确实发生了，那么反过
+    来可以推断事件$A_i$发生的概率. 
+
+  \begin{thm}[Murphy]
+    设$\{A_i\}$为一列事件，满足$A_n\subset A_{n+1}$，定义$A=\bigcup_{i=1}^nA_n$，
+    若$\p(A|A_n^c)\ge\vep>0$，则$\p(A)=1$.
+  \end{thm}
+  \proof
+    根据全概率公式，可知
+    \[
+      \p(A) = \p(A_n)\p(A|A_n) + (1-\p(A_n))\p(A|A_n^c) 
+       \ge \p(A_n)\p(A|A_n) + \vep(1-\p(A_n)).
+    \]
+    根据\thmref{thm: 连续概率}，可知当$n\to\infty$时，$\p(A_n)\to\p(A)$，
+    $\p(A|A_n)\to 1$，所以
+    \[
+      \p(A) \ge \p(A) + \vep - \vep \p(A)\quad\rightarrow\quad
+      \p(A) \ge 1.
+    \]
+    而根据概率律的定义，$\p(A)\le 1$，从而$\p(A)=1$.$\quad\blacksquare$
+  \remark
+    这一定理，通俗地说，意味着“只要一件事情有可能发生，则它必定会发生”. 将$A_n$看作这件事
+    在前$n$天发生这一事件，则$\p(A|A_n^c)$意味着在前$n$天没有发生这件事情的前提下，这件
+    事发生的概率，它大于一个大于零的常数，它对应了这件事“可能会发生”这一条件，而$\p(A)=1$
+    则表明这件事终究会发生.
+
+  \begin{lemma}
+    \label{lemma: 复合条件概率}
+    设$A,B,C$是样本空间$\Omega$上的事件.
+    记$\p_B = \p(*|B)$，它仍是样本空间$\Omega$上的一个概率律，所以可以继续定义
+    $\p_B(*|C)$. 成立
+    \[
+      \p_B(A|C) = \p(A|B\cap C).
+    \]
+  \end{lemma}
+  \proof
+    \[\begin{split}
+      \p_B(A|C) &= \frac{\p_B(A\cap C)}{\p_B(C)} 
+         = \frac{\p(A\cap C|B)}{\p(C|B)} \\
+         &= \frac{\p(A\cap B\cap C}{\p(B))}\frac{\p(B)}{\p(B\cap C)}
+         = \frac{\p(A\cap(B\cap C))}{\p(B\cap C)} = \p(A|B\cap C).
+         \quad\blacksquare
+    \end{split}\]
+  \remark
+    实际上这一引理描述的是嵌套的条件概率就是要求两个条件都满足情况下的条件概率. 
+
+  \begin{thm}[条件概率的全概率公式]
+    设$C_1,\dots,C_n$构成了样本空间的一个划分. 设$A$和$B$为两个事件且满足
+    $\p(B\cap C_i)>0$，则成立
+    \[
+      \p(A|B) = \sum_{i=1}^n \p(C_i|B)\p(A|B\cap C_i).
+    \]
+  \end{thm}
+  \proof
+    记$\p_B(A)=\p(A|B)$看作新的概率律，对它施全概率公式并利
+    用\lemmaref{lemma: 复合条件概率}，有
+    \[
+      \p(A|B) = \sum_{i=1}^n \p_B(C_i)\p_B(A|C_i) 
+        = \sum_{i=1}^n\p(C_i|B)\p(A|B\cap C_i).\quad\blacksquare
+    \]
+
+  \begin{defi}[暗示]
+    对于事件$A$与$B$，设$\p(A)>0$，$\p(B)>0$，称事件$B$暗示事件$A$，若$\p(A|B)
+    >\p(A)$，称事件$B$不暗示事件$A$，若$\p(A|B)<\p(A)$.
+  \end{defi}
+
+  \begin{pos}
+    事件$A$暗示事件$B$的充要条件为事件$B$暗示事件$A$. 若$\p(B^c)>0$，则$B$暗示$A$的
+    充要条件为$B^c$不暗示$A$.
+  \end{pos}
+  \proof
+    根据Bayes公式，有$\p(B)/\p(A) = \p(B|A)/\p(A|B)$，所以前者成立. 对于后者，
+    由于$(B^c)^c=B$成立，所以只需要证明一边即可. 利用Bayes，得
+    \[
+      \p(A|B^c) - \p(A) = \frac{\p(A)}{\p(B^c)}(\p(B^c|A)-\p(B^c))
+      = \frac{\p(A)}{\p(B^c)}(\p(B)-\p(B|A)).
+    \]
+    根据前一条定理，$\p(B)-\p(B|A)<0$成立，所以$\p(A|B^c)<\p(A)$成立.$\quad\blacksquare$
+
 
 \end{document}
