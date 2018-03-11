@@ -107,6 +107,7 @@
   \remark
     实际上可以证明，如果$H$有单位元，则它一定是$G$的单位元. 对于逆也是一样的.
 
+
 \subsection{整数加法群的子群}
 
   \begin{thm}
@@ -140,6 +141,7 @@
     十分好用.
 
   \begin{cor}[互素]
+    \label{cor: 互素}
     $a$，$b$互素的充要条件为存在$r,s\in\Z$，成立$ra+sb=1$.
   \end{cor}
   \proof
@@ -193,6 +195,7 @@
     $\quad\blacksquare$
 
   \begin{pos}
+    \label{pos: 循环子群的性质}
     设$x$是群中的一个阶为有限值$n$的元素，设$k=nq+r$，其中$0\le r<n$，则
     \begin{enumerate}
       \item $x^k = x^r$.
@@ -208,6 +211,14 @@
     $x^{mk}=1$，所以$n\,|\,mk$，从而$n/d\,|\,mk/d$，而$d=\gcd(n, k)$，
     因此$n/d\,|\, m$，即$n/d \le m$. 同时$x^{k(n/d)} = x^{(k/d)n}=1$，
     所以$n/d \ge m$. 综上，$n/d = m$.$\quad\blacksquare$
+
+  \begin{pos}[逆元的阶]
+    \label{pos: 逆元的阶}
+    设$x$是群$G$中的元素，则$x$与$x^{-1}$的阶相同.
+  \end{pos}
+  \remark
+    由于当$x$的阶数大于$2$时，$x\ne x^{-1}$，所以阶大于$2$的元素
+    都是成对出现的.
 
 \subsection{同态}
 
@@ -254,6 +265,7 @@
     可以将陪集理解为$H$被$a$作用后的结果.
 
   \begin{thm}
+    \label{thm: 同余、陪集}
     设$\varphi:G\to G\hp$是一个群同态，$a,b\in G$. 记$\varphi$的核为
     $K$. 则以下命题等价
     \begin{enumerate}
@@ -266,7 +278,9 @@
   \remark
     [2.]表示在$\varphi$的含义下，$a^{-1}$和$b^{-1}$的效果是差不多的，都
     可以让$b$被映射到$1$上，即表明$a$和$b$是差不多的. 而[2. 3.]可以根据
-    \defref{defi: 陪集}的评注加以理解.
+    \defref{defi: 陪集}的评注加以理解. [1.]实际上表示$a$和$b$同余，[1. 3. 4.]
+    描述了同余的元素的陪集之间的关联.\par
+    同余类就是陪集！！
   \proof
     下仅给出思路. 先证明[1. 2.]等价，再证明[2.]$\Rightarrow$[3.]，
     [3.]$\Rightarrow$[1.]，最后证明[3. 4.]等价即可. 注意在[1. 2.]
@@ -282,7 +296,7 @@
     称$N$是$G$的正规子群，若对任意$a\in N$，$g\in G$，共轭$gag^{-1}\in N$.
   \end{defi}
   \remark
-    若$G$是阿贝尔群，则$N$必然是一个正规子群.
+    若$G$是Abel群，则$N$必然是一个正规子群.
 
   \begin{thm}
     同态的核是一个正规子群.
@@ -336,9 +350,12 @@
   \end{defi}
   \remark
     显然$I$是自同构. $g$的共轭作用$\varphi(x)=gxg^{-1}$也是一个自同构.
-    一般而言，确认两个元素$x$，$y$是否共轭即尝试求解方程$yg=gx$.
+    注意，这里的$x$是$G$中的元素，其结果也是，而在正规子群的定义的中，这两者
+    有要求是子群$N$中的元素.
+    另外一般而言，确认两个元素$x$，$y$是否共轭即尝试求解方程$yg=gx$.
 
   \begin{lemma}[交换子]
+    \label{lemma: 交换子}
     设$a,b$是群$G$中的两个元素，$ab=ba$当前仅当$aba^{-1}=b$，当且仅当
     $aba^{-1}b^{-1}=1$. 称$aba^{-1}b^{-1}$为交换子.
   \end{lemma}
@@ -359,10 +376,14 @@
 \subsection{等价关系与划分}
 
   \begin{pos}[核的陪集]
+    \label{pos: 核的陪集}
     设$K$是同态$\varphi:G\to G\hp$的核. 则包含了元素$a$的$\varphi$的
     纤维是陪集$aK$. 这些陪集构成了$G$的一个划分，它们分别对应了$\varphi(G)$
     中的一个元素.
   \end{pos}
+  \remark
+    纤维实际上就是一个同余类，而根据\thmref{thm: 同余、陪集}可知，同余类中的元素
+    和核$K$的陪集都是同一个.
 
 \subsection{陪集}
 
@@ -390,9 +411,10 @@
     $G$的子群$H$的所有左陪集$aH$的阶数都相等.
   \end{lemma}
   \proof
-    $h\leadsto ah$是一个双射，所以所有左陪集的阶数都与$H$相同.$\quad\blacksquare$
+    $h\mapsto ah$是一个双射，所以所有左陪集的阶数都与$H$相同.$\quad\blacksquare$
 
   \begin{thm}[Lagrange]
+    \label{thm: Lagrange}
     设$H$是有限群$G$的一个子群，则$H$的阶数整除$G$的阶数.
   \end{thm}
   \remark
@@ -408,6 +430,7 @@
   \end{cor}
 
   \begin{cor}
+    \label{cor: 循环群、素数}
     设$G$的阶数$p$为素数，而$a\in G$不是单位元，则$G=\langle a\rangle$.
   \end{cor}
   \proof
@@ -415,7 +438,7 @@
     因此$\langle a\rangle$的指数为$1$. 所以它的唯一左陪集，即它本身，
     构成了$G$的一个划分，即$G=\langle a\rangle$. $\quad\blacksquare$
   \remark
-    这一推论说明了，所有的阶数为素数$p$的群都是同构的.
+    这一推论说明了，所有的阶数为素数$p$的群都是同构的，即它们是$p$阶循环群.
 
   \begin{pos}
     $[G:\ker\varphi] = |\im\varphi|$.
@@ -425,6 +448,7 @@
     这一事实.
 
   \begin{cor}
+    \label{cor: 同态、核、像、阶}
     设$\varphi: G\to G\hp$是有限群的同态，则
     \begin{enumerate}
       \item $|G|=|\ker\varphi||\im\varphi|$.
@@ -476,6 +500,22 @@
     $H$，$gH$，$gHg^{-1}$的阶数都为$r$，所以$H=gHg^{-1}$.
     根据\thmref{thm: 正规子群等价命题}，$H$正规.$\quad\blacksquare$
 
+  \begin{thm}[线性方程组]
+    考虑$(\R^m, +)$. 设齐次线性方程组$AX=0$的解全体为$W$，则线性方程组的$AX=B
+    (B\ne 0)$的解全体组成的集合或不存在，或是$W$的陪集.
+  \end{thm}
+  \proof
+    实际上可以将左乘$A$看作一个同态$A:\R^m\to\R^n$，而$W$即为它的核. 根据
+    \posref{pos: 核的陪集}，只要$AX=B$的解集不为空，则它就是核$W$的一个陪集.
+    $\quad\blacksquare$
+
+  \paragraph{分析群的阶数的方法}
+    一般来说，会给出一个群的阶数、群中元素的阶数等相关信息中的一部分，要求给出剩余
+    的相关信息. 可以考虑如下的方法，首先根据\thmref{thm: Lagrange}，Lagrange
+    定理，知道群和子群阶数的整除相关的信息. 接着，如果是循环子群，则可以利用
+    \posref{pos: 循环子群的性质}来得到其他一部分子群的阶数. 另外的，如果给定的信
+    息中包含素数，则常常可以利用\corref{cor: 循环群、素数}得到更多的信息.
+
 \subsection{模运算}
 
   \begin{pos}
@@ -499,6 +539,17 @@
     \]
     与此同时，可以证明它们满足分配律等性质.
 
+  \begin{thm}[中国剩余定理]
+    \label{thm: 中国剩余定理}
+    设$a,b,u,v\in\Z$且$\gcd(a,b)=1$，则存在$x\in\Z$，成立
+    $x\equiv u \mod a$且$x\equiv v\mod b$.
+  \end{thm}
+  \proof
+    首先取$u=0$，$k=1$，则方程等价于$k_1a+k_2b=1$，由于$a$和$b$
+    互素，所以根据\corref{cor: 互素}，存在整数$k_1$和$k_2$使上式成立.
+    考虑一般的$u$和$v$，则方程等价于$n_1a+n_2b=v-u$. 取$n_1=(v-u)k_1$，
+    $n_2=(v-u)k_2$，它满足上式.$\quad\blacksquare$
+
 \subsection{对应定理}
 
   \begin{pos}
@@ -513,11 +564,12 @@
   \end{pos}
 
   \begin{thm}[对应定理\protect\footnote{Correspondence Theorem}]
+    \label{thm: 对应定理}
     设满射同态$\varphi:G\to\mathcal{G}$的核为$K$. 则在$\mathcal{G}$
     的子群与$G$的包含$K$的子群之间存在一个双射，它为
     \[\begin{split}
-      K\subset H\subset G &\leadsto \varphi(H) \\
-      \mathcal{H} \subset \mathcal{G} &\leadsto \varphi^{-1}(\mathcal{H}).
+      K\subset H\subset G &\mapsto \varphi(H) \\
+      \mathcal{H} \subset \mathcal{G} &\mapsto \varphi^{-1}(\mathcal{H}).
     \end{split}\]
     且满足$H$是正规子群当且仅当$\mathcal{G}$为正规子群，以及$|H|=|\mathcal{H}||K|$.
   \end{thm}
@@ -534,7 +586,207 @@
         $\varphi^{-1}(\varphi(H))=H$.
       \item $|\varphi^{-1}(\mathcal{H})|=|\mathcal{H}||K|$.
     \end{enumerate}
-    其中[1.]是显然的，而[2. 3.]由\posref{pos: 弱对应定理}保证.
+    其中[1.]是显然的，而[2. 3.]由\posref{pos: 弱对应定理}保证. 对于[4.]由于$\varphi$
+    是满射，所以前者显然成立. 对于后者，$H\subset\varphi^{-1}(\varphi(H))$显然成立，
+    考虑另一方向. 设$x\in\varphi^{-1}(\varphi(H))$，则存在$h\in H$，成立$\varphi(x)
+    =\varphi(h)$，从而$\varphi(h^{-1}x)=1$，即$h^{-1}x\in K\subset H$，所以$x\in
+    H$. 综上，[4.]成立. 至于[5.]，注意到$H$是一个子群，而$\mathcal{H}$是像集以及$K$
+    是对应同态的核，则利用\corref{cor: 同态、核、像、阶}即可证明.$\quad\blacksquare$
+
+  \begin{pos}
+    设记号同\thmref{thm: 对应定理}. $[G:H] = [\mathcal{G}:\mathcal{H}]$.
+  \end{pos}
+
+\subsection{直积}
+
+  \begin{defi}[直积]
+    对于群$G$和$G\hp$，定义它们的直积为$(G\times G\hp, \cdot)$，
+    其中$(a, b)\cdot (a\hp, b\hp) = (aa\hp, bb\hp)$.
+  \end{defi}
+  \remark
+    可以证明，两个群的直积依然是一个群. 而对于一个给定的群$G$，将它直积
+    分解的含义是，找两个通常而言更简单的群$H$和$H\hp$，使得$G$和
+    $H\times H\hp$同构. 另外，对于$x\in G$和$x\hp\in G\hp$，考虑
+    如下四个映射通常是有用的：
+    \[
+      i(x)=(x, 1),\quad i(x\hp) = (1, x\hp),\quad
+      p(x,x\hp) = x, \quad p\hp(x,x\hp)=x\hp.
+    \]
+
+  \begin{pos}[循环群的分解]
+    设整数$r$和$s$互素. 一个阶为$rs$的循环群与一个阶为$r$的群和一个
+    阶为$s$的循环群的直积同构.
+  \end{pos}
+  \proof
+    设$\langle x\rangle$的阶为$rs$，满足$x^{rs}=1$. 则$\langle x^r
+    \rangle$和$\langle x^s\rangle$的阶分别为$s$和$r$. 考虑$y=(x^r,x^s)$，
+    由于$\gcd(r, s)=1$，所以最小的满足$y^k=1$的$k$为$rs$. 即
+    $\langle x\rangle$与$\langle y\rangle$同构.$\quad\blacksquare$
+
+  \begin{thm}[直积的同构]
+    \label{thm: 直积的同构}
+    设$H$和$K$是群$G$的子群，定义$\f:H\times K\to G$为$f(h, k)=hk$.
+    记它的像集为$HK$. 则
+    \begin{enumerate}
+      \item $\f$为单射当且仅当$H\cap K=\{1\}$.
+      \item $\f$是$H\times K$到$G$的同态当且仅当对任意$h\in H$，
+        $k\in K$，$hk=kh$.
+      \item 若$H$是$G$的正规子群，则$HK$是$G$的子群.
+      \item $\f$是$H\times K$到$G$的同构当且仅当$H\cap K=1$，
+        $HK=G$且$H$和$K$是$G$的正规子群.
+    \end{enumerate}
+  \end{thm}
+  \remark
+    这一定理的动机在于一般而言，构造验证某个直积和另一个群同构的同构并不方便，
+    这一定理给出了一个一般的映射，并给出了它是一个同构的充要条件.
+  \proof
+    对于[1.]利用定义和投影即可证明. 而[2.]是显然的. [3.]可利用
+    $h_1k_1h_2k_2 = h_1(k_1h_2k_1^{-1})k_1k_2$. 至于[4.]，
+    双射是显然的，而同态利用[2.]和$H\cap K = 1$
+    以及\lemmaref{lemma: 交换子}即可证明.$\quad\blacksquare$
+
+  \begin{defi}[Klein四元群]
+    Klein四元群是指由如下四个矩阵构成的群
+    \[
+      \begin{pmatrix}
+        \pm 1 & \\
+        & \pm 1
+      \end{pmatrix}
+    \]
+    它是最小的非循环群.
+  \end{defi}
+  \remark
+    考虑一个向量$x\in\R^2$，左乘一个Klein四元群里的矩阵对应着将$x$
+    沿着$x$或$y$轴或关于原点翻转，或保持不变.
+
+  \begin{thm}[$4$阶的群]
+    $4$阶的群共有两个同构类，其一为$4$阶循环群$C_4$所处的同构类，
+    其一为Klein四元群所处的同构类，$C_2\times C_2$也属于这一同构类.
+  \end{thm}
+  \proof
+    设$|G|=4$. 若存在$x\in G$，它的阶为$4$，则$\langle x\langle=G$，
+    即$G$为$4$阶循环群. \par
+    对于另一情况：若任意非单位的$x\in G$，阶都为$2$. 考虑使
+    用\thmref{thm: 直积的同构}来证明，首先先构造处$H$和$K$并验证相关
+    的条件. $H$和$K$可以是$G$中两不同元素生成的循环子群. 则$H\cap K=
+    \{1\}$是自然成立的. 同时，利用它们的阶为$2$，可知$H=\{1,x\}$，
+    $K=\{1, y\}$，不难推出$HK=G$. 接下来只需证明它们都正规. 由于任意
+    元素的阶都为$2$，所以它们的逆就为本身. 所以$aba^{-1}b^{-1}=
+    (ab)(ab)=1$，其中$a,b$为$G$中任意元素，所以$G$是Abel群，从而$G$
+    的任意子群为正规子群. 所以另一同构类为$C_2\times C_2$所属的同构类.
+    关于Klein四元群和$C_2\times C_2$的同构的证明略.$\quad\blacksquare$
+
+  \begin{exa}
+    设$G$包含一个阶为$5$和一个阶为$3$的正规子群$H$和$K$，则
+    $G$包含一个阶为$15$的元素.
+  \end{exa}
+  \proof
+    由于$5$和$3$是素数，所以根据\corref{cor: 循环群、素数}，
+    $H$和$K$是循环群，设生成它们的元素分别为$h$和$k$. 根据
+    \thmref{thm: 直积的同构}，$HK$是$G$的子群且与$H\times K$
+    同构. 对任意的$p\in\{0,\dots,4\}$和$q\in\{0,1,2\}$，
+    根据\thmref{thm: 中国剩余定理}，存在$n\in\Z$，成立
+    $n\equiv p \mod 5$，$n\equiv q\mod 3$，即$HK=\langle(h,k)
+    \rangle$. 同时$(h,k)^n=1$的最小正整数解为$15$. 综上，$HK$是
+    $G$中的阶为$15$的循环子群.$\quad\blacksquare$
+
+\subsection{商群}
+
+  \begin{pos}
+    设$N$是群$G$的正规子群，$aN$和$bN$是$N$的陪集，则$(aN)(bN)$也是
+    $N$的陪集，且成立$(aN)(bN) = (ab)N$.
+  \end{pos}
+  \proof
+    \footnote{在此定义集合$AB=\{x\,|\, a\in A,\, b\in B\}$.}
+    由于$N$是正规子群，所以根据\thmref{thm: 正规子群等价命题}，它的
+    左陪集和右陪集相等，所以有
+    \[
+      (aN)(bN)=a(Nb)N=a(bN)N=(ab)(NN)=(ab)N.\quad\blacksquare
+    \]
+  \remark
+    若$H$不是正规的，则存在$a$和$b$，使$(aH)(bH)$不是陪集.
+    证明如下：反证法，假设一定是左陪集. 取$a=g$，$b=g^{-1}$，
+    则由于$1\in (gH)(g^{-1}H)$，所以$(gH)(g^{-1}H) = 1H = H$.
+    则对任意$h\in H$，$ghg^{-1} = ghg^{-1}1 \in (gH)(g^{-1}H) = H$，
+    即$H$正规，与已知矛盾.$\quad\blacksquare$
+
+  \begin{lemma}
+    设$G$是一个群，$Y$是一个定义了复合律的集合. 设$\varphi:
+    G\to Y$是一个有同态性质的满射. 则$Y$也是一个群且$\varphi$
+    是一个同态.
+  \end{lemma}
+
+  \begin{thm}
+    设$N$是群$G$的一个正规子群，记$\bar{G}$是$N$的陪集全体.
+    则存在一个复合律，使得$\bar{G}$构成一个群，且映射\footnote{
+    称这一映射为标准映射（Canonical Map）}
+    $\pi:G\to\bar{G}$，$\bar{a}=\bar{a}$是一个满射同态且
+    $\ker\pi=N$.
+  \end{thm}
+  \proof
+    本节前述的命题与引理，分别定义了复合律并证明了$\bar{G}$构成了
+    一个群，所以仅需要再证明$\ker\pi=N$即可，根据相关定义，这是显然的.
+    $\quad\blacksquare$
+
+  \begin{cor}
+    设$N$是群$G$的正规子群，$\pi:G\to\bar{G}$为标准同态. 设
+    $a_1,\dots,a_k\in G$满足$a_1\cdots a_k\in N$，则
+    $\bar{a}_1\cdots\bar{a}_k=\bar{1}$.
+  \end{cor}
+  \proof
+    $p=a_1\cdots a_k\in N$，则
+    $\bar{a}_1\cdots\bar{a}_k=\pi(a_1\cdots a_k)=\bar{p}=\bar{1}$.
+    $\quad\blacksquare$
+
+  \begin{thm}[群同构第一定理]
+    设$N$是满射群同态$\varphi:G\to G\hp$的核，则商群$\bar{G}=G/N$
+    与$\im\varphi=G\hp$同构. 即，设$\pi:G\to\bar{G}$为标准映射，
+    则存在唯一的同构$\bar{\varphi}:\bar{G}\to G\hp$，成立
+    $\varphi = \bar{\varphi}\circ\pi$.
+  \end{thm}
+  \proof
+    首先注意，同态的核是一个正规子群，所以所说的商群是符合定义的.
+    根据\posref{pos: 核的陪集}，对于任意$g\hp\in G\hp$，对应有
+    唯一一个$N$的陪集，即$\bar{G}$中的一个元素. 所以可以考虑
+    定义$\bar{\varphi}(\bar{g})=\varphi(g)$，可以证明这是一个
+    同构.$\quad\blacksquare$
+
+  \begin{cor}
+    设$N$和$H$分别是$\varphi:G\to G\hp$的核和像，则$G/N$与$H$同构.
+  \end{cor}
+
+\subsection{杂项}
+
+  \begin{pos}
+    \footnote{习题 2.M.2}
+    $\,$
+    \begin{enumerate}
+      \item 任意偶数阶的群必含有阶为$2$的元素.
+      \item 任意$21$阶群必含有阶为$3$的元素.
+    \end{enumerate}
+  \end{pos}
+  \proof
+    根据\posref{pos: 逆元的阶}，阶数大于$2$的元素个数为偶数，而阶数
+    为$1$的元素仅有单位元，而因为群为偶数阶，所以必然必然存在阶为$2$的元素.
+    \par
+    对于$21$阶群$G$. $G$的任意非单位的元素$x$的阶数为$\{3,7,21\}$中的
+    一个. 如果$x$的阶为$21$，则$x^7$的阶为$3$. 假设仅有阶为$7$的元素.
+    则取$h\in G$，记$H=\langle h\rangle$，同时取$G$中元素$g\notin H$.
+    下证$H,\dots,g^6H$不相交. 设$g^ah^p  = g^bh^q$，则$g^{a-b}=h^{q-p}$.
+    由于$g\notin H$，所以$g^{a-b}=1$，即$a\equiv b\mod 7$. 所以它们不相交.
+    因此$[G:H]\ge 7$，所以$|G|\ge 49$，矛盾.$\quad\blacksquare$
+
+  \begin{defi}[半群]
+    半群指定义了满足结合律的复合律的、且有单位元的集合. 相较于
+    群，它无需逆元的存在. 称一个半群$S$由元素$s$生成，若
+    $S=\{1, s, s^2, \dots\}$.
+  \end{defi}
+
+  \begin{defi}
+    \label{defi: 路径连接}
+    设$a,b\in S\subset\R^k$，称$a$和$b$由一条$S$中的路径连接，
+    若存在连续的映射$X:[0,1]\to S$成立$X(0)=a$，$X(1)=b$.
+  \end{defi}
 
 
 \end{document}
