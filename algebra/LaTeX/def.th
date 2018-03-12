@@ -46,7 +46,6 @@
 \DeclareMathOperator*{\agm}{arg\,min}
 
 \newcommand{\pr}{\prime}
-\newcommand{\F}{\mbf{F}}
 \newcommand{\tr}{^\intercal}
 \newcommand{\st}{\text{s.t.}}
 \newcommand{\hp}{^\prime}
@@ -61,6 +60,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
 
 \newcommand{\JD}{\textbf{D}}
 \newcommand{\rd}{\mathrm{d}}

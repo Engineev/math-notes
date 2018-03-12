@@ -107,7 +107,6 @@
   \remark
     实际上可以证明，如果$H$有单位元，则它一定是$G$的单位元. 对于逆也是一样的.
 
-
 \subsection{整数加法群的子群}
 
   \begin{thm}
@@ -776,17 +775,108 @@
     由于$g\notin H$，所以$g^{a-b}=1$，即$a\equiv b\mod 7$. 所以它们不相交.
     因此$[G:H]\ge 7$，所以$|G|\ge 49$，矛盾.$\quad\blacksquare$
 
-  \begin{defi}[半群]
-    半群指定义了满足结合律的复合律的、且有单位元的集合. 相较于
-    群，它无需逆元的存在. 称一个半群$S$由元素$s$生成，若
-    $S=\{1, s, s^2, \dots\}$.
-  \end{defi}
-
   \begin{defi}
     \label{defi: 路径连接}
     设$a,b\in S\subset\R^k$，称$a$和$b$由一条$S$中的路径连接，
     若存在连续的映射$X:[0,1]\to S$成立$X(0)=a$，$X(1)=b$.
   \end{defi}
 
+\newpage
+\section{向量空间}
+
+\subsection{$\R^n$的子空间}
+
+\subsection{域}
+
+  \begin{defi}[域]
+    设集合$F$定义了如下被称作加法和乘法的复合律
+    \[
+      F\times F\to^{+} F \quad\text{和}\quad F\times F\to^{\times}F.
+    \]
+    称$F$为域若它满足如下性质
+    \begin{enumerate}
+      \item 加法使$F$构成了一个Abel群$F^+$，记其单位元为$0$.
+      \item 乘法满足交换律，且乘法使$F$的非零元素全体构成了一个Abel群$F^\times$，记其单位元为$1$.
+      \item 满足分配律：$a(b+c)=ab+ac$.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    [2.]需要单独说明满足交换律，只要是为了处理与$0$相乘的情况. 另外可以证明：
+    \begin{enumerate}
+      \item $0\ne 1$.
+      \item $0a=a0=0$.
+      \item 乘法满足结合律，$1$是$F$全体\footnote{定义中仅说是非
+      零子集的单位元.}的乘法单位元.
+    \end{enumerate}
+
+  \begin{defi}[子域]
+    设$F$为域，称$L\subset F$为其子域，若它对加减乘除封闭且包含乘法单位元.
+  \end{defi}
+  \remark
+    可以证明$0=1-1$成立，从而$0\in L$.
+
+  \begin{thm}
+    设$p$为素数，则任意非零的模$p$同余类有逆元，因此$\F_p=\Z/p\Z$为
+    一个阶为$p$的域.
+  \end{thm}
+  \remark
+    这一定理声称$\F_p^\times$是一个群. 如果它结论成立的话，那么我们
+    可以知道$|\F_p^\times|=p-1$为一有限数，所以它的任意元素$\bar{a}$
+    的阶也是一个有限数，设为$r$. 即有$\bar{a}^r=1$，从而它的逆元为
+    $\bar{a}^{r-1}$.
+  \proof
+    首先可以证明$\F_p^\times$有消去律，即若$\bar{a}\bar{b}=0$，则
+    $\bar{a}=0$或$\bar{b}=0$；若$\bar{a}\ne -$且$\bar{a}\bar{b}
+    =\bar{a}\bar{c}$，则$\bar{b}=\bar{c}$. 接下来只需要对于
+    $\bar{1},\bar{a},\bar{a}^2,\dots$以及$\F_p^\times$施鸽巢原理
+    以及消去律即可.$\quad\blacksquare$
+
+  \begin{defi}[特征\protect\footnotemark]
+    \footnotetext{Characteristic}
+    定一个域$F$的特征为它的乘法单位元$1$作为加法群中元素时的阶数，
+    若其阶数为无穷，则定义特征为零.
+  \end{defi}
+
+  \begin{lemma}
+    域的特征或为零，或为一个素数.
+  \end{lemma}
+  \proof
+    设特征为$m\ne 0$. 记乘法单位元为$\bar{1}$，$\bar{n}$为$n$个$\bar{1}$
+    相加的结果. $\bar{1}$在加法意义下生成的子群
+    $\langle\bar{1}+\rangle=\{\bar{0},\bar{1},\dots,\overline{m-1}\}$.
+    若$m$不为素数，则$m=rs$，其中$r,s\ne 1$. 即成立
+    \[
+      \bar{0}=\bar{m}=\overline{rs}=\sum_1^{rs}\bar{1}
+      =\left(\sum_1^r\bar{1}\right)=\left(\sum_1^s\bar{1}\right)
+      =\bar{r}\bar{s}.
+    \]
+    而$\bar{r},\bar{s}\in F^\times$但$\bar{0} \notin F^\times$，同时
+    $F^\times$是一个群，矛盾.$\quad\blacksquare$
+
+  \begin{thm}[乘法群的结构]
+    \label{thm: 乘法群的结构}
+    设$p$为素数. 则$\F_p^\times$是$p-1$阶循环群.
+  \end{thm}
+  \remark
+    证明见之后的内容.
+
+  \begin{cor}[Fermat]
+    设$p$为素数，则对任意$a\in\Z$，成立$a^p\equiv a\mod p$.
+  \end{cor}
+
+  \begin{cor}[Wilson]
+    设$p$为素数，则$(p-1)!\equiv -1 \mod p$.
+  \end{cor}
+  \proof
+    考虑$\F_p^\times=\{1,2,\dots,p-1\}$，根据\thmref{thm:
+    乘法群的结构}它是$p-1$阶循环群，所以
+    \[
+      (p-1)! = \prod_{k=0}^{p-2}(p-1)^k = (p-1)^{(p-2)(p-1)/2}
+      \equiv p-1 \equiv -1 \mod p.
+    \]
+
+  \begin{defi}[原根]
+    能生成$\F_p^\times$的数被称作模$p$的原根.
+  \end{defi}
 
 \end{document}
