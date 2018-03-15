@@ -879,4 +879,106 @@
     能生成$\F_p^\times$的数被称作模$p$的原根.
   \end{defi}
 
+\subsection{向量空间}
+
+  \begin{defi}[向量空间]
+    在域$F$上的向量空间$V$是指定义了加法和数乘的一个集合，且这两个运算满足
+    \begin{enumerate}
+      \item 加法是的$V$构成一个Abel群$V^+$.
+      \item $1v=v$.
+      \item $(ab)v=a(bv)$，其中$a,b\in F$，$v\in V$.
+      \item 分配律.
+    \end{enumerate}
+  \end{defi}
+
+\subsection{基与维度}
+  \paragraph{说明}
+    本节仅记录了部分命题.
+
+  \begin{thm}
+    设$A\in F^{m\times n}$，$B\in F^n$. 则$AX=B$有解当且仅当$B$
+    位于$A$的列空间中.
+  \end{thm}
+
+  \begin{thm}
+    设$S$和$L$是向量空间$V$的有限子集. 设$S$张成$V$且$L$线性无关，
+    则$|S|\ge |L|$.
+  \end{thm}
+
+\subsection{利用基计算}
+
+  \begin{pos}
+    考虑在域$F$上的向量空间$V$，在给定它的一组基$\mbf{B}$后，
+    映射$\psi: F^n\to V,\, X\mapsto\mbf{B}X$为一个向量空间的同构.
+  \end{pos}
+
+  \begin{pos}
+    设$(v_1,\dots,v_n)$为向量空间$V$的一个子集，$\psi: F^n\to V$
+    为$\psi(X)=SX$. 则
+    \begin{enumerate}
+      \item $\psi$为单射当且仅当$S$线性无关.
+      \item $\psi$为满射当且仅当$S$张成$V$.
+      \item $\psi$为双射当且仅当$S$是$V$的一组基.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{cor}
+    任意域$F$上的$n$维向量空间$V$同构于$F^n$.
+  \end{cor}
+
+  \begin{defi}[换基矩阵]
+    对于向量空间$V$的基$\mbf{B}=(v_1,\dots,v_n)$和$\mbf{B}\hp=(v_1\hp,
+    \dots,v_n\hp)$. 称$P$为换基矩阵，若成立$\mbf{B}\hp=\mbf{B}P$.
+  \end{defi}
+  \remark
+    设$v\in V$在$\mbf{B}$下的坐标为$X$，则在$\mbf{B}\hp$下的坐标为
+    $X\hp = P^{-1}X$.
+
+  \begin{pos}
+    $\,$
+    \begin{enumerate}
+      \item $\mbf{B}$和$\mbf{B}\hp$是向量空间$V$的两组基. 则换基
+        矩阵$P$可逆且由$\mbf{B}$和$\mbf{B}\hp$唯一确定.
+      \item 设$\mbf{B}$是$V$的一组基，则$V$的所有基组成的全体为
+        $\{\mbf{B}P\,|\, P\in GL_n(F)\}$.
+    \end{enumerate}
+  \end{pos}
+
+\subsection{直和}
+
+  \begin{defi}[直和]
+    定义$V$的子空间$W_1,\dots,W_n$的直和为
+    \[
+      W_1 + \cdots W_n = \{v\in V\,|\, v=w_1+\cdots+w_n,\,w_i\in W_i\}.
+    \]
+  \end{defi}
+
+  \begin{defi}[独立]
+    称子空间$W_1,\dots,W_n$独立，若对于$w_i\in W_i$，$w_1+\cdots+w_n=0$
+    意味着$w_i=0$.
+  \end{defi}
+  \remark
+    子空间的直和是向量的张成的类比，或者说推广. 考虑向量的独立，它等价于各个向量
+    张成的子空间的独立.
+
+  \begin{pos}
+    设$W_1,\dots,W_n$是有限维向量空间$V$的子空间，$\mbf{B}_i$是$W_i$的基.
+    \begin{enumerate}
+      \item $W_i$独立且$\sum W_i=V$等价于$(\mbf{B}_1,\dots,\mbf{B}_n)$是$V$的基.
+      \item $\dim(\sum W_i)\le\sum\dim W_i$，当且仅当独立时等号成立.
+      \item 若$W_i\hp$是$W_i$的子空间，则$W_i\hp$独立.
+    \end{enumerate}
+  \end{pos}
+  \remark
+    若[1.]的条件成立，则称$V=W_1\oplus\cdots\oplus W_n$为直和.
+
+  \begin{thm}
+    设$W_1$和$W_2$是有限维向量空间$V$的子空间.
+    \begin{enumerate}
+      \item $\dim W_1 + \dim W_2 = \dim(W_1\cap W_2)+\dim(W_1+W_2)$.
+      \item $W_1$和$W_2$独立当且仅当$W_1\cap W_2=\{0\}$.
+      \item 若$V=W_1+W_2$，则存在$W_2$的子空间$W_2\hp$成立$W_1\oplus W_2\hp=V$.
+    \end{enumerate}
+  \end{thm}
+
 \end{document}
