@@ -10,177 +10,200 @@
 \tableofcontents
 \newpage
 
-\section{测度论}
-
-\subsection{绪论}
-
-  \begin{lemma}
-    设矩形$R$由有限个几乎不相交的矩形组成，即$R=\bigcup_{k=1}^N R_k$，则
-    $|R|=\sum_{k=1}^N|R_k|$.
-  \end{lemma}
-
-  \begin{lemma}
-    \label{lemma: 矩形并}
-    设$R,R_1,\dots,R_N$为矩形且$R\subset\bigcup_{k=1}^N R_k$，则
-    $|R|\le \sum_{k=1}^N|R_k|$.
-  \end{lemma}
+\section{集合论导引}
 
   \begin{thm}
-    设$\mcal{O}\subset\R$为开集，则$\mcal{O}$可以被唯一地写成可数个不相交开区间的并.
+    \label{thm: 开集的闭方块表示}
+    所有$\R^n$中的开集$\mcal{O}$都可以写作可数个几乎不相交的闭方块的并的形式.
   \end{thm}
-  \proof
-    首先证明可以用不相交开区间覆盖. 分为两步，首先逐点地构造覆盖它的最大开区间，接着
-    证明若两个“最大开区间”相交，则它们相等. 而对于可数，只需要用从每个区间中取出一个
-    有理数作为编号即可.$\quad\blacksquare$
-  \remark
-    这一定义给出了定义$R$中区间的测度的思路，而定义$R^n$中集合的测度的思路，也和这个是
-    类似的，但是需要经过一定的修改.
 
-  \begin{thm}
-    $R^d$中的开集$\mcal{O}$，$d\ge 1$，可被表示成可数个几乎不相交的立方体的并.
-  \end{thm}
-  \proof
-    TODO
-  \remark
-    注意，并不能保证这种表示方法是唯一的，所以并不能直接用它来定义“面积”.
+  \begin{pos}[对称差]
+    \label{pos: 对称差}
+    $\,$
+    \begin{enumerate}
+      \item $(A_1\cup A_2)\Delta(B_1\cup B_2)\subset(A_1\Delta B_1)\cup(A_2\Delta B_2)$.
+      \item TODO
+    \end{enumerate}
+  \end{pos}
+
+\newpage
+\section{测度论导引}
+
+\newpage
+\section{$\R^n$上的Lebesgue测度}
+
+\subsection{方块的测度}
+
+\subsection{$\vep^n$的测度}
 
 \subsection{外测度}
 
-  \begin{defi}[外测度]
-    \label{defi: 外测度}
-    对于$E\subset\R^n$，定义$E$的外测度为
-    \[
-      m_*(E) = \inf\sum_{j=1}^\infty |Q_j|.
-    \]
-    其中$\{Q_j\}$取遍$E$的所有可数闭立方覆盖，$|Q_j|$为立方体$Q_j$的体积.
-  \end{defi}
-  \remark
-    这一定义的动机在于，立方体$|Q_j|$的定义是明确，而我们尝试用立方体来覆盖原来的集合，
-    我们可以通过把立方体取得足够小，来使得覆盖尽可能地精确. 而这一行为的极限，即其下
-    确界，可以认为就是原来集合的测度.
-
-  \begin{pos}
-    $\,$
-    \begin{enumerate}
-      \item $\R^n$中的点的测度为零.
-      \item 闭立方$Q$的测度$m_*(Q)$等于它的体积$|Q|$，开立方也是.
-      \item $\R^n$的测度为$\infty$.
-    \end{enumerate}
-  \end{pos}
-  \proof
-    下给出[2.]的证明的概要. 需要证明$m_*(Q)\le|Q|$及其反向. 对于前者，由于$Q$可以被其
-    自身覆盖，所以根据外测度定义中的“下确界”，$m_*(Q)\le|Q|$成立. 而对于后者，考虑证明
-    $|Q|\le (1+\vep)m_*(Q)$对任意$\vep>0$成立. 对于任意$Q$的闭立方覆盖$\{Q_j\}$，
-    可以取一个每个立方都比原来稍大的开立方覆盖$\{S_j\}$，$|S_j|=(1+\vep)|Q_j|$. 由于
-    $Q$是紧集，所以可以取出有限子覆盖. 取对应的闭包再将对应的体积相加即可证明.\par
-    这一证明的动机在于，$m_*$的定义中是下确界，很难证明下确界大于等于某个东西，所以考虑证明
-    对于任意的立方覆盖，都成立大于等于号，从而导出下确界大于等于. 而由于\lemmaref{lemma:
-    矩形并}中只给出了有限的情况，所以需要紧集取出一个有限覆盖.$\quad\blacksquare$
-
   \begin{lemma}
-    对任意$\vep>0$，存在一个覆盖$E\subset\bigcup_{j=1}^\infty Q_j$，成立
-    \[
-      \sum_{j=1}^\infty m_*(Q_j) \le m_*(E)+\vep.
-    \]
+    对于任意的$A_1,A_2\in\mcal{M}^*(\R^n)$，成立
+    $|\mu^*A_1 - \mu^*A_2|\le\mu^*(A_1\Delta A_2)$.
   \end{lemma}
 
-  \begin{thm}[外测度的性质]
-    \label{thm: 外测度的性质}
-    $\,$
-    \begin{enumerate}
-      \item 单调性：若$E_1\subset E_2$，则$m_*(E_1)\le m_*(E_2)$.
-      \item 可数可加性：若$E=\bigcup_{j=1}^\infty E_j$，则$m_*(E)\le
-        \sum_{j=1}^\infty m_*(E_j)$.
-      \item 设$E\subset\R^d$，则$m_*(E)=\inf m_*(\mcal{O})$，其中
-        $\mcal{O}$取遍所有包含$E$的开集.
-      \item 若$E=E_1\cup E_2$且$d(E_1,E_2)>0$，则$m_*(E)=m_*(E_1)+m_*(E_2)$.
-      \item 若$E$是可数个几乎不相交的立方体$\{Q_j\}$的并，则
-        $m_*(E)=\sum_{j=1}^\infty|Q_j|$.
-    \end{enumerate}
-  \end{thm}
-  \remark
-    其中[3.]表示任意集合的外测度可以用开集的测度逼近.
-  \proof
-    关于[2.]，按照定义展开$m_*(E_j)$，取满足$\sum_{j=1}^\infty|Q_{k,j}
-    \le m_*(E_j) + \frac{\vep}{2^j}|$的立方覆盖. 则$\{Q_{k,j}\}$构成了
-    $E$的一个覆盖，再利用$m_*(E)$的定义以及几何级数即可证明.\par
-    对于[3.]，$m_*(E)\le\inf m_*(\mcal{O})$是显然的，下仅证明另一方向.
-    首先考虑$\rhs$的含义，它是$m_*(\mcal{O})$的下确界，要证明某个东西大于它，
-    只需要构造出一个$\mcal{O}$并让那个东西大于那一特定的$m_*(\mcal{O})$即可.
-    再考虑$lhs$，和之前相同，可以将它看作$m_*(E)+\vep$，而这又可以换成一个稍小
-    一点的立方覆盖. 将这一立方覆盖里的每一个立方稍稍放大，即得到了一个开立方覆盖.
-    它们的并是一个开集，这就是之前所需要构造的$\mcal{O}$.\par
-    [4.]和[5.]的证明中所用的技巧和之前的是相似的.$\quad\blacksquare$
-
-\subsection{可测集和Lebesgue测度}
-
+\subsection{Lebesgue测度}
   \begin{defi}[Lebesgue测度]
-    称$E\subset\R^d$为Lebesgue可测的，若对于任意$\vep>0$，存在开集
-    $\mcal{O}\supset E$，成立$m_*(\mcal{O}-E)\le\vep$. 对于可测集
-    $E$，定义Lebesgue测度$m(E)=m_*(E)$.
+    称集合$A\in\mcal{M}^*(\R^n)$为Lebesgue可测，若对任意$\vep>0$，存在
+    初等集$B$，使得
+    \begin{equation}
+      \label{equ: Lebesgue测度}
+      \mu^*(A\Delta B) < \vep.
+    \end{equation}
+    记Lebesgue可测的集合全体为$\mcal{M}(\R^n)$. 定义$\mu$为$\mu^*$限制在
+    $\mcal{M}(\R^n)$上的函数，称其为Lebesgue测度.
   \end{defi}
   \remark
-    虽然每一个集合$E$都有外测度，但是只有特定的一类集合的外测度有一些比较好的
-    性质，因此我们需要定义Lebesgue测度.
+    之所以既需要外测度也需要定义Lebesgue测度是因为虽然外测度是定义在所有集合上的，
+    但是它不满足可加性；而Lebesgue虽然有诸如可加性等很好的性质，但它只是定义在$\R^n$的
+    一个子集上面. 而如此定义可测的原因在于，对于初等集而言，外测度的性质是良好且直观的.
 
-  \begin{lemma}
-    若$F$为闭集，$K$为紧集，且$F$和$K$不相交，则$d(F,K)>0$.
-  \end{lemma}
-
-  \begin{pos}[可测集的性质]
-    $\,$
+  \begin{pos}[Lebesgue测度的性质]
+    Lebesgue测度满足如下性质
     \begin{enumerate}
-      \item $\R^d$中的开集都可测.
-      \item 若$F$是一个外测度为零的集合的子集，则$F$可测.
-      \item 可数个可测集的并可测.
-      \item 闭集可测.
-      \item 可测集的补集可测.
-      \item 可测集的可数交可测.
+      \item 对任意$A\in\mcal{M}(\R^n)$，成立$\mu A\ge 0$.
+      \item $\vep^n\subset\mcal{M}(\R^n)$且若$A\in\vep^n$，则$\mu A=m A$.
     \end{enumerate}
   \end{pos}
-  \proof
-    [1.]是显然的. [2.]可以利用\thmref{thm: 外测度的性质}[3.]证明. \par
-    对于[3.]只需要证明紧集可测即可，因为闭集可以被表达成可数个紧集的并的形式，之后
-    利用[2.]即可完成证明. 而证明紧集$F$，考虑定义，即对任意$\vep>0$构造$\mcal{O}$
-    使成立$m_*(\mcal{O}-F)\le\vep$. 根据\thmref{thm: 外测度的性质}[3.]可以
-    构造出$m_*(\mcal{O})\le m_*(F)+\vep$的$\mcal{O}$，但是由于$m_*$和集合
-    的相减不兼容，所以仍需要进一步的处理. 考虑$\mcal{O}-F$，它实际上是包在$F$外
-    的一层集合，它可以被可数个几乎不相交的立方覆盖，而根据\thmref{thm: 外测度的性质}
-    [3.]，它们是从$m_*$中拆出来的. 再利用前任意有限个，进一步处理即可.$\quad\blacksquare$
 
   \begin{thm}
-    设$E_1,E_2,\dots$为不相交可测集且$E=\bigcup_{j=1}^\infty E_j$，则
-    \[
-      m(E) = \sum_{j=1}^\infty m(E_j).
-    \]
+    $\mcal{M}(\R^n)$为环.
+  \end{thm}
+  \proof
+    利用\posref{pos: 对称差}即可. $\quad\blacksquare$
+
+  \begin{cor}
+    $\mcal{M}([0, 1])$为一个代数.
+  \end{cor}
+
+  \begin{thm}
+    $\mu$在$\mcal{M}(\R^n)$上满足可加性.
+  \end{thm}
+  \proof
+    即证明，若$A=A_1\cupdot A_2$，则$\mu A = \mu A_1 + \mu A_2$. 其中$\mu A
+    \le \mu A_1 + \mu A_2$可以由外测度的性质直接推出. 下考虑另一方向，尝试证明
+    $\mu A > \mu A_1 + \mu A_2 - \vep$.\par
+    对于固定的$\vep$，首先根据Lebesgue可测的定义取出基础集$B_i$，满足$\mu*(A_i
+    \Delta B_i)<\vep/6$，同时可以证明$m(B_1\cap B_2)<\vep/3$. 用$B=B_1\cup
+    B_2$来估计$A$即可完成证明.$\quad\blacksquare$
+
+  \begin{thm}
+    环$\mcal{M}(\R^n)$上的测度$\mu$是$\sigma$-可加的.
   \end{thm}
 
-  \begin{defi}[$\sigma$-代数]
-    称一个$\R^d$的子集组成的集合为一个$\sigma$-代数，若它在可数交、可数并以及
-    取补集操作下封闭.
+  \begin{thm}
+    \label{thm: 可数并可测}
+    设$A\in \mcal{M}^*(\R^n)$且$A=\bigcup_{k=1}^\infty A_k$，其中
+    $A_k\in\mcal{M}(\R^n)$. 则$A\in\mcal{M}(\R^n)$.
+  \end{thm}
+  \remark
+    注意，对于Lebesgue可测集，它的测度就是外测度.
+  \proof
+    首先将$A$重写为不相交集$A_k\hp=A_k\backslash\bigcup_{j=1}^{k-1}A_j$.
+    考虑级数$\sum\mu A_k\hp$，根据条件，它是收敛的. 之后对于它前充分多的有限项
+    所对应的集合的并，它是Lebesgue可测的，考虑它对应的初等集$B$. 而对于剩下的集合，
+    它们的外测度足够小. $\quad\blacksquare$
+
+  \begin{cor}
+    可数个零测集的并依然是零测集.
+  \end{cor}
+  \proof
+    利用外测度的$\sigma$-半可加性和\thmref{thm: 可数并可测}即可证明.
+
+  \begin{defi}[完备]
+    称定义在环$\mathcal{K}$上的测度$\mu$是完备的，若任意零测集的子集的测度也为零.
   \end{defi}
 
-  \begin{defi}[Borel集]
-    Borel集$\mcal{B}_{\R^d}$是指含有所有$\R^d$中开集的最小的$\sigma$-代数，
-    即对任意含有所有开集的集合$S$，成立$\mcal{B}_{\R^d}\subset S$.
-  \end{defi}
-  \remark
-    由于$\sigma$-代数的交依然是$\sigma$-代数，所以也可以定义Borel集为所有含有
-    所有开集的$\sigma$-代数的交，这给出了存在性和唯一性.
+  \begin{thm}
+    Lebesgue测度是完备的.
+  \end{thm}
+
+\subsection{广义测度}
 
   \begin{defi}
-    定义可数个开集的交集的全体为$G_{\delta}$；定义可数个闭集的并集的全体
-    为$F_{\sigma}$.
+    定义$\hat{Q}_l$为中心在原点、边长为$2l$的$n$维立方块.
   \end{defi}
 
-  \begin{pos}
-    设$E\subset\R^d$，以下命题等价：
-    \begin{enumerate}
-      \item $E$可测.
-      \item $E$与$G_\delta$仅相差一个零测集.
-      \item $E$与$F_\sigma$仅相差一个零测集.
-    \end{enumerate}
-  \end{pos}
+  \begin{defi}[$\sigma$-可测]
+    \label{defi: sigma-可测}
+    称$A\subset\R^n$广义Lebesgue可测或$\sigma$-可测，若对于任意
+    $l\in\mathbb{N}$，集合$A\cap\hat{Q}_l$ Lebesgue可测. 同时，对于
+    $\sigma$-可测的集合，定义
+    \begin{equation}
+      \label{equ: sigma-测度}
+      \mu A = \lim_{l\to\infty}\mu(A\cap \hat{Q}_l).
+    \end{equation}
+    记$\sigma$可测的集合全体为$\mcal{M}_{\sigma}(\R^n)$.
+  \end{defi}
+
+  \begin{thm}
+    $\mcal{M}(\R^n)\subset\mcal{M}_{\sigma}(\R^n)$.
+  \end{thm}
+
+  \begin{thm}
+    若对于$A\in\mcal{M}_\sigma(\R^n)$，\equref{equ: sigma-测度}的极限为有限值，
+    则$A\in\mcal{M}(\R^n)$.
+  \end{thm}
+  \remark
+    这一定理表明，$\mcal{M}_\sigma(\R^n)$只是$\mcal{M}(\R^n)$加上了原来测度
+    为无穷的那些集合. 即对于测度有限部分，这两种的按照不同方式定义的测度是相同的.
+  \proof
+    为证明$A\in\mcal{M}(\R^n)$，只需要利用\thmref{thm: 可数并可测}，即验证
+    $A\in\mcal{M}^*(\R^n)$且$A$可以拆成可数个Lebesgue可测集的并的形式.\par
+    首先将利用$\{A_l\backslash A_{l-1}\}$拆分$A$，可以证明它们都是Lebesgue可测
+    的. 之后只需要证明$A$的外测度有限即可. 注意
+    \[
+      \mu^* A \le \sum_{l=1}^\infty\mu^*(A_l\backslash A_{l-1})
+      = \sum_{l=1}^\infty\mu(A_l\backslash A_{l-1}).
+    \]
+    而利用级数相关知识，可知$\rhs$收敛于有限值.$\quad\blacksquare$
+
+  \begin{thm}
+    $\mcal{M}_\sigma(\R^n)$是$\sigma$-代数，它的单位元为$\R^n$.
+  \end{thm}
+
+  \begin{cor}
+    设$X\subset\R^n$为紧集，则$\mcal{M}(X)$为$\sigma$-代数.
+  \end{cor}
+
+  \begin{thm}
+    $\R^n$中的开集都$\sigma$-可测.
+  \end{thm}
+  \proof
+    利用$\mcal{M}_\sigma(\R^n)$是$\sigma$-代数这一事实以及\thmref{thm:
+    开集的闭方块表示}即可.$\quad\blacksquare$
+
+\subsection{Borel $\sigma-$代数}
+
+  \begin{defi}[Borel $\sigma$-代数]
+    \label{defi: Borel代数}
+    定义$\R^n$上的Borel $\sigma$-代数是由开集全体生成的$\sigma$-代数，即
+    \[
+      \mcal{B}(\R^n) = \sigma(\mcal{T}(\R^n)) =
+      \bigcap\{ \mcal{A}\subset\R^n\,|\, \mcal{A}\supset\mcal{T}(\R^n),
+      \,\text{且$\mcal{A}$为$\sigma$-代数}\}.
+    \]
+    其中$\mcal{T}(\R^n)$表示$\R^n$上的开集全体.
+  \end{defi}
+  \remark
+    这一定义表明Borel $\sigma$-代数是最小的包含了所有开集的$\sigma$-代数. 首先，
+    对$\mcal{A}$的要求表明它是包含了所有开集的$\sigma$-代数，而$\bigcap$则表明
+    它是最小的. 与此同时，由于$\sigma$-代数对于取补集操作封闭，所以也可以说Borel
+    $\sigma$-代数是由全体闭集生成的. 另，常简称Borel $\sigma$-代数为Borel代数
+    或Borel集.
+
+  \begin{thm}
+    Borel代数由$\R^n$中的闭方块全体$\mcal{K}(\R^n)$生成. 且Borel集Lebesgue可测.
+  \end{thm}
+  \remark
+    这一定理意味着只需要定义了方块以及方块上的测度，那么对应的Borel集永远是可测的.
+  \proof
+    首先考虑定理的前半部分. 根据\thmref{thm: 开集的闭方块表示}可知，$\mcal{T}(\R^n)
+    \subset\sigma(\mcal{K}(\R^n))$，从而$\sigma(\mcal{T}(\R^n))\subset
+    \sigma(\mcal{K}(\R^n))$. 而根据\defref{defi: Borel代数}的评注，可知反向也
+    成立. 因此$\mcal{B}(\R^n) = \sigma(\mcal{K}(\R^n))$.\par
+
 
 
 \end{document}
