@@ -97,5 +97,75 @@
 
 \subsection{特征向量}
 
+  \begin{defi}[特征向量]
+    对于线性算子$T$，称非零向量$v$为其特征向量，若存在标量$\lambda$，成立
+    $T(v)=\lambda v$. 称$\lambda$为其关于$v$的特征值.
+  \end{defi}
+
+  \begin{thm}
+    相似矩阵的特征值相同.
+  \end{thm}
+
+  \begin{thm}
+    $\,$
+    \begin{enumerate}
+      \item 设$T$是向量空间$V$上的线性算子. $T$在基$\mbf{B}=(v_1,\dots,v_n)$下的
+        矩阵为对角阵，当且仅当$v_i$为其特征向量.
+      \item 矩阵$A_{n\times n}$相似于对角阵，当且仅当它的特征向量组成了$V$的一组基.
+    \end{enumerate}
+  \end{thm}
+
+\subsection{特征多项式}
+
+  \begin{thm}
+    设$T$是有限维向量空间$V$上的线性算子，则$T$的特征值为使得$\lambda I-T$非奇异
+    的$\lambda$. 且以下命题等价：
+    \begin{enumerate}
+      \item $T$奇异.
+      \item $T$有为零的特征值.
+      \item 设$A$是$T$在任意基下的矩阵. $\det A=0$.
+    \end{enumerate}
+  \end{thm}
+  \remark
+    这一命题表明，我们可以通过求解$\lambda I - T=0$来解得所有的特征值，在利用这些
+    特征值来求解对应的特征向量.
+
+  \begin{defi}[特征多项式]
+    设$A$是线性算子$T$在某组基下的矩阵，定义$T$的特征多项式为$p(t)=\det(tI-A)$.
+  \end{defi}
+
+  \begin{cor}
+    线性算子的特征值为其特征多项式的根.
+  \end{cor}
+
+  \begin{cor}
+    设$A$为三角阵，则它的特征多项式为$p(t)=(t-a_{11})\cdots(t-a_{nn})$.
+  \end{cor}
+
+  \begin{thm}
+    线性算子的特征多项式与基的选取无关.
+  \end{thm}
+
+  \begin{thm}
+    $n\times n$矩阵的特征多项式有形式
+    \[
+      p(t) = t^n - (\trace A)t^{n-1} + \cdots + (-1)^n\det A.
+    \]
+  \end{thm}
+
+  \begin{thm}
+    设$T$是有限维向量空间$V$上的线性算子.
+    \begin{enumerate}
+      \item 若$\dim V=n$，则$T$至多有$n$个特征向量.
+      \item $\{0\}=V\subset\mathbb{C}$，则$T$至少有一个特征向量.
+    \end{enumerate}
+  \end{thm}
+
+  \begin{thm}
+    设$\lambda_1,\dots,\lambda_n$是$n\times n$复矩阵$A$的特征值，则$\det=
+    \prod\lambda_i$，$\trace A=\sum\lambda_i$.
+  \end{thm}
+
+
 
 \end{document}
