@@ -1,0 +1,320 @@
+\section{绪论}
+
+\subsection{复数与复平面}
+
+  复数相关定义与性质、复平面相关拓扑性质略
+
+\subsection{复平面上函数}
+
+  \paragraph{说明}
+    极限、连续函数相关的定义与性质略，
+    它们在对于一般度量空间中的函数的讨论中已经讨论过了.
+
+  \begin{defi}[极值]
+    对于定义在$\Omega\subset\mC$上的复函数$f$，称$f$在$z_0\in\Omega$
+    处达到极大值，若对任意$z\in\Omega$，成立$|f(z)| \le |f(z_0)|$.
+    对于极小值同理.
+  \end{defi}
+  \remark
+    由于复数之间是没有大小关系的，所以极值是利用绝对值定义的.
+
+  \begin{defi}[全纯\protect\footnotemark]
+    \footnotetext{Holomorphic}
+    设$f$是定义在开集$\Omega\subset\mC$的复函数. 称$f$在点$z_0
+    \in\Omega$处全纯，若存在有限极限
+    \[
+      \lim_{h\to 0}\frac{f(z_0+h) - f(z_0)}{h}.
+    \]
+    其中$h\ne 0$且$z_0+h\in\Omega$. 称$f$在$\Omega$上全纯，若
+    它在每个点上全纯. 若$f$在$\mC$上全纯，则称它是整的.
+  \end{defi}
+  \remark
+    这一定义和实变量函数的可导在形式上是一致的，但是实际上这一条件相较于
+    可导要强很多. 另外，和、差等函数的相关公式以及链式法则都是成立的，
+    在此略去.
+
+  \begin{pos}[有限增量公式]
+    设$f$在$z_0$处全纯，则$f(z_0+h)=f(z_0)+f\hp(z_0)h + h\psi(h)$，
+    其中$\lim_{h\to 0}\psi(h)=0$.
+  \end{pos}
+
+  \paragraph{复函数与映射}
+    一个复函数$f$在一定程度上可以看作$F:\R^2\to\R^2$的映射，但是它们仍
+    有着本质的区别. 首先$f$的全纯和$F$的可导是不等价的，考虑非全纯的函数
+    $f(z)=\bar{z}$，它对应的$F$是无穷次可微的. 另一方面，$f$的复导数
+    是一个复数，而$F$的导数则是对应的Jacob矩阵. 但是，它们之间仍是有联系
+    的. 它们之间的关联见\thmref{thm: Cauchy-Riemann方程1}以及\thmref{thm:
+    Cauchy-Riemann方程2}.
+
+  \begin{defi}
+    定义
+    $\dfrac{\pt}{\pt z} = \dfrac{1}{2}\left(
+    \dfrac{\pt}{\pt x} + \dfrac{1}{i}\dfrac{\pt}{\pt y}
+    \right)$，
+    $\dfrac{\pt}{\pt \bar{z}} = \dfrac{1}{2}\left(
+    \dfrac{\pt}{\pt x} - \dfrac{1}{i}\dfrac{\pt}{\pt y}
+    \right)$.
+  \end{defi}
+
+  \begin{thm}[Cauchy-Riemann方程]
+    \label{thm: Cauchy-Riemann方程1}
+    设$f=u+\iu v$在$z_0$处全纯，则
+    \begin{equation}
+        \label{equ: Cauchy-Riemann方程}
+        \frac{\pt f}{\pt \bar{z}}(z_0)=0\quad\text{且}\quad
+        f\hp(z_0) = \frac{\pt f}{\pt z}(z_0)
+        = 2\frac{\pt u}{\pt z}(z_0).
+    \end{equation}
+     设$F:\R^2\to\R^2$为$f$对应的映射，则$F$可微且成立
+     \[
+      \det J_F(x_0,y_0) = |f\hp(z_0)|^2.
+     \]
+  \end{thm}
+  \remark
+    设$f=u+\iu v$，则Cauchy-Riemann方程也可以写作
+    \begin{equation}
+      \label{equ: Cauchy-Riemann方程2}
+      \frac{\pt u}{\pt x} = \frac{\pt v}{\pt y},\quad
+      \frac{\pt u}{\pt y} = -\frac{\pt v}{\pt x}.
+    \end{equation}
+  \proof
+    $f(z)=f(x+\iu y)=f(x, y)$，分别让$h$沿实轴和虚轴方向趋于零，得到
+    两偏导数，根据全纯的定义，它们应相等，从而可得到\equref{equ: Cauchy-Riemann方程}中
+    的前者. 同时，将它们相加再除以二即为$\pt f/\pt z$，同时利
+    用\equref{equ: Cauchy-Riemann方程2}，可以得到后者.\par
+    而关于$F$的可微性，只需注意到若利用\equref{equ: Cauchy-Riemann方程2}，则有
+    \[\begin{split}
+      &|F(x_0+h_1,x_0+h_2)-F(x_0,y_0)-J_F(x_0,y_0)(h_1,h_2)\tr|  \\
+      =& \left|f(z_0+h)-f(z_0)-
+      \left(\frac{\pt u}{\pt x}-\iu\frac{\pt u}{\pt y}\right)(h_1+\iu h_2)\right|
+      = |f(z_0+h)-f(z_0)-f\hp(z_0)h|.
+    \end{split}\]
+    由全纯的定义可知$F$是可微的. 而最后只需要将Cauchy-Riemann方程应用到
+    $J_F$行列式的表达式中即可完成所有的证明.$\quad\blacksquare$
+
+  \begin{thm}[Cauchy-Riemann方程]
+    \label{thm: Cauchy-Riemann方程2}
+    设$f=u+\iu v$是定义在开集$\Omega$上的复函数. 设$u$和$v$连续
+    可微且满足Cauchy-Riemann方程\equref{equ: Cauchy-Riemann方程2}，
+    则$f$在$\Omega$上全纯且$f\hp(z_0) = \pt f/\pt z$.
+  \end{thm}
+  \proof
+    利用$f=u+\iu v$，分别对$u$和$v$利用有限增量公式展开即可.$\quad\blacksquare$
+
+  \begin{thm}[Cauchy-Riemann方程]
+    \label{thm: 极坐标Cauchy-Riemann方程}
+    在极坐标下，Cauchy-Riemann方程的形式为
+    \[
+      \frac{\pt u}{\pt r} = \frac{1}{r}\frac{\pt v}{\pt\theta},\quad
+      \frac{1}{r}\frac{\pt u}{\pt\theta} = -\frac{\pt v}{\pt r}.
+    \]
+  \end{thm}
+  \proof
+    首先将\thmref{thm: 偏导数的极坐标表示}的结果代入\equref{equ:
+    Cauchy-Riemann方程2}，则有
+    \[\begin{split}
+      (*1)\qquad\frac{\pt u}{\pt r}\cos\theta - \frac{1}{r}\frac{\pt u}{\pt\theta}\sin\theta
+      &= \frac{\pt v}{\pt r}\sin\theta - \frac{1}{r}\frac{\pt v}{\pt\theta}\cos\theta\\
+      (*2)\qquad\frac{\pt u}{\pt r}\sin\theta + \frac{1}{r}\frac{\pt u}{\pt\theta}\cos\theta
+      &= -\frac{\pt v}{\pt r}\cos\theta + \frac{1}{r}\frac{\pt v}{\pt\theta}\sin\theta.
+    \end{split}\]
+    计算$(*1)\times r\cos\theta + (*2)\times r\sin\theta$即得结论中的前式，
+    计算$(*1)\times r\sin\theta - (*2)\times r\cos\theta$即得结论中的后式.
+    $\quad\blacksquare$
+
+  \begin{thm}[链式法则]
+    设$U$和$V$是复平面上的开集，$f:U\to V$和$g:V\to\mC$从实变量角度
+    可微，定义$h=g\circ f$，则
+    \[
+      \frac{\pt h}{\pt z}=\frac{\pt g}{\pt z}\frac{\pt f}{\pt z}
+      + \frac{\pt g}{\pt\bar{z}}\frac{\pt\bar{f}}{\pt z},\quad
+      \frac{\pt h}{\pt\bar{z}} = \frac{\pt g}{\pt z}\frac{\pt f}{\pt\bar{z}}
+      + \frac{\pt g}{\pt\bar{z}}\frac{\pt\bar{f}}{\pt\bar{z}}.
+    \]
+  \end{thm}
+  \proof
+    TODO
+
+  \begin{defi}[调和]
+    对于二阶连续可导的函数，定义Laplace算子为
+    \[
+      \Delta = \frac{\pt}{\pt x^2} + \frac{\pt}{\pt y^2}.
+    \]
+    称定义在复平面上开集$\Omega$中的实值函数$f$为调和的，若$\Delta f=0$在
+    $\Omega$中成立.
+  \end{defi}
+
+  \begin{pos}
+    $\Delta = 4\dfrac{\pt}{\pt z}\dfrac{\pt}{\pt\bar{z}}
+    = 4\dfrac{\pt}{\pt\bar{z}}\dfrac{\pt}{\pt z}$.
+  \end{pos}
+
+  \begin{cor}[调和]
+    若$f$在开集$\Omega$上全纯，则它的实部和虚部分别调和.
+  \end{cor}
+
+  \begin{defi}[Blaschke因子]
+    对于单位圆盘$\mathbb{D}$内的复数$w$，定义Blaschke因子为
+    \[
+      F: z\mapsto \frac{w-z}{1-\bar{w}z},\quad z\in\mC.
+    \]
+  \end{defi}
+
+  \begin{thm}[Blaschke因子]
+    Blaschke因子满足如下性质：
+    \begin{enumerate}
+      \item $F(\mathbb{D})\subset\mathbb{D}$，且$F$全纯.
+      \item $F(0)=w$且$F(w)=0$.
+      \item 若$|z|=1$，则$|F(z)|=1$.
+      \item $F:\mathbb{D}\to\mathbb{D}$为双射.
+    \end{enumerate}
+  \end{thm}
+  \proof
+    TODO
+
+  \begin{pos}[常数]
+    设$f$是定义在连通开集$\Omega$上的全纯函数，若$\Re(f)$，$\Im(f)$或
+    $|f|$在$\Omega$上为常数，则$f$也为常数.
+  \end{pos}
+  \proof
+    由于连通开集必然是路径连通的，所以只需要证明对应的$J_f=0$即可. 对于
+    前两者，证明是显然的. 对于$|f|=C$的情况，只需要考虑极坐标的形式并利
+    用\thmref{thm: 极坐标Cauchy-Riemann方程}即可.$\quad\blacksquare$
+
+\subsection{幂级数}
+
+  \begin{thm}[幂级数收敛半径]
+    给定幂级数$\sum_{n=0}^\infty a_nz^n$，在扩充实数域中存在$R$使得
+    \begin{enumerate}
+      \item 若$|z|<R$，则幂级数绝对收敛.
+      \item 若$|z|>R$，则幂级数发散.
+    \end{enumerate}
+    并且，$R$由Hadamard公式确定
+    \[
+      \frac{1}{R} = \limsup|a_n|^{1/n}.
+    \]
+  \end{thm}
+  \proof
+    对于固定的$z$，取常数$s\in(|z|, R)$，将$\sum|a_n||z|^n$放缩成
+    幂级数即可.$\quad\blacksquare$
+
+  \begin{thm}
+    设$\{a_n\}$为非零复序列且满足$\lim_{n\to\infty}|a_{n+1}|/|a_n|=L$，
+    则$\lim_{n\to\infty}\sqrt[n]{|a_n|}=L$.
+  \end{thm}
+
+  \begin{defi}[指数函数]
+    \label{defi: 指数函数}
+    对于$z\in\mC$，定义$e^z = \sum\limits_{n=0}^\infty\dfrac{z^n}{n!}$.
+  \end{defi}
+  \remark
+    首先由于$\rhs$在$\R$中一致收敛至$e^x$，所以这一定义和原有的定义是一致的.
+    与此同时，可以证明对于任意的$\rhs$对任意$z\in\mC$是收敛的，所以这一定义
+    是良定义的.
+
+  \begin{defi}[三角函数]
+    \label{defi: 三角函数}
+    对于$z\in\mC$，定义三角函数
+    \[
+      \cos z = \sum_{n=0}^\infty(-1)^n\frac{z^{2n}}{(2n)!},\quad
+      \sin z = \sum_{n=0}^\infty(-1)^n\frac{z^{2n+1}}{(2n+1)!}.
+    \]
+  \end{defi}
+
+  \begin{thm}[Euler公式]
+    \label{thm: Euler公式}
+    对于$z\in\mC$，成立$e^{iz} = \cos z + \iu\sin z$.
+  \end{thm}
+  \proof
+    根据\defref{defi: 指数函数}和\defref{defi: 三角函数}，不难验证
+    上式的正确性. 需要注意，此两级数相加和换序的正确性是由它们的绝对收敛性
+    保证的.$\quad\blacksquare$
+
+  \begin{thm}
+    幂级数$f(z)=\sum_{n=0}^\infty a_nz^n$在它的收敛圆盘内定义了一个
+    全纯函数. 且$f$可以逐项求导，其导数$f\hp$的收敛半径与$f$的收敛半径相同.
+  \end{thm}
+  \proof
+    关于$f$和$f\hp$的收敛半径相同的验证是简单的，下仅证明$f\hp$的存在性，
+    且它可逐项求导得到，即$\sum_{n=0}^\infty na_nz^{n-1}$收敛至$g(z)$
+    而$\lim_{h\to 0}\{(f(z+h)-f(z))/h - g(z)\} = 0$.\par
+    设$g(z)=\sum_{n=0}^\infty na_nz^{n-1}$，$S_N(z)$为其前$N$
+    项和而$E_N(z)$为其余项，对于任意的$z$，考虑
+    \[\begin{split}
+      \frac{f(z+h)-f(z)}{h} - g(z) = &
+      \left( \frac{S_N(z+h)-S_N(z)}{h} - S\hp_n(z) \right)\\
+      &+ (S\hp_N(z) - g(z)) + \left( \frac{E_N(z+h)-E_N(z)}{h} \right).
+    \end{split}\]
+    先让$N\to\infty$，可以证明后两项趋于零. 之后固定充分大的$N$，令$h\to 0$，
+    则可以证明第一项趋于零.$\quad\blacksquare$
+
+  \begin{cor}
+    幂级数在它的收敛圆盘内定义了一个无穷次可导的复函数，且它的任意
+    阶导数都可以通过逐项求导得到.
+  \end{cor}
+
+  \begin{defi}[解析]
+    称复函数$f$在$z_0\in\mC$处解析，若存在$\delta>0$，在$O_\delta(z_0)$中$f$
+    有幂级数展开.
+  \end{defi}
+
+\subsection{曲线积分}
+
+  \begin{defi}[参数曲线]
+    参数曲线是指映射$z:[a,b]\subset\R\to\mC$. 称它为光滑的，
+    若$z$连续可导并且$z(t)\ne 0$. 称两个参数曲线$z$和$\tilde{z}:[c,d]\to\mC$
+    是等价的，若存在连续可微的从$[c,d]$到$[a,b]$的双射$s\mapsto t(s)$成立
+    $t\hp(s)>0$且$\tilde{z}=z(t(s))$.\par
+    称分段光滑的曲线是闭合的，若$z(a)=z(b)$. 称它为简单的，若$z(x)=z(y)$可以
+    推得$x=y$或$x,y\in\{a, b\}$. 通常，曲线一词指代分段光滑曲线.
+  \end{defi}
+  \remark
+    注意，$\R^2$中的曲线通常有不止一种参数化方法.
+
+  \begin{defi}[曲线积分]
+    给定$\mC$中的光滑曲线$\gamma$，设$z:[a,b]\to\mC$是它的参数化而
+    $f$是定义在$\gamma$上的连续函数，则定义$f$沿$\gamma$的积分为
+    \[
+      \int_\gamma f(z)\rd z = \int_a^b f(z(t))z\hp(t)\rd t.
+    \]
+  \end{defi}
+  \remark
+    可以证明$\rhs$的取值与参数化的方法无关，所以它是良定义的.
+
+  \begin{defi}[曲线长度]
+    给定$\mC$中的光滑曲线$\gamma$，设$z:[a,b]\to\mC$是它的参数化.
+    定义$\gamma$的长度为
+    \[
+      \len(\gamma) = \int_a^b|z\hp(t)|\rd t.
+    \]
+  \end{defi}
+
+  \begin{thm}
+    连续函数的曲线积分满足如下性质.
+    \begin{enumerate}
+      \item 线性性.
+      \item $\int_\gamma f(z)\rd z = -\int_{\gamma^-}f(z)\rd z$.
+      \item $|\int_\gamma f(z)\rd z| \le \sup_{z\in\gamma}|f(z)|\times\len(\gamma)$.
+    \end{enumerate}
+  \end{thm}
+
+  \begin{thm}
+    设连续函数$f$在$\Omega$上有原函数$F$，$\gamma$是$\Omega$中以
+    $w_1$为起点$w_2$为终点的曲线，则
+    \[
+      \int_\gamma f(z)\rd z = F(w_2) - F(w_1).
+    \]
+  \end{thm}
+
+  \begin{cor}
+    \label{cor: 曲线积分1}
+    设连续函数$f$在$\Omega$上有原函数$F$，$\gamma$是$\Omega$中的
+    闭曲线，则
+    \[
+      \oint_\gamma f(z)\rd z = 0.
+    \]
+  \end{cor}
+
+  \begin{cor}
+    若$f$在区域$\Omega$中全纯且$f\hp = 0$，则$f$为常值.
+  \end{cor}

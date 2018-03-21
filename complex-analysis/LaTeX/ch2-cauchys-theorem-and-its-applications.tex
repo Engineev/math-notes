@@ -1,0 +1,260 @@
+\section{Cauchy定理及其应用}
+
+\subsection{Goursat定理}
+
+  \begin{thm}[Goursat]
+    \label{thm: Goursat}
+    设$\Omega$是$\mC$中的开集，$T\subset\Omega$是一个三角形，且它
+    的内部也都在$\Omega$内. 设$f$在$\Omega$中全纯，则
+    \[
+      \int_T f(z)\rd z = 0.
+    \]
+  \end{thm}
+  \remark
+    这一定理同\corref{cor: 曲线积分1}最大的区别在于，它并不要求$f$的
+    原函数，甚至相反的，它要求$f$全纯. 另外，如果将条件中的三角形换成
+    长方形，结论依然是成立的，只需要将它分割成两个三角形再应用此定理即可
+    证明.
+  \proof
+    通过连接各边中点来四分三角形. 选取其中$|\int f\rd z|$最大者作为
+    下一个三角形，使得成立$|I_0|\le 4^n|I_n|$，即用沿着小三角形的积分
+    来估计原积分. 另一方面，这些小三角形及其内部构成了一个紧集套，设它
+    收缩至$z_0$. 利用在$z_0$处展开$f$至二次项以及\corref{cor:
+    曲线积分1}来估计$I_n$. $\quad\blacksquare$
+
+\subsection{局部原函数存在性与圆盘上的Cauchy定理}
+
+  \begin{thm}[局部存在性]
+    \label{thm: 局部存在性}
+    开圆盘上的全纯函数在该圆盘上有原函数.
+  \end{thm}
+  \proof
+    不失一般性的，可以假设圆盘以原点为中心.
+    分为两步完成证明，首先定义一个无歧义的$F(z)$，接着证明$F(z)$
+    是$f(z)$的原函数.
+    \begin{enumerate}
+      \item 选取连接原点和$z$的直角路径，定义沿该路径积分的结果为$F(z)$.
+      \item 通过路径积分的相消和\thmref{thm: Goursat}，证明$F(z+h)-
+        F(z)$即为沿着连接两点的直线段积分的结果. 再进行进一步的估计与证明.
+        $\quad\blacksquare$
+    \end{enumerate}
+  \remark
+    这一定理表明对于全纯函数，至少在局部永远是有原函数的.
+
+  \begin{thm}[圆盘上的Cauchy定理]
+    设$f$在圆盘上全纯，则对于任意圆盘中的闭曲线$\gamma$，成立
+    \[
+      \int_\gamma f(z)\rd z = 0.
+    \]
+  \end{thm}
+
+  \begin{cor}
+    \label{cor: Cauchy定理}
+    设$f$在开集$\Omega$上全纯，圆$C$及其内部都在$\Omega$中，则
+    \[
+      \int_C f(z)\rd z = 0.
+    \]
+  \end{cor}
+  \remark
+    实际这些定理对于包括锁孔形在内的所有可以方便定义内部的“简单”图形
+    都成立.
+
+\subsection{利用Cauchy定理积分}
+
+  通常可以总结为如下步骤：
+  \begin{enumerate}
+    \item 选取恰当的全纯函数$f$.
+    \item 接下来选取恰当的闭曲线$\gamma$，在其上对$f$应用\corref{cor: Cauchy定理}.
+    \item 将$\int_\gamma f(z)\rd z$中$\gamma$拆分成不同的段，使得在其上的积分
+      或互相抵消，或可以得出结果，或有原所求积分的形式.
+    \item 整理之前的结果，进行诸如取极限等操作并得出结论.
+  \end{enumerate}
+  各个步骤之间的顺序并非一定的.
+
+\subsection{Cauchy积分公式}
+
+  \begin{thm}[Cauchy]
+    \label{thm: Cauchy公式}
+    设$f$在开集$\Omega$上全纯且$\Omega$包含圆盘$D$的闭包.
+    记$C$为$D$的边界且取向为正，则对于任意$z\in D$，成立
+    \[
+      f(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.
+    \]
+  \end{thm}
+  \remark
+    这一定理给出了全纯函数在某个点的函数值的曲线积分表达式.
+  \proof
+    考虑将$z$排除的锁孔形$\Gamma_{\vep}$，$\vep$为锁孔半径. 则$F(\zeta)
+    =f(\zeta)/(\zeta-z)$在$\Gamma$上全纯，所以对应的沿锁孔形的积分为零.
+    接下来让走廊的宽度趋于零，由于连续性对应积分的变化也趋于零. 于是就有
+    \[
+      \int_C \frac{f(\zeta)}{\zeta-z}\rd\zeta
+      = \int_{C\hp}\frac{f(\zeta)}{\zeta-z}\rd\zeta,
+    \]
+    其中$C\hp$为锁眼，即以$z$为圆心，半径为$\vep$的圆. 同时，对右侧做变量代换，令
+    $\zeta = z+\vep e^{i\theta}$，同时令$\vep\to 0$，可得$\rhs=2\pi\iu f(z)$.
+    $\quad\blacksquare$
+
+  \begin{cor}[Cauchy]
+    \label{cor: Cauchy}
+    设$f$是在开集$\Omega$上的全纯函数，则$f$在复数含义下无限次可导.
+    并且，如果$C\subset\Omega$是一个内部也在$\Omega$中的圆，则
+    对于$C$内部的点，成立
+    \[
+      f^{(n)}(z) = \frac{n!}{2\pi\iu}\int_C\frac{f(\zeta)}{(\zeta-z)^{n+1}}\rd\zeta.
+    \]
+  \end{cor}
+  \proof
+    对$n$施归纳法即可.$\quad\blacksquare$
+  \remark
+    这一命题描述了全纯函数的正则性. 它意味着对于全纯函数而言，积分和微分实际上
+    上一样的，例如如果要证明一个函数复数意义下可导，只需要证明它存在原函数即可，
+    根据此命题自然而然就得出了该函数的全纯.
+
+  \begin{cor}
+    设$f$在开集$\Omega$上全纯，$D$是以$z_0$为圆心的半径为$R$圆盘，且它的闭包在
+    $\Omega$内. 则成立
+    \[
+      |f^{(n)}(z_0)| \le \frac{n!\|f\|_\infty}{R^n}.
+    \]
+  \end{cor}
+
+  \begin{thm}[幂级数展开]
+    设$f$在开集$\Omega$上全纯. $D$是以$z_0$为圆心的圆盘且它的闭包在$\Omega$内，
+    则$f$在$z_0$处有幂级数展开，即对任意$z\in D$成立
+    \[
+      f(z) = \sum_{n=0}^\infty a_n(z-z_0)^n,\qquad
+      a_n = \frac{f^{(n)}(z_0)}{n!}.
+    \]
+  \end{thm}
+  \remark
+    这一定理表明全纯的条件在很大程度上已经意味着幂级数展开的存在性. 尤其是对于
+    整函数，这一定理表明它在整个$\mC$上有幂级数展开.
+  \proof
+    方法在于首先应用Cauchy公式得到$f(z)$的积分表达式
+    \[
+      f(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.
+    \]
+    考虑被积函数，利用一致收敛的几何级数来得到级数的形式，同时化出$(z-z_0)^n$，
+    具体方法为
+    \[
+      \frac{1}{\zeta-z} = \frac{1}{\zeta-z_0}\frac{1}{1-(\frac{z-z_0}{\zeta-z_0})}
+      = \frac{1}{\zeta-z_0}\sum_{n=0}^\infty\left(\frac{z-z_0}{\zeta-z_0}\right)^n.
+      \quad\blacksquare
+    \]
+
+  \begin{cor}[Liouville]
+    若整函数$f$有界，则$f$为常值函数.
+  \end{cor}
+
+  \begin{cor}
+    所有非常值复多项式$P(z)=a_nz^n + \cdots + a_0$在$\mC$中有一个根.
+  \end{cor}
+  \proof
+    只需注意到如果$P$没有根，则$1/P$是一个有界整函数即可.
+
+  \begin{cor}
+    任意$n\ge 1$阶多项式$P(z)=a_nz^n + \cdots + a_0$在$\mC$中有恰$n$个根.
+    且若设这些根为$w_1,\dots,w_n$，则$P$可被分解为
+    \[
+      P(z) = a_n(z-w_1)\cdots(z-w_n).
+    \]
+  \end{cor}
+  \proof
+
+  \begin{thm}
+    设$f$在区域$\Omega$上全纯且在一列聚点在$\Omega$中的点处取值为零，则$f\equiv 0$.
+  \end{thm}
+  \proof
+    TODO
+
+  \begin{cor}
+    设$f$和$g$在区域$\Omega$上全纯且$f(z)=g(z)$对于$\Omega$的某个非空开子集中
+    的任意$z$成立，则在$\Omega$上成立$f\equiv g$.
+  \end{cor}
+
+\subsection{应用}
+
+  \begin{thm}[Morera]
+    \label{thm: Morera}
+    设$f$是开圆盘$D$上的连续函数，并且对于包含于$D$中的三角形$T$，成立
+    \[
+      \int_T f(z)\rd z = 0,
+    \]
+    则$f$全纯.
+  \end{thm}
+  \proof
+    由于复变函数的正规性，所以我们只需要证明$f$的原函数$F$全纯即可. 我们可以
+    按照\thmref{thm: 局部存在性}中的方法构造处$F$，再验证一下即可.$\quad\blacksquare$
+
+  \begin{thm}[级数]
+    \label{thm: 级数、全纯}
+    设$\{f_n\}$是一列全纯函数. 设在$\Omega$的任意紧子集中，它们一致收敛于$f$，
+    则$f$在$\Omega$上全纯.
+  \end{thm}
+  \proof
+    利用\thmref{thm: Morera}即可.$\quad\blacksquare$
+
+  \begin{thm}
+    设$\{f_n\}$是一列全纯函数. 设在$\Omega$的任意紧子集中，它们一致收敛于$f$，
+    则$\{f_n\hp\}$在任意$\Omega$的紧子集中一致收敛于$f\hp$.
+    \footnote{$f\hp$的存在性由\thmref{thm: 级数、全纯}.}
+  \end{thm}
+  \remark
+    只需要反复应用\thmref{thm: 级数、全纯}以及此命题，就可以证明任意阶导数的一致收敛性.
+  \proof
+    用$|f_n-f|$来估计$|f_n\hp-f\hp|$即可. 若设$\Omega_\delta=
+    \{z\in\Omega\,|\, \overline{D_\delta}(z)\subset\Omega\}$为所有离边界
+    距离不小于$\delta$的点全体，可以证明成立不等式
+    \[
+      \sup_{z\in\Omega_\delta}|F\hp(z)| \le \frac{1}{\delta}\sup_{z\in\Omega}|F(z)|.
+      \quad\blacksquare
+    \]
+
+  \begin{thm}[含参积分]
+    设$F(z,s)$定义在$\Omega\times[0, 1]$上，其中$\Omega$是$\mC$中的开集.
+    设$F$满足如下条件
+    \begin{enumerate}
+      \item 对任意固定的$s$，$F(z, s)$全纯.
+      \item $F$在$\Omega\times[0, 1]$上连续.
+    \end{enumerate}
+    则如下定义在$\Omega$上的函数$f$全纯，
+    \[
+      f(z) = \int_0^1F(z,s)\rd s.
+    \]
+  \end{thm}
+  \proof
+    可以利用\thmref{thm: Morera}来证明，但这样需要验证积分换序的条件.
+    为了避免这件事，我们可以考虑Riemann积分的定义，定义
+    \[
+      f_n = \frac{1}{n}\sum_{k=1}^nF(z,k/n).
+    \]
+    这样我们就将问题化归为\thmref{thm: 级数、全纯}条件的验证.$\quad\blacksquare$
+
+  \begin{thm}[对称原理\protect\footnotemark]
+    \footnotetext{关于定理中的记号，见书P58.}
+    设$f^+$和$f^-$是分别定义在$\Omega^+$和$\Omega^-$上的全纯函数，且
+    可以连续地沿拓到$I$上且成立$f^+(x)=f^-(x)$对任意$x\in I$成立，则
+    按如下定义的函数$f$在$\Omega$上全纯
+    \[
+      f(z)=
+      \begin{cases}
+        f^+(z), &z\in\Omega^+, \\
+        f^+(z)=f^-(z) &z\in I, \\
+        f^-(z), & z\in\Omega^-.
+      \end{cases}
+    \]
+  \end{thm}
+
+  \begin{thm}[Schwarz镜像原理]
+    设$f$在$\Omega^+$上全纯且其在$I$伤的连续沿拓为实函数. 则存在在整个$\Omega$上
+    全纯函数$F$，在$\Omega^+$上成立$F=f$.
+  \end{thm}
+
+\subsection{说明}
+  对于全纯函数而言，微分和积分是一体的. 如果要证明$f$全纯，则只需要构造处它的原函数
+  $F$即可，则根据\corref{cor: Cauchy}可知，$f$是全纯的. 另一方面，若$f$全纯，
+  则可以根据Goursat定理等，得到关于它的积分的诸多性质. 而Cauchy定理则意味着，除了
+  在实函数中常见的级数展开，还可以使用积分来表示$f$在某一点的值. \par
+  如果要证明函数$f$在某个区域$\Omega$内的某个性质，通常可以考虑通过逐点的取一个
+  小圆盘的方式来证明，另外，如果这个函数全纯的话，则一般只需要取它的一个小开集即可.
