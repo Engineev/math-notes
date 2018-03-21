@@ -1,0 +1,198 @@
+\section{向量空间}
+
+\subsection{$\R^n$的子空间}
+
+\subsection{域}
+
+  \begin{defi}[域]
+    设集合$F$定义了如下被称作加法和乘法的复合律
+    \[
+      F\times F\to^{+} F \quad\text{和}\quad F\times F\to^{\times}F.
+    \]
+    称$F$为域若它满足如下性质
+    \begin{enumerate}
+      \item 加法使$F$构成了一个Abel群$F^+$，记其单位元为$0$.
+      \item 乘法满足交换律，且乘法使$F$的非零元素全体构成了一个Abel群$F^\times$，记其单位元为$1$.
+      \item 满足分配律：$a(b+c)=ab+ac$.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    [2.]需要单独说明满足交换律，只要是为了处理与$0$相乘的情况. 另外可以证明：
+    \begin{enumerate}
+      \item $0\ne 1$.
+      \item $0a=a0=0$.
+      \item 乘法满足结合律，$1$是$F$全体\footnote{定义中仅说是非
+      零子集的单位元.}的乘法单位元.
+    \end{enumerate}
+
+  \begin{defi}[子域]
+    设$F$为域，称$L\subset F$为其子域，若它对加减乘除封闭且包含乘法单位元.
+  \end{defi}
+  \remark
+    可以证明$0=1-1$成立，从而$0\in L$.
+
+  \begin{thm}
+    设$p$为素数，则任意非零的模$p$同余类有逆元，因此$\F_p=\Z/p\Z$为
+    一个阶为$p$的域.
+  \end{thm}
+  \remark
+    这一定理声称$\F_p^\times$是一个群. 如果它结论成立的话，那么我们
+    可以知道$|\F_p^\times|=p-1$为一有限数，所以它的任意元素$\bar{a}$
+    的阶也是一个有限数，设为$r$. 即有$\bar{a}^r=1$，从而它的逆元为
+    $\bar{a}^{r-1}$.
+  \proof
+    首先可以证明$\F_p^\times$有消去律，即若$\bar{a}\bar{b}=0$，则
+    $\bar{a}=0$或$\bar{b}=0$；若$\bar{a}\ne -$且$\bar{a}\bar{b}
+    =\bar{a}\bar{c}$，则$\bar{b}=\bar{c}$. 接下来只需要对于
+    $\bar{1},\bar{a},\bar{a}^2,\dots$以及$\F_p^\times$施鸽巢原理
+    以及消去律即可.$\quad\blacksquare$
+
+  \begin{defi}[特征\protect\footnotemark]
+    \footnotetext{Characteristic}
+    定一个域$F$的特征为它的乘法单位元$1$作为加法群中元素时的阶数，
+    若其阶数为无穷，则定义特征为零.
+  \end{defi}
+
+  \begin{lemma}
+    域的特征或为零，或为一个素数.
+  \end{lemma}
+  \proof
+    设特征为$m\ne 0$. 记乘法单位元为$\bar{1}$，$\bar{n}$为$n$个$\bar{1}$
+    相加的结果. $\bar{1}$在加法意义下生成的子群
+    $\langle\bar{1}+\rangle=\{\bar{0},\bar{1},\dots,\overline{m-1}\}$.
+    若$m$不为素数，则$m=rs$，其中$r,s\ne 1$. 即成立
+    \[
+      \bar{0}=\bar{m}=\overline{rs}=\sum_1^{rs}\bar{1}
+      =\left(\sum_1^r\bar{1}\right)=\left(\sum_1^s\bar{1}\right)
+      =\bar{r}\bar{s}.
+    \]
+    而$\bar{r},\bar{s}\in F^\times$但$\bar{0} \notin F^\times$，同时
+    $F^\times$是一个群，矛盾.$\quad\blacksquare$
+
+  \begin{thm}[乘法群的结构]
+    \label{thm: 乘法群的结构}
+    设$p$为素数. 则$\F_p^\times$是$p-1$阶循环群.
+  \end{thm}
+  \remark
+    证明见之后的内容.
+
+  \begin{cor}[Fermat]
+    设$p$为素数，则对任意$a\in\Z$，成立$a^p\equiv a\mod p$.
+  \end{cor}
+
+  \begin{cor}[Wilson]
+    设$p$为素数，则$(p-1)!\equiv -1 \mod p$.
+  \end{cor}
+  \proof
+    考虑$\F_p^\times=\{1,2,\dots,p-1\}$，根据\thmref{thm:
+    乘法群的结构}它是$p-1$阶循环群，所以
+    \[
+      (p-1)! = \prod_{k=0}^{p-2}(p-1)^k = (p-1)^{(p-2)(p-1)/2}
+      \equiv p-1 \equiv -1 \mod p.
+    \]
+
+  \begin{defi}[原根]
+    能生成$\F_p^\times$的数被称作模$p$的原根.
+  \end{defi}
+
+\subsection{向量空间}
+
+  \begin{defi}[向量空间]
+    在域$F$上的向量空间$V$是指定义了加法和数乘的一个集合，且这两个运算满足
+    \begin{enumerate}
+      \item 加法是的$V$构成一个Abel群$V^+$.
+      \item $1v=v$.
+      \item $(ab)v=a(bv)$，其中$a,b\in F$，$v\in V$.
+      \item 分配律.
+    \end{enumerate}
+  \end{defi}
+
+\subsection{基与维度}
+  \paragraph{说明}
+    本节仅记录了部分命题.
+
+  \begin{thm}
+    设$A\in F^{m\times n}$，$B\in F^n$. 则$AX=B$有解当且仅当$B$
+    位于$A$的列空间中.
+  \end{thm}
+
+  \begin{thm}
+    设$S$和$L$是向量空间$V$的有限子集. 设$S$张成$V$且$L$线性无关，
+    则$|S|\ge |L|$.
+  \end{thm}
+
+\subsection{利用基计算}
+
+  \begin{pos}
+    考虑在域$F$上的向量空间$V$，在给定它的一组基$\mbf{B}$后，
+    映射$\psi: F^n\to V,\, X\mapsto\mbf{B}X$为一个向量空间的同构.
+  \end{pos}
+
+  \begin{pos}
+    设$(v_1,\dots,v_n)$为向量空间$V$的一个子集，$\psi: F^n\to V$
+    为$\psi(X)=SX$. 则
+    \begin{enumerate}
+      \item $\psi$为单射当且仅当$S$线性无关.
+      \item $\psi$为满射当且仅当$S$张成$V$.
+      \item $\psi$为双射当且仅当$S$是$V$的一组基.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{cor}
+    任意域$F$上的$n$维向量空间$V$同构于$F^n$.
+  \end{cor}
+
+  \begin{defi}[换基矩阵]
+    对于向量空间$V$的基$\mbf{B}=(v_1,\dots,v_n)$和$\mbf{B}\hp=(v_1\hp,
+    \dots,v_n\hp)$. 称$P$为换基矩阵，若成立$\mbf{B}\hp=\mbf{B}P$.
+  \end{defi}
+  \remark
+    设$v\in V$在$\mbf{B}$下的坐标为$X$，则在$\mbf{B}\hp$下的坐标为
+    $X\hp = P^{-1}X$.
+
+  \begin{pos}
+    $\,$
+    \begin{enumerate}
+      \item $\mbf{B}$和$\mbf{B}\hp$是向量空间$V$的两组基. 则换基
+        矩阵$P$可逆且由$\mbf{B}$和$\mbf{B}\hp$唯一确定.
+      \item 设$\mbf{B}$是$V$的一组基，则$V$的所有基组成的全体为
+        $\{\mbf{B}P\,|\, P\in GL_n(F)\}$.
+    \end{enumerate}
+  \end{pos}
+
+\subsection{直和}
+
+  \begin{defi}[直和]
+    定义$V$的子空间$W_1,\dots,W_n$的直和为
+    \[
+      W_1 + \cdots W_n = \{v\in V\,|\, v=w_1+\cdots+w_n,\,w_i\in W_i\}.
+    \]
+  \end{defi}
+
+  \begin{defi}[独立]
+    称子空间$W_1,\dots,W_n$独立，若对于$w_i\in W_i$，$w_1+\cdots+w_n=0$
+    意味着$w_i=0$.
+  \end{defi}
+  \remark
+    子空间的直和是向量的张成的类比，或者说推广. 考虑向量的独立，它等价于各个向量
+    张成的子空间的独立.
+
+  \begin{pos}
+    设$W_1,\dots,W_n$是有限维向量空间$V$的子空间，$\mbf{B}_i$是$W_i$的基.
+    \begin{enumerate}
+      \item $W_i$独立且$\sum W_i=V$等价于$(\mbf{B}_1,\dots,\mbf{B}_n)$是$V$的基.
+      \item $\dim(\sum W_i)\le\sum\dim W_i$，当且仅当独立时等号成立.
+      \item 若$W_i\hp$是$W_i$的子空间，则$W_i\hp$独立.
+    \end{enumerate}
+  \end{pos}
+  \remark
+    若[1.]的条件成立，则称$V=W_1\oplus\cdots\oplus W_n$为直和.
+
+  \begin{thm}
+    设$W_1$和$W_2$是有限维向量空间$V$的子空间.
+    \begin{enumerate}
+      \item $\dim W_1 + \dim W_2 = \dim(W_1\cap W_2)+\dim(W_1+W_2)$.
+      \item $W_1$和$W_2$独立当且仅当$W_1\cap W_2=\{0\}$.
+      \item 若$V=W_1+W_2$，则存在$W_2$的子空间$W_2\hp$成立$W_1\oplus W_2\hp=V$.
+    \end{enumerate}
+  \end{thm}

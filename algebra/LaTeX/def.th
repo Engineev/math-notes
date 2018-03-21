@@ -43,6 +43,7 @@
 \DeclareMathOperator{\sgn}{sign}
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\trace}{trace}
 \DeclareMathOperator*{\agm}{arg\,min}
 
 \newcommand{\pr}{\prime}
