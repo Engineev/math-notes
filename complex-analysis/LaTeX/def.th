@@ -37,6 +37,7 @@
 \DeclareMathOperator{\aarg}{arg}
 \DeclareMathOperator{\sgn}{sign}
 \DeclareMathOperator{\len}{length}
+\DeclareMathOperator{\res}{res}
 \DeclareMathOperator*{\agm}{arg\,min}
 \renewcommand{\Im}{\text{Im}}
 \renewcommand{\Re}{\text{Re}}
