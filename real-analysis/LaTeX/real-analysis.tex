@@ -356,4 +356,45 @@
 
 % end{section}
 
+  \begin{defi}
+    记$\R^n$中所有开集的可数并全体为$G_\delta(\R^n)$，所有闭集的可数交为$F_\sigma(\R^n)$.
+  \end{defi}
+  \remark
+    可以证明，这两个集合实际就是Borel集. 相关的证明见\thmref{thm: sigma-可测、开集、闭集}.
+
+  \begin{thm}
+    \label{thm: sigma-可测、开集、闭集}
+    设$A\in\mcal{M}_\sigma(\R^n)$. 则存在$G\in G_\delta(\R^n)$和$F\in F_\sigma(\R^n)$
+    满足
+    \[
+      F\subset A\subset G,\quad \mu(G\backslash A) = \mu(A\backslash F) = 0.
+    \]
+  \end{thm}
+  \proof
+    对$\{ G_k\}$和$\{ F_k\}$施\thmref{thm: sigma-测度、夹逼}即可.$\quad\blacksquare$
+
+  \begin{cor}
+    $\mcal{M}_\sigma(\R^n)$是$\mcal{B}_\sigma(\R^n)$的在Lebesgue-$\sigma$测度
+    下的完备化\footnote{注意，$\mcal{M}_\sigma(\R^n)$是完备的.}
+    ，即对与$\mcal{M}_\sigma(\R^n)$中的集合和$\mcal{B}_\sigma(\R^n)$中
+    的集合仅相差Borel集中零测集的某个子集，即对于任意的$A\in\mcal{M}_\sigma(\R^n)$，
+    $A$可以被写为$X\cup M$的形式，其中$X\in\mcal{B}_\sigma(\R^n)$，而$M\subset N
+    \in\mcal{B}_\sigma(\R^n)$且$\mu N=0$.
+  \end{cor}
+
+\subsection{不变性与Lebesgue不可测集}
+
+  \begin{thm}
+    Lebesgue测度有平移不变性、相对伸缩不变性和镜像不变性.
+  \end{thm}
+
+  \begin{thm}[Lebesgue不可测集]
+    略
+  \end{thm}
+
+\subsection{其他测度}
+
+  
+
+
 \end{document}
