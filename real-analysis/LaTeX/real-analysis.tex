@@ -215,7 +215,7 @@
 
   \paragraph{正则性}
     如果说事物A是关于事物B正则的，那么它的含义是A可以用B来逼近. 例如说Lebesgue测度
-    是Borel正则的，它表明某些集合的Lebesgue测度可以用Borel集合的测度来逼近.
+    是Borel正则的，它表明某些集合的Lebesgue测度可以用Borel集的测度来逼近.
 
   \begin{thm}
     \label{thm: Borel正则性}
@@ -252,7 +252,7 @@
     成立$\mu^*(G\backslash A)<\vep$.
   \end{thm}
   \proof
-    首先假设$A\in\mcal{M}_\sigma(\R^n)$. 对于$\mu(A)<infty$的情况，
+    首先假设$A\in\mcal{M}_\sigma(\R^n)$. 对于$\mu(A)<\infty$的情况，
     利用\thmref{thm: Borel正则性}证明中所构造的开集即可. 而对于$\mu(A)=\infty$的情况，
     只需对于$A_l$取对应开集，再取它们的并即可.\par
     接着假设条件成立，证明$A\in\mcal{M}_\sigma(\R^n)$. 对于有限的情况，取比$A$稍大
@@ -261,11 +261,99 @@
     并封闭来完成证明.$\quad\blacksquare$
 
   \begin{thm}
+    \label{thm: sigma-测度、夹逼}
     $A\in\mcal{M}_\sigma(\R^n)$当且仅当对任意$\vep>0$，存在开集$G$和闭集$F$，满足
     $F\subset A\subset G$且$\mu(G\backslash F)<\vep$. 若$\mu(A)<\infty$，则
     $F$的选取可以是紧集.
   \end{thm}
   \proof
     TODO
+  % end(proof)
+
+  \begin{defi}
+    记$\R^n$中所有开集的可数并全体为$G_\delta(\R^n)$，所有闭集的可数交为$F_\sigma(\R^n)$.
+  \end{defi}
+  \remark
+    可以证明，这两个集合实际就是Borel集. 相关的证明见\thmref{thm: sigma-可测、开集、闭集}.
+
+  \begin{thm}
+    \label{thm: sigma-可测、开集、闭集}
+    设$A\in\mcal{M}_\sigma(\R^n)$. 则存在$G\in G_\delta(\R^n)$和$F\in F_\sigma(\R^n)$
+    满足
+    \[
+      F\subset A\subset G,\quad \mu(G\backslash A) = \mu(A\backslash F) = 0.
+    \]
+  \end{thm}
+  \proof
+    对$\{ G_k\}$和$\{ F_k\}$施\thmref{thm: sigma-测度、夹逼}即可.$\quad\blacksquare$
+
+  \begin{cor}
+    $\mcal{M}_\sigma(\R^n)$是$\mcal{B}_\sigma(\R^n)$的在Lebesgue-$\sigma$测度
+    下的完备化\footnote{注意，$\mcal{M}_\sigma(\R^n)$是完备的.}
+    ，即对与$\mcal{M}_\sigma(\R^n)$中的集合和$\mcal{B}_\sigma(\R^n)$中
+    的集合仅相差Borel集中零测集的某个子集，即对于任意的$A\in\mcal{M}_\sigma(\R^n)$，
+    $A$可以被写为$X\cup M$的形式，其中$X\in\mcal{B}_\sigma(\R^n)$，而$M\subset N
+    \in\mcal{B}_\sigma(\R^n)$且$\mu N=0$.
+  \end{cor}
+
+\subsection{不变性与Lebesgue不可测集}
+
+  \begin{thm}
+    Lebesgue测度有平移不变性、相对伸缩不变性和镜像不变性.
+  \end{thm}
+
+  \begin{thm}[Lebesgue不可测集]
+    略
+  \end{thm}
+
+\subsection{其他测度}
+
+
+
+\newpage
+\section{可测函数}
+
+\subsection{可测函数的定义}
+   \begin{defi}[测度空间]
+     对于集合$X$，设$\mcal{M}(X)$是它的一个构成$\sigma$-代数的子集且该$\sigma$-代数的单位元
+     为$X$，设$\mu$是定义在$\mcal{M}$上的完备$\sigma$-可加测度. 称$(X, \mcal{M}, \mu)$为
+     一个测度空间.
+   \end{defi}
+
+   \begin{defi}[可测]
+     称函数$f:X\to\R$在集合$X$上关于测度$\mu$可测，若对任意实数$c$，集合$X(f>c):=\{x\in X
+     \,:\,f(x)>c\}$可测. 记定义在$X$上的可测的函数全体为$S(X,\mcal{M}, \mu)$，简记为$S(X)$.
+   \end{defi}
+
+  \begin{lemma}
+    以下命题等价.
+    \begin{enumerate}
+      \item $f\in S(X)$，即$X(f>c)\in\mcal{M}$.
+      \item $X(f\ge c)\in\mcal{M}$.
+      \item $X(f<c)\in\mcal{M}$.
+      \item $X(f\le c)\in\mcal{M}$.
+    \end{enumerate}
+  \end{lemma}
+  \proof
+    首先证明
+    \[
+      X(f\ge c) = \bigcap_{k=1}^\infty X\left(f>c-\frac{1}{k}\right).
+    \]
+    之后只需要利用$\mcal{M}$的$\sigma$-可加性既可得到$\lhs$的可测性. 对于其他的条件，
+    或与此证明类似，或可以直接利用补集等推出.$\quad\blacksquare$
+  % end{proof}
+
+  \begin{cor}
+    若$f\in S(X)$，则对于任意的$a\le b$，如下集合都可测：
+    \[
+      X(a\le f\le b),\quad X(a<f\le b),\quad X(a<f<b),\quad X(a\le f<b), \quad 
+      X(f=a).
+    \]
+  \end{cor}
+
+
+% end{subsection}
+
+% end{section}
 
 \end{document}
