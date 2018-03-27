@@ -1,14 +1,8 @@
-%!TEX program = xelatex
 \input{def.th}
 
 \title{代数$\,$笔记}
 \author{任云玮}
 \date{}
-
-% TODO:
-% * 分块行操纵对应的“初等矩阵”
-% * P34 5.1, 5.2, misc
-% * 扩展Euclid
 
 \begin{document}
 \maketitle
@@ -166,6 +160,139 @@
     \prod\lambda_i$，$\trace A=\sum\lambda_i$.
   \end{thm}
 
+% end(subsection)
+
+\newpage
+\section{线性算子的应用}
+
+\subsection{正交矩阵与旋转}
+  \begin{thm}
+    若$X\perp Y$，设$Z=X+Y$，则$|Z|^2=|X|^2+|Y|^2$.
+  \end{thm}
+
+  \begin{cor}
+    任意$\R^n$中的不含零向量的正交向量组线性独立.
+  \end{cor}
+
+  \begin{defi}[正交矩阵]
+    称$A\in\R^{n\times n}$正交若$A\tr A=I$.
+  \end{defi}
+
+  \begin{lemma}
+    $A\in\R^{n\times n}$正交当且仅当$A$的列向量组成立$\R^{n}$的一个标准正交基.
+  \end{lemma}
+  \remark
+    由于正交矩阵的定义中要求$A\tr A$的结果为$I$而非$\lambda I$，所以这里得出了$A$的
+    列向量组是标准正交基而不仅仅是正交基是合情合理的.
+  % end(remark)
+
+  \begin{pos}
+    $\,$
+    \begin{enumerate}
+      \item 正交矩阵的乘积为正交矩阵；正交矩阵的逆也为正交矩阵. 即正交矩阵构成了$GL_n$的
+        一个子群，称之为正交群$O_n$.
+      \item 正交矩阵的行列式的值为$\pm 1$. 行列式为$1$的正交矩阵构成了$O_n$的一个指数
+        为$2$的子群$SO_2$.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{defi}[正交算子]
+    称$\R^n$上的线性算子为正交算子，若对于任意的向量$X$和$Y$，成立
+    \[
+      (TX\cdot TY) = (X\cdot Y).
+    \]
+    其中$(\cdot)$表示内积.
+  \end{defi}
+
+  \begin{thm}
+    $\R^n$上的线性算子正交当且仅当对于任意的向量$X$，成立$(TX\cdot TX)=(X\cdot X)$. 
+    即它保长.
+  \end{thm}
+
+% end(subsection)
+
+% end(section)
+
+\newpage
+\section{对称}
+
+\subsection{等距同构}
+
+  \begin{defi}[等距同构]
+    称$f:\R^n\to\R^n$为等距同构，若成立对任意$u,v\in\R^n$，成立$|f(u)-f(v)|=|u-v|$.
+  \end{defi}
+  \remark
+    注意，等距同构的定义中，并没有要求它是线性的，虽然可以证明它一定是线性的.
+  % end(remark)
+
+  \begin{lemma}
+    \label{lemma: 向量相等}
+    设$x,y\in\R^n$且$(x\cdot x)$，$(y\cdot y)$以及$(x\cdot y)$三者相等，则$x=y$.
+  \end{lemma}
+  \proof 即证明$((x-y)\cdot (x-y))=0$.$\quad\blacksquare$
+  
+  \begin{thm}
+    对于映射$\varphi:\R^n\to\R^n$，以下命题等价：
+    \begin{enumerate}
+      \item $\varphi$是等距映射且保原点，即$\varphi(0)=0$.
+      \item $\varphi$保点积，即$(\varphi(u)\cdot\varphi(v))=(u\cdot v)$.
+      \item $\varphi$是正交线性算子.
+    \end{enumerate}
+  \end{thm}
+  \proof
+    首先[3.]推出[1.]是显然的. 而[2.]推出[3.]实际上只需要证明$\varphi$是线性算子即可，
+    而这可以通过\lemmaref{lemma: 向量相等}. 而对于[1.]推出[2.]，只需要注意到对于等距
+    同构而言，保原点性即意味着
+    \[
+      |\varphi(u)| = |\varphi(u)-\varphi(0)| = |u-0| = |u|
+    \]
+    这一事实. 再展开点积形式的$|\varphi(u)-\varphi(v)|=|u-v|$即可.$\quad\blacksquare$
+  % end(proof)
+
+  \begin{cor}
+    $\R^n$的任一等距同构$f$都可以被唯一表达为$f=t_a\varphi$的形式，其中$t_a$为一
+    平移算子而$\varphi$是一个正交线性算子.
+  \end{cor}
+  \proof 即证明$\varphi=t_af$正交线性算子即可，其中$a=f(0)$.$\quad\blacksquare$
+
+  \begin{pos}
+    对于平移算子$t_a$和$t_b$以及正交线性算子$\varphi$，设$a\hp=\varphi(a)$，成立
+    \[
+      t_at_b = t_{a+b}\quad \varphi t_a = t_{a\hp}\varphi.
+    \]
+  \end{pos}
+
+  \begin{thm}
+    $\R^n$中的等距同构全体构成了一个群，记作$M_n$.
+  \end{thm}
+
+  \begin{thm}
+    定义$\pi:M_n\to O_n$，$\pi(f)=\varphi$为等距同构的正交线性算子的部分. 
+    它是一个满射同态. 它的核为全体平移算子.
+  \end{thm}
+
+  \begin{thm}[坐标变换]
+    考虑使用等距同构$\eta$来进行坐标变换，即$\eta(x\hp)=x$. 设$m$为在某组基下
+    映射$f$所对应矩阵，则成立
+    \[
+      m\hp = \eta^{-1}m\eta.
+    \]
+  \end{thm}
+
+  \begin{cor}
+    对坐标的平移变换并不改变同态$\pi$.
+  \end{cor}
+
+  \begin{defi}[定向]
+  \end{defi}
+
+% end(subsection)
+
+\subsection{平面的等距同构}
+
+% end(subsection)
+
+% end(section)
 
 
 \end{document}
