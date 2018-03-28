@@ -351,48 +351,122 @@
     \]
   \end{cor}
 
-
-% end{subsection}
-
-% end{section}
-
-  \begin{defi}
-    记$\R^n$中所有开集的可数并全体为$G_\delta(\R^n)$，所有闭集的可数交为$F_\sigma(\R^n)$.
-  \end{defi}
-  \remark
-    可以证明，这两个集合实际就是Borel集. 相关的证明见\thmref{thm: sigma-可测、开集、闭集}.
-
   \begin{thm}
-    \label{thm: sigma-可测、开集、闭集}
-    设$A\in\mcal{M}_\sigma(\R^n)$. 则存在$G\in G_\delta(\R^n)$和$F\in F_\sigma(\R^n)$
-    满足
-    \[
-      F\subset A\subset G,\quad \mu(G\backslash A) = \mu(A\backslash F) = 0.
-    \]
+    设$X$是$\R$上的一段区间或$\R$本身. 任何连续函数$f:X\to\R$ $\sigma-$Lebesgue可测.
   \end{thm}
   \proof
-    对$\{ G_k\}$和$\{ F_k\}$施\thmref{thm: sigma-测度、夹逼}即可.$\quad\blacksquare$
+    考虑$X$的内点$X_0$中满足$f>c$的部分$X_0(f>c)$. 根据连续性，可以证明它也是一个开集，
+    从而使可测的. 而$X_0(f>c)$和$X(f>c)$之间只相差有限个点.$\quad\blacksquare$
+  % end(proof)
+% end{subsection}
 
-  \begin{cor}
-    $\mcal{M}_\sigma(\R^n)$是$\mcal{B}_\sigma(\R^n)$的在Lebesgue-$\sigma$测度
-    下的完备化\footnote{注意，$\mcal{M}_\sigma(\R^n)$是完备的.}
-    ，即对与$\mcal{M}_\sigma(\R^n)$中的集合和$\mcal{B}_\sigma(\R^n)$中
-    的集合仅相差Borel集中零测集的某个子集，即对于任意的$A\in\mcal{M}_\sigma(\R^n)$，
-    $A$可以被写为$X\cup M$的形式，其中$X\in\mcal{B}_\sigma(\R^n)$，而$M\subset N
-    \in\mcal{B}_\sigma(\R^n)$且$\mu N=0$.
-  \end{cor}
+\subsection{可测函数的性质}
+  \begin{pos}
+    若$f\in S(X)$而$k\in\R$，则$f+k\in S(X)$且$kf\in S(X)$.
+  \end{pos}
 
-\subsection{不变性与Lebesgue不可测集}
+  \begin{lemma}
+    设$f,g\in S(X)$，则$X(f>g)\in\mcal{M}(X)$.
+  \end{lemma}
+  \proof
+    将$X(f>g)$化为$X(f>r)$和$X(g<r)$的形式，其中$r\in Q$. 接着利用
+    $\mcal{X}$的在可数并下封闭即可.$\quad\blacksquare$
+  % end(proof)
+
+  \begin{defi}
+    定义函数$f$的正部与负部分别为
+    \[
+      f^+(x)=\begin{cases}
+        f(x), & f(x)\ge 0,\\
+        0,    & f(x) < 0.
+      \end{cases}\qquad
+      f^-(x)=\begin{cases}
+        0,     & f(x) > 0,\\
+        -f(x), & f(x) \le 0.
+      \end{cases},\quad
+    \]
+  \end{defi}
+
+  \begin{thm}··
+    若$f,g\in S(X)$，则以下函数都可测：
+    \[
+      f^2,\quad f+g,\quad fg,\quad f/g,\quad |f|,\quad f^{\pm}.
+    \]
+  \end{thm}
+
+  \begin{lemma}
+    \label{lemma: sigma-代数、限制}
+    设$\mcal{A}$是单位元为$X$的$\sigma$-代数，$X_0\in\mcal{A}$，定义
+    \[
+      \mcal{A}(X_0) = \{A\cap X_0\,:\,A\in\mcal{A}(X)\}.
+    \]
+    则$\mcal{A}(X_0)$是以$X_0$为单位元的$\sigma$-代数.
+  \end{lemma}
+  \proof
+    首先证明它对于可数并以及可数交封闭. 
+    \[
+      \bigcup_{k=1}^\infty(A_k\cap X_0)= 
+      \left(\bigcup_{k=1}^\infty A_k \right)\cap X_0.
+    \]
+    由于$\mcal{A}$是$\sigma$-代数，所以$\bigcup_{k=1}^\infty A_k\in\mcal{A}$.
+    所以$\lhs\in\mcal{A}(X_0)$. 对于可数交的证明也是同样. 下证明对于补集封闭.
+    \[
+      (A\cap X_0)^c = X_0\backslash A \cup \varphi = A^c\cap X_0\in\mcal{A}(X_0).
+    \]
+    同时，$X_0\cap(A\cap X_0) = A\cap X_0$，即$X_0$是单位元. 综上，$\mcal{A}(X_0)$
+    是以$X_0$为单位元的$\sigma$-代数.$\quad\blacksquare$
+  % end(proof)
+
+  \begin{pos}
+    若$f\in S(X)$且$X_0\in\mcal{M}(X)$，则$f\in S(X_0)$.
+  \end{pos}
+  \remark
+    这一命题表示如果把一个可测函数限制在一个可测子集上，它依然是该子集上的可测函数.
+  \proof
+    由于$f\in S(X)$，所以$X(f>c)\in\mcal{A}$. 根据\lemmaref{lemma:
+    sigma-代数、限制}，所以$X_0(f>c) = X_0\cap X(f>c)$属于以$X_0$为单位元的
+    $\sigma$-代数，即为\footnote{??}$\mcal{M}(X_0)$.$\quad\blacksquare$
+  % end
+  
+  \begin{thm}
+    设$f:X\to\R$，$X=\bigcup_{k=1}^\omega X_k$且$1\le\omega\le\infty$，
+    $X_k\in\mcal{M}(X)$，并且$f\in S(X_k)$. 则$f\in S(X)$.
+  \end{thm}
+  \remark
+    这一命题表示对于一列可测集，只需要在每一集合上可测，那么$f$就在$X$上可测.
+    $\quad\blacksquare$
+  \proof
+    利用$X(f>c)=\bigcup_k X_{k=1}^\omega(f>c)$以及$\mcal{X}$对可数并
+    封闭即可.$\quad\blacksquare$
+  % end
 
   \begin{thm}
-    Lebesgue测度有平移不变性、相对伸缩不变性和镜像不变性.
+    设$f\in S(X)$且$\mu X(f=\pm\infty)=0$. 则对任意$\vep>0$，存在有界$g\in S(X)$
+    使得$\mu X(f\ne g)<\vep$.
   \end{thm}
+  \remark
+    这一命题表示，如果某个函数的“极点”测度为零，那么基本上可以把他们忽略掉从而使得它有界
+    而不对原来的结果产生过大的影响.
+  \proof
+    定义$A_n = X(|f|>n)$. 令$n$充分大，定义
+    \[
+      g(x)=\begin{cases}
+        f(x), & x\in X\backslash A_n,\\
+        0,    & x\in A_n.
+      \end{cases}
+    \]
+    可以证明它就是所要的$g$.$\quad\blacksquare$
+  % end
 
-  \begin{thm}[Lebesgue不可测集]
-    略
-  \end{thm}
+  \begin{defi}[几乎处处]
+    称性质$P$在集合$X$上几乎处处成立，若$X$中$P$不成立的点全体为一个零测集.
+  \end{defi}
 
-\subsection{其他测度}
+% end(subsection)
+  
+% end{section}
+
+
 
   
 
