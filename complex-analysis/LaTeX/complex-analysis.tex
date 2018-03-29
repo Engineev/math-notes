@@ -26,6 +26,7 @@
   \end{defi}
 
   \begin{thm}
+    \label{thm: 零点、分离}
     设不恒为零的复函数$f$在区域$\Omega$上全纯且$z_0\in\Omega$为其零点.
     则在$z_0$的某个领域$U\subset\Omega$中，存在一个在$U$中无零点的全纯函数$g$，
     以及唯一的正整数$n$，使得$f(z)=(z-z_0)^ng(z)$.
@@ -90,7 +91,150 @@
   
 
 
-\subsection{}
+\subsection{奇点与亚纯函数}
+
+  \begin{thm}[Riemann]
+    \label{thm: Riemann、可去奇点}
+    设$f$在开集$\Omega$上除点$z_0$外全纯. 若$f$在$\Omega\backslash\{z_0\}$上
+    有界，则$z_0$是可去奇点.
+  \end{thm}
+  \proof
+    定义全纯函数
+    \[
+      f_*(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.
+    \]
+    再证明对于$z\in\Omega\backslash\{z_0\}$，$f(z)=f_*(z)$. 具体证明只需采用
+    和\thmref{thm: Cauchy公式}中类似的方法即可，同时需要对绕$z_0$附近的积分做一个
+    估计.$\quad\blacksquare$
+  % end(proof)
+
+  \begin{cor}
+    设$z_0$是$f$的孤立奇点. $z_0$是极点的充要条件为，当$z\to z_0$时，
+    $|f(z)\to\infty|$。
+  \end{cor}
+  \remark
+    $|f(z)\to\infty|$保证了$f$不会剧烈震荡.
+  \proof
+    考虑$1/f$即可. $\quad\blacksquare$
+  % end
+
+  \begin{thm}[Casorati-Weierstrass]
+    设$f$在去心圆盘$D_r(z_0)\backslash\{z_0\}$上全纯且$z_0$是$f$的必要奇点.
+    则$D_r(z_0)\backslash\{z_0\}$在$f$映射下的像集在复平面中稠密.
+  \end{thm}
+  \proof
+    反证法. 假设存在$w\in\mC$周围没有$f(z)$，则函数
+    \[
+      g(z) = \frac{1}{f(z)-w}
+    \]
+    全纯. 利用\thmref{thm: Riemann、可去奇点}及其推论可以证明$z_0$或是$f$的
+    可去奇点，或者极点，与条件矛盾.$\quad\blacksquare$
+  % end
+
+  \begin{defi}[亚纯]
+    称函数$f$在开集$\Omega$中亚纯，若存在点列$\{z_k\}$在$\Omega$中无聚点，
+    且
+    \begin{enumerate}
+      \item $f$在$\Omega\backslash\{z_0,z_1,\dots\}$上全纯；
+      \item ${z_k}$是$f$的奇点.
+    \end{enumerate}
+  \end{defi}
+  \remark
+    也可以在扩充复平面上讨论亚纯函数，讨论$f(z)$在无穷远处的行为，即讨论$f(1/z)$在
+    原点处的行为.
+  % end
+
+  \begin{thm}
+    扩充复平面上的亚纯函数都是有理函数.
+  \end{thm}
+  \proof
+    依次取出$f$在极点处的主部. 证明剩余的部分为整有界函数，从而根据\corref{cor:
+    Liouville}，剩余的部分为一常数.$\quad\blacksquare$
+  % end
+
+  \begin{defi}[Riemann球]
+    TODO
+  \end{defi}
+
+
+
+% end(subsection)
+
+\subsection{辅角原理及其应用}
+
+  \begin{lemma}
+    设$f$在开集$\Omega$上亚纯，则$f$的零点和极点都是$f\hp/f$的简单极点，
+    且其留数为$\pm n$，其中$n$为对应零点/极点的阶数.
+  \end{lemma}
+  \proof
+    设$z_0$是零点，则根据\thmref{thm: 零点、分离}可以将$f$分为
+    \[
+      f(z) = (z-z_0)^ng(z).
+    \]
+    利用这一形式直接证明即可. 对于极点而言，证明是类似的. $\quad\blacksquare$
+  % end
+
+  \begin{thm}[辅角原理]
+    \label{thm: 辅角原理}
+    设$f$在一个包含了圆$C$及其内部的开集上亚纯. 若$f$在$C$上无零点无极点，则
+    \[
+      \frac{1}{2\pi\iu}\int_C\frac{f\hp(z)}{f(z)}\rd z = 
+      \text{($C$内$f$的零点个数)} - \text{($C$内$f$的极点个数)}.
+    \]
+    其中计算个数时需要考虑重数. 这一定理对于任意玩具曲线都是成立的.
+  \end{thm}
+  \proof
+    利用前述引理和留数定理即可.$\quad\blacksquare$
+  % end
+
+  \begin{thm}[Rouchè]
+    \label{thm: Rouche}
+    设$f$和$g$在包含圆$C$及其内部的开集上全纯，且对于任意$z\in C$，成立
+    $|f(z)|>|g(z)|$. 则在$C$内部，$f$和$f+g$的零点个数相同.
+  \end{thm}
+  \proof
+    定义
+    \[
+      f_t(z) = f(z) + tg(z),\quad t\in[0, 1].
+    \]
+    同时定义$n_t$为$f_z(t)$的零点个数. 利用辅角定理可以得出$n_t$的积分表达
+    式，证明它连续，即可得$n_t$为常数.$\quad\blacksquare$
+  % end
+
+  \begin{defi}[开映射]
+    称一个映射为开映射，若它将任意定义域内的开集映成一个开集.
+  \end{defi}
+
+  \begin{thm}[开映射]
+    若$f$在区域$\Omega$上全纯且非常值，则它为一个开映射.
+  \end{thm}
+  \proof
+    即对于$w_0$周围的任意$w$，证明$g(z)=f(z)-w$有零点. 将$g$写为
+    \[
+      g(z) = (f(z)-w_0) + (w_0-w) = F(z) + G(z),
+    \]
+    并利用\thmref{thm: Rouche}即可. 而为了为使之满足Rouchè定理的条件，可以
+    先取一个充分小的$\vep$，使得可以在$w_0$周围取出一个圆$C$使得在$C$上满足
+    $|F(z)|>\vep$. 同时注意到$G$实际上与$z$无关，所以只需要利用连续性取离
+    $w_0$足够近的$w$即可.$\quad\blacksquare$
+   % end
+
+% end(subsection)
+
+  \begin{thm}[最大模原理]
+    设$f$是区域$\Omega$中的非常值全纯函数，则$f$在$\Omega$中取不到最大值.
+  \end{thm}
+  \proof
+    反证法，假设取到最大值，会与它是一个开映射矛盾.$\quad\blacksquare$
+  % end
+
+  \begin{cor}
+    记区域$\Omega$的闭包为$\bar{\Omega}$. 若$f$在$\Omega$上全纯且在
+    $\bar{\Omega}$上连续，则
+    \[
+      \sup_{z\in\Omega}|f(z)| \le \sup_{z\in\bar{\Omega}\backslash\Omega}|f(z)|.
+    \]
+  \end{cor}
 
 \newpage
 \section{附录}
