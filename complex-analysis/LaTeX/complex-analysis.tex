@@ -217,11 +217,10 @@
     先取一个充分小的$\vep$，使得可以在$w_0$周围取出一个圆$C$使得在$C$上满足
     $|F(z)|>\vep$. 同时注意到$G$实际上与$z$无关，所以只需要利用连续性取离
     $w_0$足够近的$w$即可.$\quad\blacksquare$
-   % end
+  % end
 
-% end(subsection)
 
-  \begin{thm}[最大模原理]
+   \begin{thm}[最大模原理]
     设$f$是区域$\Omega$中的非常值全纯函数，则$f$在$\Omega$中取不到最大值.
   \end{thm}
   \proof
@@ -235,6 +234,130 @@
       \sup_{z\in\Omega}|f(z)| \le \sup_{z\in\bar{\Omega}\backslash\Omega}|f(z)|.
     \]
   \end{cor}
+
+% end(subsection)
+
+\subsection{同伦与单连通区域}
+
+  \begin{defi}[同伦]
+    设$\gamma_0$和$\gamma_1$是开集$\Omega$上的有共同端点的曲线. 设
+    $\gamma_0(t)$和$\gamma_1(t)$分别是它们在$[a,b]$上的参数化. 称
+    它们是同伦的，若对于任意$0\le s\le 1$，存在与它们同端点的曲线
+    $\gamma_s\subset\Omega$，设它在$[a,b]$上有参数化$\gamma_s(t)$，
+    对任意$t\in [a,b]$，成立
+    \[
+      \gamma_s(t)|_{s=0} = \gamma_0(t),\quad 
+      \gamma_s(t)|_{s=1} = \gamma_1(t),
+    \]
+    并且$\gamma_s(t)$关于$s$和$t$连续.
+  \end{defi}
+
+  \begin{lemma}
+    \label{lemma: 紧集、闭集、距离}
+    对于不相交的紧集$K$和闭集$F$，它们之间的距离$d(K, F)>0$.
+  \end{lemma}
+
+  \begin{thm}
+    若$f$在开集$\Omega$上全纯，则对任意同伦的曲线$\gamma_0$和$\gamma_2$，成立
+    \[
+      \int_{\gamma_0}f(z)\rd z = \int_{\gamma_1}f(z)\rd z.
+    \]
+  \end{thm}
+  \proof
+    总体的思路是对于两条靠的足够近的曲线，证明等式成立，如果“近”的概念是一致的，那么即完成了
+    证明. 具体证明步骤如下：
+    \begin{enumerate}
+      \item 首先注意到$F(s, t)=\gamma_s(t)$是一个在紧集上的连续函数.
+      \item 利用\lemmaref{lemma: 紧集、闭集、距离}证明可以用统一大小的圆盘覆盖所有曲线
+        而不超出$\Omega$.
+      \item 利用一直连续性取出离得足够近的两条曲线以使得可以用足够小的一系列圆盘覆盖它们两者.
+      \item 在圆盘相交的部分中以及端点上取点，将曲线积分化为分段曲线积分的求和.
+      \item 利用圆盘上的原函数的存在性\thmref{thm: 局部存在性}得出差分式.
+      \item 相加相消得出结论. $\quad\blacksquare$
+    \end{enumerate}
+  % end
+
+  \begin{defi}[单连通]
+    称复平面上的区域$\Omega$是单连通的，若任意$\Omega$内的两天同端点曲线同伦.
+  \end{defi}
+
+  \begin{thm}
+    任意单连通区域上的全纯函数有原函数.
+  \end{thm}
+
+  \begin{thm}[Cauchy]
+    若$f$在单连通区域$\Omega$上全纯，则对于任意$\Omega$内的闭曲线$\gamma$成立
+    \[
+      \int_\gamma f(z)\rd z = 0.
+    \]
+  \end{thm}
+
+% end(subsection)
+
+\subsection{复对数}
+
+  \begin{thm}
+    设$\Omega$为单连通区域且$1\in\Omega$而$0\notin\Omega$. 则在$\Omega$中
+    存在$F(z)=\log_{\Omega}(z)$为对数的一支，成立
+    \begin{enumerate}
+      \item $F$在$\Omega$上全纯.
+      \item $e^{F(z)}=z$对$z\in\Omega$成立.
+      \item $F(r)=\log r$对$1$附近的实数成立.
+    \end{enumerate}
+    即$\log_\Omega(z)$的每一支都是标准对数的一个沿拓.
+  \end{thm}
+  \proof
+    首先定义$F(z)$为从$1$到$z$路径积分$1/z$的结果，显然它是对数的一支. 并且容易验证
+    [1.]成立. 对于[2.]，只需要证明
+    \[
+      \frac{\rd}{\rd z}(ze^{-F(z)}) = 0
+    \]
+    即可. 而对于[3.]，将路径取在实轴上即可.$\quad\blacksquare$
+  % end
+
+  \begin{defi}[主支]
+    定义对数的主支为其在$\Omega = \mC\backslash\{(-\infty, 0\}$上的分支.
+  \end{defi}
+
+  \begin{thm}
+    复对数的主支有表达式$\log z = \log r + \iu\theta$，其中
+    $z=re^{\iu\theta}$，$|\theta|<\pi$.
+  \end{thm}
+  \remark
+    注意，一般而言，$\log(z_1z_2)\ne \log z_1 + \log z_2$. 同时，对于$|z|<1$，
+    成立Taylor展开
+    \[
+      \log(1+z) = z-\frac{z^2}{2}+\frac{z^3}{3} - \cdots = 
+      \sum_{n=1}^\infty (-1)^{n+1}\frac{z^n}{n}.
+    \]
+  \proof
+    只需要由，实轴上从$1$到$r$的线段，以及从$r$到$re^{\iu\theta}$的圆弧作为路径
+    作积分即可.$\quad\blacksquare$
+  % end
+
+  \begin{defi}[指数]
+    对于任意$\alpha\in\mC$，定义$z^\alpha = e^{\alpha\log z}$.
+  \end{defi}
+
+  \begin{thm}
+    若$f$是一个在单连通区域$\Omega$内无零点的全纯函数，则存在$\Omega$上的
+    全纯函数$g$，成立
+    \[
+      f(z) = e^{g(z)}.
+    \]
+  \end{thm}
+  \proof
+    利用路径积分定义$g$，通过求导证明$f(z)=e^{g(z)}$.$\quad\blacksquare$
+  % end
+
+
+
+% end(subsection)
+
+\subsection{Fourier级数与调和函数}
+
+% end(subsection)
+% end(section)
 
 \newpage
 \section{附录}
