@@ -387,7 +387,7 @@
     \]
   \end{defi}
 
-  \begin{thm}··
+  \begin{thm}
     若$f,g\in S(X)$，则以下函数都可测：
     \[
       f^2,\quad f+g,\quad fg,\quad f/g,\quad |f|,\quad f^{\pm}.
@@ -463,10 +463,219 @@
   \end{defi}
 
 % end(subsection)
-  
 % end{section}
 
+\newpage
+\section{可测函数}
 
+  \begin{defi}[特征函数]
+    定义集合$E$的特征函数为
+    \[
+      \chi_E(x) = \begin{cases}
+        1,& \quad x\in E, \\
+        0,& \quad x\notin E.
+      \end{cases}
+    \]
+  \end{defi}
+
+  \begin{defi}[阶跃函数]
+    称$f$是阶跃函数，若
+    \[
+      f = \sum_{k=1}^n a_k\chi_{R_k}
+    \]
+    其中$R_k$是$n$维矩形.
+  \end{defi}
+
+  \begin{defi}[简单函数]
+    称$f$为简单函数，若
+    \[
+      f = \sum_{k=1}^n a_k\chi_{E_k}
+    \]
+    其中$E_k$为可测集且测度有限.
+  \end{defi}
+
+\subsection{定义与基础性质}
+
+  \begin{thm}
+    有限值函数$f$可测当且仅当对于任意开集$\mcal{O}$，$f^{-1}(\mcal{O})$可测，
+    当且仅当对任意闭集$F$，$f^{-1}(F)$可测.
+  \end{thm}
+  \remark
+    对于非有限值函数，只需要再要求$f^{-1}(\pm\infty)$分别可测，则定理仍是成立的.
+  \proof
+    实轴上的开集都可以被写成可数个不相交开区间的并的形式，同时由于$\mcal{M}$是
+    $\sigma$-代数，所以它在可数并和取补集下都是封闭的.$\quad\blacksquare$
+  % end
+
+  \begin{thm}
+    若$f$在$\R^n$上连续，则$f$可测. 若$f$可测且有限，同时$\Phi$连续，则
+    $\Phi\circ f$可测.
+  \end{thm}
+  \proof
+    事实上，连续保证了开集的原像是开集\footnote{证明见Rudin的《数学分析原理》.}，
+    而开集永远是可测的，所以$f$可测. 对于后半部分的证明同理.$\quad\blacksquare$
+  % end
+
+  \begin{thm}
+    设$\{f_n\}_{n=1}^\infty$是一列可测函数，则如下函数可测
+    \[
+      \sup_n f_n(x),\quad \inf_nf_n(x),\quad \limsup_{n\to\infty}f_n(x),
+      \quad \liminf_{n\to\infty}f_n(x).
+    \]
+  \end{thm}
+  \proof
+    $X(\sup_n f_n>c) = \bigcup_n X(f_n>c)$. 其中左边表示$\sup_n f_n$中
+    值大于$c$的$x$全体，而右侧表示只需要有一个$f_n(x)>c$，那么$c$就可以被取进来.
+    所以第一个函数是可测的. 同时又有
+    \[
+      \inf_nf_n(x) = -\sup_n(-f_n(x)), \quad
+      \limsup_{n\to\infty} = \inf_k\{\sup_{n\ge k}f_n\}.
+    \]
+    所以后几个函数也是可测的.$\quad\blacksquare$
+  % end
+
+  \begin{cor}
+    设$\{f_n\}$是一列可测函数且$\lim_{n\to\infty}f_n = f$，则$f$可测.
+  \end{cor}
+
+  \begin{thm}
+    设$f$和$g$可测，则
+    \begin{enumerate}
+      \item 对于正整数$k$，$f^k$可测.
+      \item 若$f$和$g$有限，则$f+g$和$fg$可测.
+    \end{enumerate}
+  \end{thm}
+
+
+  \begin{thm}
+    设$f$可测且$g$同$f$几乎处处相等，则$g$可测.
+  \end{thm}
+  \remark
+    $f$和$g$的任意原像至多只相差一个零测集.$\quad\blacksquare$
+  % end
+
+% end(subsection)
+
+\subsection{利用简单函数或阶跃函数作逼近}
+
+  \begin{thm}
+    \label{thm: 简单函数逼近非负可测函数}
+    设$f$是$\R^n$上的非负可测函数. 则存在一列递增的非负简单函数$\{\varphi_k\}$
+    逐点收敛至$f$，即对任意$x$成立
+    \[
+      \varphi_k(x) \le \varphi_{k+1}(x),\quad
+      \lim_{k\to\infty}\varphi_k(x) = f(x).
+    \]
+  \end{thm}
+  \proof
+    首先用一个长宽高都为$N$的正方体去截取原函数，设$Q_N$为以原点为中心、边长为
+    $N$的正方形，即定义
+    \[
+      F_N(x) = \begin{cases}
+        f(x), & x \in Q_N\quad\text{\&}\quad f(x) \le N, \\
+        N,    & x \in Q_N\quad\text{\&}\quad f(x) > N, \\
+        0,    & x \notin Q_N.
+      \end{cases}
+    \]
+    接着沿着纵轴切以$1/M$的厚度切这个正方体，得到一个$Q_N$的划分，即
+    \[
+      E_{l,M} = \left\{ x\in Q_N \,:\,
+      \frac{l}{M} < F_N(x) \le \frac{l+1}{M} \right\}, \quad
+      0\le l \le NM.
+    \]
+    这样就可以得到所需的简单函数
+    \[
+      F_{N, M} = \sum_{l}\frac{l}{M}\chi_{E_{l,M}}(x).
+    \]
+    取$\varphi_k = F_{2^k,2^k}$即可. 可以验证它满足所需的性质.$\quad\blacksquare$
+  % end
+
+  \begin{thm}
+    \label{thm: 简单函数逼近可测函数}
+    设$f$在$\R^n$上可测. 则存在一列简单函数$\{\varphi_k\}$满足
+    对任意$x$成立
+    \[
+      |\varphi_k(x)| \le |\varphi_{k+1}(x)|,\quad
+      \lim_{k\to\infty}\varphi_k(x) = f(x).
+    \]
+    同时，$|\varphi_k(x)| \le |f(x)|$.
+  \end{thm}
+  \proof
+    将$f$拆分成$f=f^+-f^-$并利用\thmref{thm: 简单函数逼近非负可测函数}即可.$\quad\blacksquare$
+  % end
+
+  \begin{thm}
+    \label{thm: 阶跃函数逼近可测函数}
+    设$f$在$\R^n$上可测. 则存在一列阶跃函数$\{\psi_k\}$几乎处处点态收敛至$f$.
+  \end{thm}
+  \proof
+    只需要对于$f=\chi_E$的情况证明，之后利用\thmref{thm: 简单函数逼近可测函数}即可.
+    用开集去逼近可测集$E$，并把开集拆成几乎不相交的方块的并，最后将这些方块取小一点，
+    使得它们不相交. 这样就得到了一个阶跃函数，可以使得它和$f$只在一个任意小的集合上
+    不同.$\quad\blacksquare$
+  % end
+
+
+% end(subsection)
+
+\subsection{Littlewood三原理}
+  \begin{pos}[Littlewood]
+    $\,$
+    \begin{enumerate}
+      \item 集合一定程度上都是有限个区间的并.
+      \item 函数一定程度上都是连续的.
+      \item 收敛点列一定程度上都是一致收敛的.
+    \end{enumerate}
+  \end{pos}
+  \remark
+    对于[1.]，它的精确表述为：“对于一个可测集E，若它的测度有限，则总可以找到有限个
+    方块的并，使得它们的对称差的测度充分小.” 而对于[2.]和[3.]的精确描述见之后的内容.
+  % end
+
+  \begin{thm}[Egorov]
+    \label{thm: Egorov}
+    设$\{f_k\}$是定义在可测集$E$上的一列可测函数且$\mu(E)<\infty$，设$f_k$
+    在$E$上几乎处处收敛至$f$. 则对于任意$\vep>0$，存在闭集$A_\vep\subset E$，
+    满足$\mu(E\backslash A_\vep)<\vep$且在$A_\vep$上$f_k$一致收敛于$f$.
+  \end{thm}
+  \proof
+    首先，不失一般性的，可以假设$f_k$在$E$上收敛. 否则只需要把那些不收敛点去除，剩下
+    的$E$和$f$依然可测，同时在新的条件下取出的闭集$A$依然是原来的$E$的闭子集.\par
+    首先定义
+    \[
+      E_k^n = \{x\in E\,:\, \forall j > k,
+      |f_j(x) - f(x)| < 1/n \}.
+    \]
+    之所以这样定义的$E_k^n$是为了避免极限定义中的“存在$N$”. 可以发现$E_k^n$随$k$
+    单调地趋于$E$，从而可以取充分大的$k_n$，使得$\mu(E-E_{k_n}^n)<1/2^n$，即我们
+    只需要去掉很少一部分点即可. 同时对于这个关于$n$的集合列，又可以取足够大的$N$，使得
+    即使取之后所有集合的交$\tilde{A}_\vep$，它们依然占了$E$中的大多数，即$\mu(E
+    \backslash \tilde{A}_\vep)<\vep/2$. 不难发现，$f_k$在$\tilde{A}_\vep$上
+    是一致收敛的，最后需要做的，只是在$\tilde{A}_\vep$中取一个只比它小一点点的闭集
+    即可.$\quad\blacksquare$
+  % end
+
+  \begin{thm}[Lusin]
+    设有限值函数$f$在测度优先的可测集$E$上可测. 则对于任意$\vep>0$，存在闭集$F_\vep$满足
+    \[
+      F_\vep\subset E,\quad \mu(E\backslash F_\vep) < \vep,
+    \]
+    且$f|_{F_\vep}$连续.
+  \end{thm}
+  \remark
+    注意$f|_{F_\vep}$和$f$在$F_\vep$上连续是有区别的，后者要求从$F_\vep$以外的点趋于
+    $F_\vep$中的点时，连续性条件仍成立.
+  \proof
+    首先根据\thmref{thm: 阶跃函数逼近可测函数}可知可以利用一列阶跃函数几乎处处地逼近$f$.
+    同时我们知道阶跃函数是几乎处处连续的. 同时利用\thmref{thm: Egorov}，可以找到一个
+    同$E$是否相近的闭集使得$f$一致收敛. 结合这三者，利用$\vep/3$的trick即可完成证明.
+    $\quad\blacksquare$
+  % end
+  
+
+% end(subsection)
+
+% end(section)
 
   
 
