@@ -62,8 +62,13 @@
       \res_{z_0}f = \lim_{z\to z_0}\frac{1}{(n-1)!}
       \left(\frac{\rd}{\rd z}\right)^{n-1}(z-z_0)^nf(z).
     \]
+    取$n=1$，即为
+    \[
+     \res_{z_0}f = \lim_{z\to z_0}(z-z_0)f(z). 
+    \]
   \end{thm}
 
+% end(subsection)
 
 \subsection{留数公式}
   \begin{thm}[留数公式]
@@ -87,10 +92,31 @@
       \frac{1}{2\pi\iu}\int_{C_\vep}\frac{a_{-k}}{(z-z_0)^k}=0.
     \]
     从而命题得证.$\quad\blacksquare$
+  % end
 
+  \begin{pos}
+    \[
+      \int_{-\infty}^\infty \frac{\rd x}{1+x^2} = \pi.
+    \]
+  \end{pos}
+  \proof
+    令$f = 1/(1+z^2)$，取以原点为圆心，半径为$R$的在上半平面的半圆.$\quad\blacksquare$
+  % end
+
+  \begin{pos}
+    设$0<a<1$. 
+    \[
+      \int_{-\infty}^\infty \frac{e^{ax}}{1+e^x}\rd x = \frac{\pi}{\sin\pi a}.
+    \]
+  \end{pos}
+
+  \begin{pos}
+    \[
+      \int_0^1\log(\sin\pi x)\rd x = -\log 2.
+    \]
+  \end{pos}
+% end
   
-
-
 \subsection{奇点与亚纯函数}
 
   \begin{thm}[Riemann]
@@ -104,16 +130,17 @@
       f_*(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.
     \]
     再证明对于$z\in\Omega\backslash\{z_0\}$，$f(z)=f_*(z)$. 具体证明只需采用
-    和\thmref{thm: Cauchy公式}中类似的方法即可，同时需要对绕$z_0$附近的积分做一个
-    估计.$\quad\blacksquare$
+    和\thmref{thm: Cauchy公式}中类似的方法即可，对于固定的$z$，考虑将$z_0$和$z$
+    排除的双锁孔形，利用Cauchy定理并对饶$z_0$的积分做一个估计. 在估计的时候注意，
+    积分的路径是绕$z_0$的小圆，但是分母上的却是和$z_0$不相等的$z$.$\quad\blacksquare$
   % end(proof)
 
   \begin{cor}
     设$z_0$是$f$的孤立奇点. $z_0$是极点的充要条件为，当$z\to z_0$时，
-    $|f(z)\to\infty|$。
+    $|f(z)|\to\infty$。
   \end{cor}
   \remark
-    $|f(z)\to\infty|$保证了$f$不会剧烈震荡.
+    $|f(z)|\to\infty$保证了$f$不会剧烈震荡.
   \proof
     考虑$1/f$即可. $\quad\blacksquare$
   % end
@@ -183,6 +210,11 @@
     \]
     其中计算个数时需要考虑重数. 这一定理对于任意玩具曲线都是成立的.
   \end{thm}
+  \remark
+    也可以反过来使用，利用积分的结果来证明零点/极点的存在性. 另外，这一定理
+    也意味着该积分的结果一定是整数，常常可以利用这一性质以及诸如连续性的性质
+    来推出某些矛盾或者说明它是常量. 同时，如果我们给$f$加上一个常数$w$，被
+    积函数的分子并不会改变，同时我们得到了一个参量$w$. 
   \proof
     利用前述引理和留数定理即可.$\quad\blacksquare$
   % end
@@ -192,6 +224,9 @@
     设$f$和$g$在包含圆$C$及其内部的开集上全纯，且对于任意$z\in C$，成立
     $|f(z)|>|g(z)|$. 则在$C$内部，$f$和$f+g$的零点个数相同.
   \end{thm}
+  \remark
+    虽然说此定理的结论说的是零点的个数，但是通过恰当的选取$g$，它可以用于
+    描述$f$的值域. 注意，$f(z)+g(z)=0$等价于$f(z)=-g(z)$.
   \proof
     定义
     \[
@@ -234,6 +269,13 @@
       \sup_{z\in\Omega}|f(z)| \le \sup_{z\in\bar{\Omega}\backslash\Omega}|f(z)|.
     \]
   \end{cor}
+  \remark
+    此命题表示在对$\Omega$中的值作估计的时候，常可以考虑$\partial\Omega$上的值.
+    例如利用$\partial D_R(0)\,(R\to\infty)$上的值来估计$\mathbb{C}$中的值. 
+    在应用的时候注意，虽然$|f|$常常不是全纯的，但是此命题结论中包含了模运算，所以只要
+    $f$全纯就够了.
+    可以用这种方法来证明Liouville定理\footnote{证明$g(z)=(f(z)-f(0))/z\equiv 0$}. 
+  % end
 
 % end(subsection)
 
@@ -295,8 +337,21 @@
 % end(subsection)
 
 \subsection{复对数}
+  \paragraph{说明}
+    本节的目的在于，对于非零复数$z$，定义对应的对数. 首先，按照$z=re^{\iu\theta}$以及
+    实对数的运算方法，很自然地会尝试定义
+    \begin{equation}
+      \label{equ: 复对数}
+      \log z = \log(re^{\iu\theta}) = \log r + \iu\theta.
+    \end{equation}
+    但是我们会发现$\log z$并非是单值的，所以我们可以考虑别的方法. 注意到我们实际上希望
+    的是对数函数是一个单值的函数，且它是自然指数的逆，最好还是全纯的. 首先我们证明在一定
+    条件下，这样的函数是存在的（\thmref{thm: 复对数}）. 接下来对于某个特殊条件下的这一
+    函数讨论. (\defref{defi: 复对数主支}).
+  % end
 
   \begin{thm}
+    \label{thm: 复对数}
     设$\Omega$为单连通区域且$1\in\Omega$而$0\notin\Omega$. 则在$\Omega$中
     存在$F(z)=\log_{\Omega}(z)$为对数的一支，成立
     \begin{enumerate}
@@ -306,20 +361,27 @@
     \end{enumerate}
     即$\log_\Omega(z)$的每一支都是标准对数的一个沿拓.
   \end{thm}
+  \remark
+    考虑\equref{equ: 复对数}的实际问题在哪里. 实际上对于多值的问题，我们可以通过强行
+    规定一个$\theta$的方式，使得它变成单值的，这样它也几乎可以满足我们所希望有的性质. 
+    但是如果这样做的话，考虑绕单位圆一圈回到$1$，若它是全纯的，则会发现$\log 1$并非
+    单值的. 出于这样的考虑，此定理限制定义了对数的集合，使得不会出现这样的情况.
   \proof
     首先定义$F(z)$为从$1$到$z$路径积分$1/z$的结果，显然它是对数的一支. 并且容易验证
     [1.]成立. 对于[2.]，只需要证明
     \[
       \frac{\rd}{\rd z}(ze^{-F(z)}) = 0
     \]
-    即可. 而对于[3.]，将路径取在实轴上即可.$\quad\blacksquare$
+    即可. 而对于[3.]，将路径取在实轴上即可.\par
+    这一证明也给出了在固定$\Omega$后，确定对数的某一支的值的具体方法. $\quad\blacksquare$
   % end
 
   \begin{defi}[主支]
+    \label{defi: 复对数主支}
     定义对数的主支为其在$\Omega = \mC\backslash\{(-\infty, 0\}$上的分支.
   \end{defi}
 
-  \begin{thm}
+  \begin{thm}[主支]
     复对数的主支有表达式$\log z = \log r + \iu\theta$，其中
     $z=re^{\iu\theta}$，$|\theta|<\pi$.
   \end{thm}
@@ -331,7 +393,7 @@
       \sum_{n=1}^\infty (-1)^{n+1}\frac{z^n}{n}.
     \]
   \proof
-    只需要由，实轴上从$1$到$r$的线段，以及从$r$到$re^{\iu\theta}$的圆弧作为路径
+    只需要在实轴上从$1$到$r$的线段以及从$r$到$re^{\iu\theta}$的圆弧组成的路径
     作积分即可.$\quad\blacksquare$
   % end
 
@@ -346,15 +408,59 @@
       f(z) = e^{g(z)}.
     \]
   \end{thm}
+  \remark
+    在实数域中的任意元素$x$都可以写成$e^y$的形式，这一命题是这一事实在复数域中的形式.
+    由于对数函数的特殊性，所以它表达方式如上. 注意，虽然那一同实数域中完全相同的形式的
+    结论也显然是正确的，但是考虑到我们一般研究的是复函数而不是单独某个复数，所以该形式
+    并没有多少实际上的意义.
   \proof
     利用路径积分定义$g$，通过求导证明$f(z)=e^{g(z)}$.$\quad\blacksquare$
   % end
 
-
-
 % end(subsection)
 
 \subsection{Fourier级数与调和函数}
+
+  \begin{thm}
+    设$f$在圆盘$D_R(z_0)$上全纯，则$f$的在$z_0$处的幂级数展开的系数满足
+    \begin{equation}
+      \label{equ: 幂级数系数}
+      a_n = \frac{1}{2\pi r^n}\int_0^{2\pi}f(z_0+re^{\iu\theta})e^{-\iu n\theta}\rd\theta,
+    \end{equation}
+    其中$n\ge 0$，$0<r<R$. 且对于$n<0$，成立
+    \begin{equation}
+      \label{equ: 幂级数系数2}
+      0 = \frac{1}{2\pi r^n}\int_0^{2\pi}f(z_0+re^{\iu\theta})e^{-\iu n\theta}\rd\theta.
+    \end{equation}
+  \end{thm}
+  \proof
+    对于\equref{equ: 幂级数系数}，只需要对$a_n = f^{(n)}(z_0)/n!$施Cauchy定理即可.
+    而对于\equref{equ: 幂级数系数2}，仍成立
+    \[
+      \rhs = \int_C\frac{\zeta}(\zeta-z_0)^{n+1}\rd\zeta.
+    \]
+    而此时被积函数全纯，由Cauchy积分定理可知该积分为零.$\quad\blacksquare$
+  % end
+
+  \begin{cor}[中值]
+    设$f$在$D_R(z_0)$上全纯，则对任意$0<r<R$，成立
+    \[
+      f(z_0) = \frac{1}{2\pi}\int_0^{2\pi}f(z_0+re^{\iu\theta})\rd\theta.
+    \]
+  \end{cor}
+  \proof
+    $a_0 = f(z_0)$. $\quad\blacksquare$
+  % end
+
+  \begin{cor}
+    设$f$在$D_R(z_0)$上全纯，设$u=\Re(f)$，则对任意$0<r<R$，成立
+    \[
+      u(z_0) = \frac{1}{2\pi}\int_0^{2\pi}u(z_0+re^{\iu\theta})\rd\theta.
+    \]
+  \end{cor}
+  \remark
+    由于任意圆盘上的调和函数都是某个全纯函数的实部，所以上述性质对任意调和函数也成立.
+  % end
 
 % end(subsection)
 % end(section)
