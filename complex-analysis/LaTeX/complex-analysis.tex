@@ -16,454 +16,79 @@
 \input{ch2-cauchys-theorem-and-its-applications.tex}
 
 \newpage
-\section{亚纯函数与对数函数}
+\input{ch3-meromorphic-functions-and-logarithm.tex}
 
-\subsection{零点与极点}
+\newpage
+\section{Fourier变换}
 
-  \begin{defi}[奇点]
-    对于复函数$f$，称$z_0$为$f$的奇点，若$f$在$z_0$的某个去心领域内定义，但
-    在$z_0$处无定义.
-  \end{defi}
+\newpage
+\section{整函数}
 
-  \begin{thm}
-    \label{thm: 零点、分离}
-    设不恒为零的复函数$f$在区域$\Omega$上全纯且$z_0\in\Omega$为其零点.
-    则在$z_0$的某个领域$U\subset\Omega$中，存在一个在$U$中无零点的全纯函数$g$，
-    以及唯一的正整数$n$，使得$f(z)=(z-z_0)^ng(z)$.
-  \end{thm}
-  \proof
-    幂级数展开.$\quad\blacksquare$
+\subsection{Jensen公式}
 
-  \begin{defi}[极点]
-    设$f$在$z_0$的去心领域中有定义. 考虑函数$g=1/f$，定义它在$z_0$处的值为$0$. 若
-    $g$在该领域中全纯，则称$z_0$为$f$的极点.
-  \end{defi}
-
-  \begin{thm}
-    设$z_0\in\Omega$是$f$的极点，则在它的某个领域中，存在一个无零点的全纯函数$h$，
-    以及唯一的正整数$n$，使得$f(z)=(z-z_0)^{-n}h(z)$.
-  \end{thm}
-
-  \begin{thm}
-    \label{thm: 极点展开}
-    设$z_0$是$f$的$n$阶极点，则在$z_0$的领域中存在全纯函数$G$，使得
-    \[
-      f(z) = \frac{a_{-n}}{(z-z_0)^n} + \frac{a_{-n+1}}{(z-z_0)^{n-1}} + \cdots +
-      \frac{a_{-1}}{z-z_0} + G(z).
-    \]
-    称$G(z)$前的项为$f$在$z_0$处的主部，称$a_{-1}$为留数，计作$\res_{z_0}f$.
-  \end{thm}
-  \proof
-    展开$h(z)=f(z)(z-z_0)^n$的$\lhs$即可.$\quad\blacksquare$
-
-  \begin{thm}[留数的计算]
-    设$z_0$是$f$的$n$阶极点，则
-    \[
-      \res_{z_0}f = \lim_{z\to z_0}\frac{1}{(n-1)!}
-      \left(\frac{\rd}{\rd z}\right)^{n-1}(z-z_0)^nf(z).
-    \]
-    取$n=1$，即为
-    \[
-     \res_{z_0}f = \lim_{z\to z_0}(z-z_0)f(z). 
-    \]
-  \end{thm}
-
-% end(subsection)
-
-\subsection{留数公式}
-  \begin{thm}[留数公式]
-    考虑开集$\Omega$及它内部的圆$C$，设$C$中的$z_0$是函数$f$的极点，除该点外$f$全纯. 则
+  \begin{thm}[Jensen]
+    \label{thm: Jensen}
+    设$\Omega$是包含$\bar{D}_R$的开集，$f$在$\Omega$中全纯且$f(0)\ne 0$. 同时
+    对$z\in C_R$，$f(z)\ne 0$. 记$z_1,\dots,z_N$为$f$在$D_R$中的零点，其中每个
+    零点被计数其重数次，则
     \begin{equation}
-      \label{equ: 留数公式}
-      \int_C f(z)\rd z = 2\pi\iu\res_{z_0}f.
+      \label{equ: Jensen}
+      \log|f(0)| = \sum_{k=1}^N\log\left( \frac{|z_k|}{R} \right)
+      + \frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta.
     \end{equation}
   \end{thm}
   \remark
-    此定理对于任何玩具曲线都成立，同时如果其中有不止一个极点的话，只需要把它们的留数相加即可.
   \proof
-    首先取锁孔形并进行一系列常规操作，可得
+    首先注意到如果$f_1$和$f_2$满足\equref{equ: Jensen}，则$f_1f_2$也满足.
+    所以我们考虑将$f$拆分成更加简单的形式并分别证明. 由于全纯，所以我们可以将它拆成
     \[
-      \int_{C}f(z)\rd z = \int_{C_\vep} f(z)\rd z.
+      f(z) = (z-z_1)\cdots (z-z_N)g(z).
     \]
-    利用\thmref{thm: 极点展开}将$f(z)$在极点展开. 沿着$C_\vep$积分$G(z)$的结果为零.
-    同时，对于常值函数$f=a_{-k}$施各阶Cauchy积分定理，可知
+    其中$g$在$\bar{D}_R$无零点，之后对于$g$和形如$x-w$的函数分别证明\equref{equ: Jensen}.\par
+    对于无零点的$g$，要证的即为
     \[
-      \frac{1}{2\pi\iu}\int_{C_\vep}\frac{a_{-1}}{z-z_0}=a_{-1},\quad
-      \frac{1}{2\pi\iu}\int_{C_\vep}\frac{a_{-k}}{(z-z_0)^k}=0.
+      \log|g(0)| = \frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta.
     \]
-    从而命题得证.$\quad\blacksquare$
+    利用\thmref{thm: 全纯、对数存在性}和\corref{cor: 全纯、实部}的评注即可证明.\par
+    而对于形如$z-w$的函数，其中$w$是圆盘内的任意一点，它在$w$处有唯一零点，所要证的式子即为
+    \[
+      \log|w|=\log\left( \frac{|w|}{R} \right) + \frac{1}{2\pi}\int_0^{2\pi}
+      \log|Re^{\iu\theta} - w|\rd\theta \quad\Leftrightarrow\quad
+      \int_0^{2\pi}\log|e^{\iu\theta}-a|\rd\theta = 0,
+    \]
+    其中$a=w/R$. 作变量代换，用$-\theta$替换$\theta$，则上式等价为
+    \[
+      \int_0^{2\pi}\log|1-ae^{\iu\theta}|\rd\theta = 0.
+    \]
+    利用和之前相同的方法证明即可.$\quad\blacksquare$
   % end
 
-  \begin{pos}
+  \begin{lemma}
+    条件同前，设$z_1,\dots,z_N$是$f$在$D_R$中的零点，设$\mathfrak{n}(r)$为$f$在
+    $D_r$中的零点个数，则
     \[
-      \int_{-\infty}^\infty \frac{\rd x}{1+x^2} = \pi.
+      \int_0^R \mathfrak{n}(r)\frac{\rd r}{r} = 
+      \sum_{k=1}^N\log\left| \frac{R}{z_k} \right|.
     \]
-  \end{pos}
+  \end{lemma}
   \proof
-    令$f = 1/(1+z^2)$，取以原点为圆心，半径为$R$的在上半平面的半圆.$\quad\blacksquare$
+    利用
+    \[
+      \log\left| \frac{R}{z_k} \right|=\int_{|z_k|}^R\frac{\rd r}{r},
+      \quad n_k(r) = ( r > |z_k| )?.\quad\blacksquare
+    \]
   % end
 
-  \begin{pos}
-    设$0<a<1$. 
+  \begin{cor}
+    条件同前. 此推论描述了零点和函数值大小之间的关系.
     \[
-      \int_{-\infty}^\infty \frac{e^{ax}}{1+e^x}\rd x = \frac{\pi}{\sin\pi a}.
+      \int_0^R\mathfrak{n}(r)\frac{\rd r}{r} = \frac{1}{2\pi}
+      \int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta - \log|f(0)|.
     \]
-  \end{pos}
+  \end{cor}
 
-  \begin{pos}
-    \[
-      \int_0^1\log(\sin\pi x)\rd x = -\log 2.
-    \]
-  \end{pos}
 % end
-  
-\subsection{奇点与亚纯函数}
-
-  \begin{thm}[Riemann]
-    \label{thm: Riemann、可去奇点}
-    设$f$在开集$\Omega$上除点$z_0$外全纯. 若$f$在$\Omega\backslash\{z_0\}$上
-    有界，则$z_0$是可去奇点.
-  \end{thm}
-  \proof
-    定义全纯函数
-    \[
-      f_*(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.
-    \]
-    再证明对于$z\in\Omega\backslash\{z_0\}$，$f(z)=f_*(z)$. 具体证明只需采用
-    和\thmref{thm: Cauchy公式}中类似的方法即可，对于固定的$z$，考虑将$z_0$和$z$
-    排除的双锁孔形，利用Cauchy定理并对饶$z_0$的积分做一个估计. 在估计的时候注意，
-    积分的路径是绕$z_0$的小圆，但是分母上的却是和$z_0$不相等的$z$.$\quad\blacksquare$
-  % end(proof)
-
-  \begin{cor}
-    设$z_0$是$f$的孤立奇点. $z_0$是极点的充要条件为，当$z\to z_0$时，
-    $|f(z)|\to\infty$。
-  \end{cor}
-  \remark
-    $|f(z)|\to\infty$保证了$f$不会剧烈震荡.
-  \proof
-    考虑$1/f$即可. $\quad\blacksquare$
-  % end
-
-  \begin{thm}[Casorati-Weierstrass]
-    设$f$在去心圆盘$D_r(z_0)\backslash\{z_0\}$上全纯且$z_0$是$f$的必要奇点.
-    则$D_r(z_0)\backslash\{z_0\}$在$f$映射下的像集在复平面中稠密.
-  \end{thm}
-  \proof
-    反证法. 假设存在$w\in\mC$周围没有$f(z)$，则函数
-    \[
-      g(z) = \frac{1}{f(z)-w}
-    \]
-    全纯. 利用\thmref{thm: Riemann、可去奇点}及其推论可以证明$z_0$或是$f$的
-    可去奇点，或者极点，与条件矛盾.$\quad\blacksquare$
-  % end
-
-  \begin{defi}[亚纯]
-    称函数$f$在开集$\Omega$中亚纯，若存在点列$\{z_k\}$在$\Omega$中无聚点，
-    且
-    \begin{enumerate}
-      \item $f$在$\Omega\backslash\{z_0,z_1,\dots\}$上全纯；
-      \item ${z_k}$是$f$的奇点.
-    \end{enumerate}
-  \end{defi}
-  \remark
-    也可以在扩充复平面上讨论亚纯函数，讨论$f(z)$在无穷远处的行为，即讨论$f(1/z)$在
-    原点处的行为.
-  % end
-
-  \begin{thm}
-    扩充复平面上的亚纯函数都是有理函数.
-  \end{thm}
-  \proof
-    依次取出$f$在极点处的主部. 证明剩余的部分为整有界函数，从而根据\corref{cor:
-    Liouville}，剩余的部分为一常数.$\quad\blacksquare$
-  % end
-
-  \begin{defi}[Riemann球]
-    TODO
-  \end{defi}
-
-
-
-% end(subsection)
-
-\subsection{辅角原理及其应用}
-
-  \begin{lemma}
-    设$f$在开集$\Omega$上亚纯，则$f$的零点和极点都是$f\hp/f$的简单极点，
-    且其留数为$\pm n$，其中$n$为对应零点/极点的阶数.
-  \end{lemma}
-  \proof
-    设$z_0$是零点，则根据\thmref{thm: 零点、分离}可以将$f$分为
-    \[
-      f(z) = (z-z_0)^ng(z).
-    \]
-    利用这一形式直接证明即可. 对于极点而言，证明是类似的. $\quad\blacksquare$
-  % end
-
-  \begin{thm}[辅角原理]
-    \label{thm: 辅角原理}
-    设$f$在一个包含了圆$C$及其内部的开集上亚纯. 若$f$在$C$上无零点无极点，则
-    \[
-      \frac{1}{2\pi\iu}\int_C\frac{f\hp(z)}{f(z)}\rd z = 
-      \text{($C$内$f$的零点个数)} - \text{($C$内$f$的极点个数)}.
-    \]
-    其中计算个数时需要考虑重数. 这一定理对于任意玩具曲线都是成立的.
-  \end{thm}
-  \remark
-    也可以反过来使用，利用积分的结果来证明零点/极点的存在性. 另外，这一定理
-    也意味着该积分的结果一定是整数，常常可以利用这一性质以及诸如连续性的性质
-    来推出某些矛盾或者说明它是常量. 同时，如果我们给$f$加上一个常数$w$，被
-    积函数的分子并不会改变，同时我们得到了一个参量$w$. 
-  \proof
-    利用前述引理和留数定理即可.$\quad\blacksquare$
-  % end
-
-  \begin{thm}[Rouchè]
-    \label{thm: Rouche}
-    设$f$和$g$在包含圆$C$及其内部的开集上全纯，且对于任意$z\in C$，成立
-    $|f(z)|>|g(z)|$. 则在$C$内部，$f$和$f+g$的零点个数相同.
-  \end{thm}
-  \remark
-    虽然说此定理的结论说的是零点的个数，但是通过恰当的选取$g$，它可以用于
-    描述$f$的值域. 注意，$f(z)+g(z)=0$等价于$f(z)=-g(z)$.
-  \proof
-    定义
-    \[
-      f_t(z) = f(z) + tg(z),\quad t\in[0, 1].
-    \]
-    同时定义$n_t$为$f_z(t)$的零点个数. 利用辅角定理可以得出$n_t$的积分表达
-    式，证明它连续，即可得$n_t$为常数.$\quad\blacksquare$
-  % end
-
-  \begin{defi}[开映射]
-    称一个映射为开映射，若它将任意定义域内的开集映成一个开集.
-  \end{defi}
-
-  \begin{thm}[开映射]
-    若$f$在区域$\Omega$上全纯且非常值，则它为一个开映射.
-  \end{thm}
-  \proof
-    即对于$w_0$周围的任意$w$，证明$g(z)=f(z)-w$有零点. 将$g$写为
-    \[
-      g(z) = (f(z)-w_0) + (w_0-w) = F(z) + G(z),
-    \]
-    并利用\thmref{thm: Rouche}即可. 而为了为使之满足Rouchè定理的条件，可以
-    先取一个充分小的$\vep$，使得可以在$w_0$周围取出一个圆$C$使得在$C$上满足
-    $|F(z)|>\vep$. 同时注意到$G$实际上与$z$无关，所以只需要利用连续性取离
-    $w_0$足够近的$w$即可.$\quad\blacksquare$
-  % end
-
-
-   \begin{thm}[最大模原理]
-    设$f$是区域$\Omega$中的非常值全纯函数，则$f$在$\Omega$中取不到最大值.
-  \end{thm}
-  \proof
-    反证法，假设取到最大值，会与它是一个开映射矛盾.$\quad\blacksquare$
-  % end
-
-  \begin{cor}
-    记区域$\Omega$的闭包为$\bar{\Omega}$. 若$f$在$\Omega$上全纯且在
-    $\bar{\Omega}$上连续，则
-    \[
-      \sup_{z\in\Omega}|f(z)| \le \sup_{z\in\bar{\Omega}\backslash\Omega}|f(z)|.
-    \]
-  \end{cor}
-  \remark
-    此命题表示在对$\Omega$中的值作估计的时候，常可以考虑$\partial\Omega$上的值.
-    例如利用$\partial D_R(0)\,(R\to\infty)$上的值来估计$\mathbb{C}$中的值. 
-    在应用的时候注意，虽然$|f|$常常不是全纯的，但是此命题结论中包含了模运算，所以只要
-    $f$全纯就够了.
-    可以用这种方法来证明Liouville定理\footnote{证明$g(z)=(f(z)-f(0))/z\equiv 0$}. 
-  % end
-
-% end(subsection)
-
-\subsection{同伦与单连通区域}
-
-  \begin{defi}[同伦]
-    设$\gamma_0$和$\gamma_1$是开集$\Omega$上的有共同端点的曲线. 设
-    $\gamma_0(t)$和$\gamma_1(t)$分别是它们在$[a,b]$上的参数化. 称
-    它们是同伦的，若对于任意$0\le s\le 1$，存在与它们同端点的曲线
-    $\gamma_s\subset\Omega$，设它在$[a,b]$上有参数化$\gamma_s(t)$，
-    对任意$t\in [a,b]$，成立
-    \[
-      \gamma_s(t)|_{s=0} = \gamma_0(t),\quad 
-      \gamma_s(t)|_{s=1} = \gamma_1(t),
-    \]
-    并且$\gamma_s(t)$关于$s$和$t$连续.
-  \end{defi}
-
-  \begin{lemma}
-    \label{lemma: 紧集、闭集、距离}
-    对于不相交的紧集$K$和闭集$F$，它们之间的距离$d(K, F)>0$.
-  \end{lemma}
-
-  \begin{thm}
-    若$f$在开集$\Omega$上全纯，则对任意同伦的曲线$\gamma_0$和$\gamma_2$，成立
-    \[
-      \int_{\gamma_0}f(z)\rd z = \int_{\gamma_1}f(z)\rd z.
-    \]
-  \end{thm}
-  \proof
-    总体的思路是对于两条靠的足够近的曲线，证明等式成立，如果“近”的概念是一致的，那么即完成了
-    证明. 具体证明步骤如下：
-    \begin{enumerate}
-      \item 首先注意到$F(s, t)=\gamma_s(t)$是一个在紧集上的连续函数.
-      \item 利用\lemmaref{lemma: 紧集、闭集、距离}证明可以用统一大小的圆盘覆盖所有曲线
-        而不超出$\Omega$.
-      \item 利用一直连续性取出离得足够近的两条曲线以使得可以用足够小的一系列圆盘覆盖它们两者.
-      \item 在圆盘相交的部分中以及端点上取点，将曲线积分化为分段曲线积分的求和.
-      \item 利用圆盘上的原函数的存在性\thmref{thm: 局部存在性}得出差分式.
-      \item 相加相消得出结论. $\quad\blacksquare$
-    \end{enumerate}
-  % end
-
-  \begin{defi}[单连通]
-    称复平面上的区域$\Omega$是单连通的，若任意$\Omega$内的两天同端点曲线同伦.
-  \end{defi}
-
-  \begin{thm}
-    任意单连通区域上的全纯函数有原函数.
-  \end{thm}
-
-  \begin{thm}[Cauchy]
-    若$f$在单连通区域$\Omega$上全纯，则对于任意$\Omega$内的闭曲线$\gamma$成立
-    \[
-      \int_\gamma f(z)\rd z = 0.
-    \]
-  \end{thm}
-
-% end(subsection)
-
-\subsection{复对数}
-  \paragraph{说明}
-    本节的目的在于，对于非零复数$z$，定义对应的对数. 首先，按照$z=re^{\iu\theta}$以及
-    实对数的运算方法，很自然地会尝试定义
-    \begin{equation}
-      \label{equ: 复对数}
-      \log z = \log(re^{\iu\theta}) = \log r + \iu\theta.
-    \end{equation}
-    但是我们会发现$\log z$并非是单值的，所以我们可以考虑别的方法. 注意到我们实际上希望
-    的是对数函数是一个单值的函数，且它是自然指数的逆，最好还是全纯的. 首先我们证明在一定
-    条件下，这样的函数是存在的（\thmref{thm: 复对数}）. 接下来对于某个特殊条件下的这一
-    函数讨论. (\defref{defi: 复对数主支}).
-  % end
-
-  \begin{thm}
-    \label{thm: 复对数}
-    设$\Omega$为单连通区域且$1\in\Omega$而$0\notin\Omega$. 则在$\Omega$中
-    存在$F(z)=\log_{\Omega}(z)$为对数的一支，成立
-    \begin{enumerate}
-      \item $F$在$\Omega$上全纯.
-      \item $e^{F(z)}=z$对$z\in\Omega$成立.
-      \item $F(r)=\log r$对$1$附近的实数成立.
-    \end{enumerate}
-    即$\log_\Omega(z)$的每一支都是标准对数的一个沿拓.
-  \end{thm}
-  \remark
-    考虑\equref{equ: 复对数}的实际问题在哪里. 实际上对于多值的问题，我们可以通过强行
-    规定一个$\theta$的方式，使得它变成单值的，这样它也几乎可以满足我们所希望有的性质. 
-    但是如果这样做的话，考虑绕单位圆一圈回到$1$，若它是全纯的，则会发现$\log 1$并非
-    单值的. 出于这样的考虑，此定理限制定义了对数的集合，使得不会出现这样的情况.
-  \proof
-    首先定义$F(z)$为从$1$到$z$路径积分$1/z$的结果，显然它是对数的一支. 并且容易验证
-    [1.]成立. 对于[2.]，只需要证明
-    \[
-      \frac{\rd}{\rd z}(ze^{-F(z)}) = 0
-    \]
-    即可. 而对于[3.]，将路径取在实轴上即可.\par
-    这一证明也给出了在固定$\Omega$后，确定对数的某一支的值的具体方法. $\quad\blacksquare$
-  % end
-
-  \begin{defi}[主支]
-    \label{defi: 复对数主支}
-    定义对数的主支为其在$\Omega = \mC\backslash\{(-\infty, 0\}$上的分支.
-  \end{defi}
-
-  \begin{thm}[主支]
-    复对数的主支有表达式$\log z = \log r + \iu\theta$，其中
-    $z=re^{\iu\theta}$，$|\theta|<\pi$.
-  \end{thm}
-  \remark
-    注意，一般而言，$\log(z_1z_2)\ne \log z_1 + \log z_2$. 同时，对于$|z|<1$，
-    成立Taylor展开
-    \[
-      \log(1+z) = z-\frac{z^2}{2}+\frac{z^3}{3} - \cdots = 
-      \sum_{n=1}^\infty (-1)^{n+1}\frac{z^n}{n}.
-    \]
-  \proof
-    只需要在实轴上从$1$到$r$的线段以及从$r$到$re^{\iu\theta}$的圆弧组成的路径
-    作积分即可.$\quad\blacksquare$
-  % end
-
-  \begin{defi}[指数]
-    对于任意$\alpha\in\mC$，定义$z^\alpha = e^{\alpha\log z}$.
-  \end{defi}
-
-  \begin{thm}
-    若$f$是一个在单连通区域$\Omega$内无零点的全纯函数，则存在$\Omega$上的
-    全纯函数$g$，成立
-    \[
-      f(z) = e^{g(z)}.
-    \]
-  \end{thm}
-  \remark
-    在实数域中的任意元素$x$都可以写成$e^y$的形式，这一命题是这一事实在复数域中的形式.
-    由于对数函数的特殊性，所以它表达方式如上. 注意，虽然那一同实数域中完全相同的形式的
-    结论也显然是正确的，但是考虑到我们一般研究的是复函数而不是单独某个复数，所以该形式
-    并没有多少实际上的意义.
-  \proof
-    利用路径积分定义$g$，通过求导证明$f(z)=e^{g(z)}$.$\quad\blacksquare$
-  % end
-
-% end(subsection)
-
-\subsection{Fourier级数与调和函数}
-
-  \begin{thm}
-    设$f$在圆盘$D_R(z_0)$上全纯，则$f$的在$z_0$处的幂级数展开的系数满足
-    \begin{equation}
-      \label{equ: 幂级数系数}
-      a_n = \frac{1}{2\pi r^n}\int_0^{2\pi}f(z_0+re^{\iu\theta})e^{-\iu n\theta}\rd\theta,
-    \end{equation}
-    其中$n\ge 0$，$0<r<R$. 且对于$n<0$，成立
-    \begin{equation}
-      \label{equ: 幂级数系数2}
-      0 = \frac{1}{2\pi r^n}\int_0^{2\pi}f(z_0+re^{\iu\theta})e^{-\iu n\theta}\rd\theta.
-    \end{equation}
-  \end{thm}
-  \proof
-    对于\equref{equ: 幂级数系数}，只需要对$a_n = f^{(n)}(z_0)/n!$施Cauchy定理即可.
-    而对于\equref{equ: 幂级数系数2}，仍成立
-    \[
-      \rhs = \int_C\frac{\zeta}(\zeta-z_0)^{n+1}\rd\zeta.
-    \]
-    而此时被积函数全纯，由Cauchy积分定理可知该积分为零.$\quad\blacksquare$
-  % end
-
-  \begin{cor}[中值]
-    设$f$在$D_R(z_0)$上全纯，则对任意$0<r<R$，成立
-    \[
-      f(z_0) = \frac{1}{2\pi}\int_0^{2\pi}f(z_0+re^{\iu\theta})\rd\theta.
-    \]
-  \end{cor}
-  \proof
-    $a_0 = f(z_0)$. $\quad\blacksquare$
-  % end
-
-  \begin{cor}
-    设$f$在$D_R(z_0)$上全纯，设$u=\Re(f)$，则对任意$0<r<R$，成立
-    \[
-      u(z_0) = \frac{1}{2\pi}\int_0^{2\pi}u(z_0+re^{\iu\theta})\rd\theta.
-    \]
-  \end{cor}
-  \remark
-    由于任意圆盘上的调和函数都是某个全纯函数的实部，所以上述性质对任意调和函数也成立.
-  % end
-
-% end(subsection)
-% end(section)
+% end
 
 \newpage
 \section{附录}

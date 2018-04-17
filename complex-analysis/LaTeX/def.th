@@ -7,6 +7,7 @@
   clrscode,
   amssymb,
   ntheorem,
+  amsfonts,
   amsmath,
   listings,
   fontspec,
@@ -14,7 +15,7 @@
   supertabular,
   multirow,
   mathtools,
-  mathrsfs
+  mathrsfs,
 }
 \definecolor{bgGray}{RGB}{36, 36, 36}
 \usepackage[
