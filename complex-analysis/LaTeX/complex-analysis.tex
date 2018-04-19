@@ -23,6 +23,9 @@
 
 \newpage
 \section{整函数}
+  \paragraph{说明}
+    本节默认$f$不恒为零.
+  % end
 
 \subsection{Jensen公式}
 
@@ -80,6 +83,7 @@
   % end
 
   \begin{cor}
+    \label{cor: 整函数、零点、模}
     条件同前. 此推论描述了零点和函数值大小之间的关系.
     \[
       \int_0^R\mathfrak{n}(r)\frac{\rd r}{r} = \frac{1}{2\pi}
@@ -88,6 +92,122 @@
   \end{cor}
 
 % end
+
+\subsection{有限阶函数}
+  \begin{defi}
+    \label{defi: 整函数的阶}
+    设$f$是整函数. 若存在正数$\rho$和正常量$A$和$B$，使得对任意$z\in\mC$成立
+    \begin{equation}
+      \label{equ: 整函数的阶、小于等于}
+      |f(z)| \le Ae^{B|z|^\rho},
+    \end{equation}
+    则称$f$增长率的阶$\le\rho$. 定义$f$增长率的阶（简称阶）为
+    \[
+      \rho_f = \inf\rho.
+    \]
+    其中$\rho$取遍所有满足\equref{equ: 整函数的阶、小于等于}的值.
+  \end{defi}
+
+  \begin{thm}
+    设整函数$f$的阶$\le\rho$，则
+    \begin{enumerate}
+      \item 对于充分大的$r$成立$\mathfrak{n}(r)\le Cr^\rho$.
+      \item 设$z_1,z_2,\dots$为$f$的零点且$z_k\ne 0$，则对任意$s>\rho$，成立
+        \[
+          \sum_{k=1}^\infty\frac{1}{|z_k|^s} < \infty.
+        \]
+    \end{enumerate}
+  \end{thm}
+  \remark
+  \proof
+    对于[1.]，不妨设$f(0)\ne 0$. 考虑\corref{cor: 整函数、零点、模}和\defref{defi:
+    整函数的阶}，可知
+    \[\begin{split}
+      \rhs \le CR^\rho-\log|f(0)|,\quad
+      \lhs \ge \int_{R/2}^R\mathfrak{n}(r)\frac{\rd r}{r}\ge 
+      \mathfrak{n}(R/2)\log 2.
+    \end{split}\]
+    而对于充分大的$R$，$\log|f(0)|$项可忽略.\par
+    对于[2.]，首先由于有界点列必有聚点而$f$不恒为零，所以可知在单位圆中至多有有限个
+    零点，所以我们只需要考虑$|z_k|\ge 1$的零点即可. 将零点按照所处于哪一个$2^j\le
+    |z_k|<2^{j+1}$来分类并做恰当的放缩即可. $\quad\blacksquare$
+  % end
+
+% end
+
+\subsection{无穷乘积}
+  \begin{thm}
+    若$\sum|a_n|<\infty$，则乘积$\prod_{n=1}^\infty(1+a_n)$收敛. 乘积
+    收敛于零当且仅当其中一个某一项为零.
+  \end{thm}
+  \proof
+    正如同常见的一样，使用对数将乘积转化为求和. 由于$\{a_n\}$绝对收敛，所以不是一般性
+    的，可设$|a_n|<1/2$. 所以可以对$1+a_n$取对数主支，即可以有
+    \[
+      \prod_{n=1}^N(1+a_n) = \prod_{n=1}^ne^{\log(1+a_n)}
+      = \exp\left(\sum_{n=1}^N\log(1+a_n)\right).
+    \]
+    而由于$|\log(1+a_n)|\le 2|a_n|$而$\{|a_n|\}$收敛，所以$\{\log(1+a_n)\}$也
+    绝对收敛，设其收敛于$B$. 由于$e^z$的连续性，可知该无穷乘积收敛于$e^B$. 这也意味着
+    若$1+a_n\ne 0$，则乘积的结果不为$0$. $\quad\blacksquare$
+  % end
+
+  \begin{thm}
+    \label{thm: 无穷乘积、导数}
+    设$\{F_n\}$是一列开集$\Omega$上全纯函数. 设存在收敛的正项级数$\{c_n\}$，使得
+    对任意$z\in\Omega$成立
+    \[
+      |F_n(z) - 1| \le c_n.
+    \]
+    则有
+    \begin{enumerate}
+      \item $\prod_{n=1}^\infty F_n(z)$在$\Omega$上一致收敛于全纯函数$F(z)$.
+      \item 若任意$F_n(z)$无零点，则
+        \[
+          \frac{F\hp(z)}{F(z)} = \sum_{n=1}^\infty\frac{F\hp_n(z)}{F_n(z)}.
+        \]
+    \end{enumerate}
+  \end{thm}
+  \remark
+    关于[2.]，考虑级数情况的求导以及对数将乘法化为加法的性质，即可明白为什么会成这样的
+    形式.
+  \proof
+    和之前的证明相似，我们可知它确实一致收敛.     
+  % end
+
+  \begin{thm}
+    \label{thm: cot级数展开}
+    \[
+      \pi\cot\pi z=\frac{1}{z}+\sum_{n=1}^\infty\frac{2z}{z^2-n^2}.
+    \]
+  \end{thm}
+  \proof
+    整体思路是证明$\Delta(z) = \lhs(z) -  \rhs(z)$为一个有界整函数. 具体而言，
+    首先分别证明两侧的周期性，并描述在原点处极点的性质，从而得出想要的结论，注意对于
+    $\rhs$，成立
+    \[
+      \rhs = \lim_{N\to\infty}\sum_{|n|\le N}\frac{1}{z+n}. \quad\blacksquare
+    \]
+  % end
+
+  \begin{thm}
+    \[
+      \frac{\sin\pi z}{\pi} = z\prod_{n=1}^\infty\left(1-\frac{z^2}{n^2}\right).
+    \]
+  \end{thm}
+  \proof
+    首先注意到
+    \[
+      \left(\frac{f}{g}\right) = \frac{f}{g}
+      \left( \frac{f\hp}{f} - \frac{g\hp}{g} \right).
+    \]
+    而对于$f\hp/f$的形式，我们可以有\thmref{thm: 无穷乘积、导数}. 证明$(\lhs/\rhs)\hp=0$
+    即可.$\quad\blacksquare$
+  % end
+
+% end
+
+
 % end
 
 \newpage
