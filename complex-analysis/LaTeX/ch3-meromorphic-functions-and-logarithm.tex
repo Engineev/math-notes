@@ -405,6 +405,7 @@
 \subsection{Fourier级数与调和函数}
 
   \begin{thm}
+    \label{thm: 幂级数系数、积分}
     设$f$在圆盘$D_R(z_0)$上全纯，则$f$的在$z_0$处的幂级数展开的系数满足
     \begin{equation}
       \label{equ: 幂级数系数}
@@ -420,7 +421,7 @@
     对于\equref{equ: 幂级数系数}，只需要对$a_n = f^{(n)}(z_0)/n!$施Cauchy定理即可.
     而对于\equref{equ: 幂级数系数2}，仍成立
     \[
-      \rhs = \int_C\frac{\zeta}(\zeta-z_0)^{n+1}\rd\zeta.
+      \rhs = \int_C\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\rd\zeta.
     \]
     而此时被积函数全纯，由Cauchy积分定理可知该积分为零.$\quad\blacksquare$
   % end

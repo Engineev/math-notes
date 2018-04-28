@@ -107,8 +107,43 @@
     \]
     其中$\rho$取遍所有满足\equref{equ: 整函数的阶、小于等于}的值.
   \end{defi}
+  \remark
+    阶描述了整函数在无穷远处的行为，如果它的阶为$\rho$，那么在无穷远处，它的增长就
+    类似于$e^{|z|^\rho}$.
+  % end
+
+  \begin{thm}[等价定义]
+    $\rho$是整函数$f$的阶的充要条件为
+    \[
+      \rho = \limsup_{R\to\infty}\frac{\log(\log\|f\|_{\infty,D_R})}{\log R}.
+    \]
+  \end{thm}
+  \proof
+    首先证明充分性. 记$M(r) = \|f\|_{\infty, D_r}$，
+    \[
+      \rho = \limsup_{r\to\infty}\log_r\log M(r) = \lim_{R\to\infty}\sup_{r>R}
+      \log_r\log M(r).
+    \]
+    按照定义，对于任意$\vep>0$，存在$R_0>0$，使得对任意$R>R_0$成立
+    \begin{equation}
+      \label{equ: 阶等价定义证明1}
+      \rho - \vep < \sup_{r>R}\log_r\log M(r) < \rho + \vep.
+    \end{equation}
+    从而对于任意的$r>R_0$，有
+    \[
+      \log_r\log M(r) < \rho + \vep \quad\Rightarrow\quad
+      M(r) < e^{r^{\rho+\vep}}.
+    \]
+    由于$M(r)$在$D_{R_0}$上有界，所以存在$A>0$使得对任意$r$成立
+    \[
+      M(r) \le Ae^{Br^\rho} \quad\Rightarrow\quad |f(z)|\le Ae^{B|z|^\rho},\quad |z|=r.
+    \]
+    所以$f$的阶$\le\rho$. 同时根据\equref{equ: 阶等价定义证明1}，可知它就是$f$的阶.\par
+    而对于必要性TODO
+  % end
 
   \begin{thm}
+    \label{thm: 整函数的阶}
     设整函数$f$的阶$\le\rho$，则
     \begin{enumerate}
       \item 对于充分大的$r$成立$\mathfrak{n}(r)\le Cr^\rho$.
@@ -119,6 +154,8 @@
     \end{enumerate}
   \end{thm}
   \remark
+    如果有$f(0)\ne 0$，[1.]中的“充分大”的要求可以去掉. 这一定理用于证明
+    \thmref{thm: 无穷乘积、导数}条件中的收敛性.
   \proof
     对于[1.]，不妨设$f(0)\ne 0$. 考虑\corref{cor: 整函数、零点、模}和\defref{defi:
     整函数的阶}，可知
@@ -137,9 +174,12 @@
 
 \subsection{无穷乘积}
   \begin{thm}
+    \label{thm: 无穷乘积}
     若$\sum|a_n|<\infty$，则乘积$\prod_{n=1}^\infty(1+a_n)$收敛. 乘积
     收敛于零当且仅当其中一个某一项为零.
   \end{thm}
+  \remark
+    这一定理的后半部分给出了确定一个用无穷乘积表示的函数的零点的方式.
   \proof
     正如同常见的一样，使用对数将乘积转化为求和. 由于$\{a_n\}$绝对收敛，所以不是一般性
     的，可设$|a_n|<1/2$. 所以可以对$1+a_n$取对数主支，即可以有
@@ -170,7 +210,7 @@
   \end{thm}
   \remark
     关于[2.]，考虑级数情况的求导以及对数将乘法化为加法的性质，即可明白为什么会成这样的
-    形式.
+    形式. 这一定理给出了一个证明无穷乘积形式的函数为全纯函数的方法.
   \proof
     和之前的证明相似，我们可知它确实一致收敛.     
   % end
@@ -207,11 +247,227 @@
 
 % end
 
+\subsection{Weierstrass无穷乘积}
+
+  \begin{defi}[自然因子]
+    对于正整数$k$，定义自然因子
+    \[
+      E_0(z) =1-z,\quad E_k(z)=(1-z)e^{z+z^2/2+\cdots+z^k/k}.
+    \]
+  \end{defi}
+  \remark
+    对于$|z|<1$，成立
+    \[
+      E_k(z) = \exp\left(\log(1-z)+\sum_{n=1}^k\frac{z^n}{n}\right)
+      = \exp\left(\sum_{n=k+1}^\infty\frac{z^n}{n}\right).
+    \]
+    在对自然因子进行估计的时候，上式是常用的. 另外，常见的会对于自然因子的变量按照$1/2$
+    来进行分类，通常是$z/a_n$的形式，分别考虑$D_{2R}$外和内的$\{a_n\}$，其中$R=|z|$.
+    具体来说，对任意$R$，分别对$|z|=R$的$z$证明，在此过程中$R$即为一个常量，此时按照
+    $2R$将$a_n$分类.  同时，很多时候不等式中的常量$c$是放缩后等比数列求和的结果，即它们与
+    $z$无关，从而上述按照$|z|=R$分类再拼起来的所取的$c$是可以是一致的.
+  % end
+
+  \begin{lemma}[自然因子估计]
+    \label{lemma: 自然因子}
+    设$|z|\le 1/2$，则存在$c>0$成立$|1-E_k(z)|\le c|z|^{k+1}$. 其中$c$的选取
+    与$k$无关.
+  \end{lemma}
+  \proof
+    首先，由于$|z|\le 1/2$，有$E_k(z)=\exp(\log(1-z)+\sum_{n=1}^k z^k/k)=e^w$. 将
+    $\log$后级数展开相消得
+    \[
+      |w| = \left| \sum_{n=k+1}^\infty\frac{z^n}{n} \right|
+       = |z|^{k+1}\left| \sum_{n=k+1}^\infty\frac{z^{n-k-1}}{n} \right|
+       \le 2|z|^{k+1}.
+    \]
+    因为$|w|<1$，所以成立
+    \[
+      |1-E_k(z)| = |1-e^w| \le 2|w|\le 4|z|^{k+1}.\quad\blacksquare
+    \]
+  % end
+
+  \begin{thm}
+    设$\{a_n\}$为任意复数序列且满足当$n\to\infty$时$|a_n|\to\infty$. 存在整
+    函数$f$，在且仅在$z=a_n$处取值为零. 任意其他满足条件的函数都有形式$f(z)e^{g(z)}$，
+    其中$g$为整函数。
+  \end{thm}
+  \remark
+    这一定理表明，对于给定的零点和重数，可以构造出满足这些条件的整函数\equref{equ:
+    Weierstrass乘积}. 这样构造的思路来源于$\sin$的乘积展开，利用自然因子使得它收敛.
+  \proof
+    对于定理的后半部分，只需要考虑$f_1/f_2$即可. 设$\{a_n\}$中仅有$m$项为零，仍用$\{a_n\}$
+    表示去除了这些项以后的序列. 定义Weierstrass乘积为
+    \begin{equation}
+      \label{equ: Weierstrass乘积}
+      f(z)=z^m\prod_{n=1}^\infty E_n(z/a_n),
+    \end{equation}
+    下面通过考虑它在半径为$R$的圆盘内的行为来证明，即证明它在任意$D_R$内收敛且在且仅在$0$和
+    $a_n\in D_R$处有零点. 首先考虑满足$|a_n|<2R$的因子，它们只有有限个，所以取出它们不影响
+    收敛性. 它们组成的乘积满足要求. 而对于满足$|a_n|\ge 2R$的因子，对于$z\in D_R$，有
+    $|z/a_n|<1/2$，根据\lemmaref{lemma: 自然因子}，有估计$|1-E_n(z/a_n)|\le c|z|^{n+1}$.
+    所以可知
+    \[
+      \prod_{|a_n|\ge 2R}E_n(z/a_n)
+    \]
+    收敛于一个全纯函数且在$D_R$内无零点，从而$f$满足要求.$\quad\blacksquare$
+  % end
+
+% end
+
+\subsection{Hadamard分解定理}
+
+  \begin{lemma}[自然因子估计]
+    \label{lemma: 自然因子估计2}
+    \begin{gather*}
+      |E_k(z)|\ge e^{-c|z|^{k+1}},\quad (|z|\le 1/2) \\
+      |E_k(z)|\ge |1-z|e^{-c\hp|z|^k},\quad (|z|\ge 1/2).
+    \end{gather*}
+  \end{lemma}
+
+  \begin{lemma}
+    \label{lemma: Hadamard}
+    设$\rho<s<k+1$，其中$\rho$为阶，$k=[\rho]$. 设$U$为以$a_n\ne 0$为圆心，
+    $|a_n|^{-k-1}$的圆盘的并，则对于$z\notin U$，成立
+    \[
+      \left| \prod_{n=1}^\infty E_k(z/a_n) \right|\ge e^{-c|z|^s}.
+    \]
+  \end{lemma}
+  \proof
+    我们对于任意固定的$z$证明此结论，并在必要时指出证明中的估计中的常量是与$z$无关的.
+    取定$z$，按照常见的思路，将$a_n$按照是否在$D_{2|z|}$内分类，即
+    \[
+      \prod_{n=1}^\infty E_k(z/a_n) = \left(\prod_{|a_n|<2|z|} E_k(z/a_n)\right)
+      \left(\prod_{|a_n|\ge2|z|} E_k(z/a_n)\right),
+    \]
+    并对两式分别估计. 首先考虑第二部分，根据\lemmaref{lemma: 自然因子估计2}，成立
+    \[\begin{split}
+      \left|\prod_{|a_n|\ge2|z|} E_k(z/a_n)\right| 
+      &= \prod_{|a_n|\ge2|z|} |E_k(z/a_n)| \\
+      &\ge \prod_{|a_n|\ge 2|z|} e^{c|z/a_n|^{k+1}} \\
+      &= \exp\left(-c|z|^{k+1}\sum_{|a_n|\ge2|z|}|a_n|^{-k-1} \right).
+    \end{split}\]
+    其中$|a_n|^{-k-1} = |a_n|^{-s}|a_n|^{s-k-1}$. 而由于$\rho_0<s$，正项级数
+    $\sum_{n=1}^\infty|a_n|^{-s}=c_1<\infty$. 同时由于$s<k+1$，所以对于$|a_n|
+    \ge 2|z|$有$|a_n|^{s-k-1}\le 2^{s-k-1}|z|^{s-k-1}$. 从而成立
+    \[
+      \sum_{|a_n|\ge2|z|}|a_n|^{-k-1} \le 2^{s-k-1}c_1|z|^{s-k-1}.
+    \]
+    因此对于第二部分有估计
+    \[
+      \left|\prod_{|a_n|\ge2|z|} E_k(z/a_n)\right| \ge
+      e^{-c|z|^{k+1} 2^{s-k-1}c_1|z|^{s-k-1}} = e^{-c_2|z|^s},
+    \]
+    其中$c_2>0$是与$z$无关的常量.\par
+    对于第一部分，首先根据\lemmaref{lemma: 自然因子估计2}，有
+    \begin{equation}
+      \label{equ: pord E_k估计}
+      \left|\prod_{|a_n|<2|z|} E_k(z/a_n)\right| 
+      \ge \prod_{|a_n|<2|z|}\left|1-\frac{z}{a_n}\right|
+      \prod_{|a_n|<2|z|}e^{-c\hp|z/a_n|^k}.
+    \end{equation}
+    其中$|a_n|^{-k}=|a_n|^{-s}|a_n|^{s-k}$. 由于$s\ge k$，所以$|a_n|^{s-k}
+    <2^{s-k}|a_n|^{s-k}$，从而
+    \[
+      \prod_{|a_n|<2|z|}e^{-c\hp|z/a_n|^k} = 
+      \exp\left( -c\hp|z|^k\sum_{|a_n|<2|z|}|a_n|^{-k} \right)
+      \ge e^{-c\hp c_1|z|^s} = e^{-c_3|z|^s},
+    \]
+    其中$c_3>0$仍是与$z$无关的常量. 最后考虑\equref{equ: pord E_k估计}的$\rhs$
+    的前半部分. 因为$z\notin U$，所以有$|a_n-z|\ge |a_n|^{-k-1}$. 所以成立
+    \[
+      \prod_{|a_n|<2|z|}\left|1-\frac{z}{a_n}\right| \ge 
+      \prod_{|a_n|<2|z|}|a_n|^{-k-2}.
+    \]
+    注意$a_n$是$f$在$D_{2|z|}$中的零点，对上式取对数，有
+    \[\begin{split}
+      (-k-2)\sum_{|a_n|<2|z|}\log|a_n| 
+      &\ge (-k-2)\mathfrak{n}(2|z|)\log 2|z|.
+    \end{split}\]
+    其中$\mathfrak{n}$表示$f/z^m$的零点个数，$m$为原点处的零点重数. 注意$f/z^m$和$f$的
+    阶是相等的，而对于$f/z^m$，它在原点取值不为零，所以根据\thmref{thm: 整函数的阶}，有
+    \[
+      (-k-2)\mathfrak{n}(2|z|)\log 2|z| 
+      \ge (-k-2)C2^\rho|z|^s\log 2|z|.
+    \]
+    其中$C$仅与$\rho$有关. 由于$s$的选取是任意的，所以可以忽略$\log 2|z|$的效果.
+    $\quad\blacksquare$
+  % end
+
+  \begin{cor}
+    \label{cor: prod E_k的估计}
+    存在一列半径$r_1,r_2,\dots$满足$r_m\to\infty$使得
+    \[
+      \left| \prod_{n=1}^\infty E_k(z/a_n) \right|\ge e^{-c|z|^s},
+      \quad |z|=r_k
+    \]
+  \end{cor}
+  \remark
+    这一推论表明可以躲开\lemmaref{lemma: Hadamard}中说的那些圆盘. 
+  % end
+
+  \begin{lemma}
+    \label{lemma: 实部、整函数、多项式}
+    设$g$为整函数，$u=\Re(g)$且对于一列$r_n\to\infty$满足
+    \[
+      u(z) \le Cr_n^s,\quad |z|=r_n.
+    \]
+    则$g$是多项式且它的次数$\le s$.
+  \end{lemma}
+  \proof
+    将$g$幂级数展开，命题要求证明对于$n>s$成立$a_n=0$. 利用\thmref{thm: 幂级数系数、积分}
+    得到$a_n$的积分表达式. 利用$2u=g+\bar{g}$将表达式和实部相联系. 注意由于沿圆积分
+    $e^{-\iu n\theta}$结果为零. 所以对$n>0$有
+    \[
+      a_n = \frac{1}{\pi r^n}\int_0^{2\pi}[u(re^{\iu\theta})-Cr^s]
+      e^{\iu n\theta}\rd\theta.
+    \]
+    令$r\to\infty$即可.$\quad\blacksquare$
+  % end
+
+  \begin{thm}[Hadamard分解定理]
+    设整函数$f$的阶为$\rho_0$. 设$k=[\rho_0]$，$a_1,a_2,\dots$为$f$的非零零点，则
+    \[
+      f(z) = e^{P(z)}z^m\prod_{n=1}^\infty E_k(z/a_n),
+    \]
+    其中$P\in\mathbb{P}_k$，$m$是$f$在原点的零点的重数.
+  \end{thm}
+  \proof
+    这一定理的证明总结了本节的一些常用做法. 首先处理不带$e^{g(z)}$的形式. 定义
+    \[
+      E(z) = z^m\prod_{n=1}^\infty E_k(z/a_n).
+    \]
+    首先要证明整，即对于任意$D_R$证明全纯. 而由于$E$是用无穷乘积定义的，所以考虑
+    利用\thmref{thm: 无穷乘积、导数}，而对于条件中的收敛性，则可利用\thmref{thm:
+    整函数的阶}. 在证明中需要对$E_k$进行估计，可以通过按照模是否大于$2R$对$a_n$进行
+    分类，接着利用之前证明的诸多关于$E_k$的估计来得出结论. 而关于零点，则直接应用
+    \thmref{thm: 无穷乘积}即可.\par
+    接着考虑$f/E$，它全纯且无零点，则$f/E=e^g$. 利用\corref{cor: prod E_k的估计}
+    来得出\lemmaref{lemma: 实部、整函数、多项式}的条件，从而得出结论.$\quad\blacksquare$
+  % end
+
+% end
 
 % end
 
 \newpage
 \section{附录}
+
+\subsection{不等式}
+
+  \begin{pos}
+    对于任意$z\in\mC$，成立$|e^z-1|\le e^{|z|}-1\le |z|e^{|z|}$.
+  \end{pos}
+
+  \begin{pos}
+    对于任意$z\in\mathbb{D}$，成立$|e^z-1|\le 2|z|$.
+  \end{pos}
+
+  \begin{pos}
+    对于任意$z\in\mathbb{C}$，成立$|e^z|\ge e^{-|z|}$.
+  \end{pos}
+
+% end
 
 \subsection{数项级数}
 
@@ -231,6 +487,7 @@
       \sum_{n=M}^{N-1}(a_{n+1}-a_n)B_n.
     \]
   \end{thm}
+% end 
 
 \subsection{函数项级数}
 
@@ -238,6 +495,8 @@
     设$\{f_n\}$是一列函数且对于任意$n$，成立$\sup|f_n-f|\le M_n$且$M_n\to 0$，
     则$f_n$一致收敛于$f$.
   \end{thm}
+
+% end
 
 \subsection{多元微积分}
 
@@ -306,6 +565,7 @@
       = \frac{\pt z}{\pt x}(-r\cos\theta) + \frac{\pt z}{\pt y}(r\sin\theta).
     \end{split}\]
     将第二个式子两边同除$r$后求上两个式的平方和即可.$\quad\blacksquare$
-
+  % end
+% end
 
 \end{document}
