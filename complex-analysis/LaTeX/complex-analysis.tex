@@ -24,6 +24,120 @@
 \newpage
 \input{ch5-entire-functions.tex}
 
+
+\newpage
+\section{Gamma函数与Zeta函数}
+
+  \paragraph{相关}
+    \thmref{thm: 级数、全纯}. 对于通过级数定义的函数，可以通过在任意紧子集中
+    证明一致收敛性来导出全纯. 而对于利用普通含参积分定义的函数，则需要连续性以及
+    对于任意参数情况下的全纯来导出. 而对于反常含参积分，则一般可以通过定义化为
+    一个取极限过程和一个常义含参积分，对于取极限过程，证明它是一致的.\footnote{
+      实际上这里就是之前级数相关的内容.
+    }
+  % end 
+
+\subsection{Gamma函数}
+
+  \begin{defi}[Gamma函数]
+    对于$s>0$，定义Gamma函数为
+    \begin{equation}
+      \label{equ: Gamma函数}
+      \Gamma(s) = \int_0^\infty e^{-t}t^{s-1}\rd t.
+    \end{equation}
+  \end{defi}
+
+  \begin{thm}[Gamma函数]
+    Gamma函数可以在半平面$\Re(s)>0$上延拓为一个解析函数，且这个函数的表达式
+    依然为\equref{equ: Gamma函数}.
+  \end{thm}
+  \proof
+    由于解析是一个局部性质，所以仅需要证明在任意$S_{\delta,M}=\{\delta<\Re(s)<M\}$上
+    \equref{equ: Gamma函数}定义了一个解析函数即可. 而由于\equref{equ: Gamma函数}实际
+    上是极限$\lim_{\vep\to\infty}\int_{\vep}^{1/\vep}e^{-t}t^{s-1}\rd t$，所以要证明
+    的事情实际上包括：上述含参积分收敛；$F_\vep$解析；$F_\vep\to \Gamma$是一致的. 最后利用
+    \thmref{thm: 级数、全纯}完成证明.\par
+    设$\sigma=\Re(s)$，由于$|e^{-t}t^{s-1}| = e^{-t}t^{\sigma-1},$且$\rhs$的积分收敛，
+    所以原含参积分收敛. 
+    同时$f(s,t)=e^{-t}t^{s-1}$在$S_{\delta,M}\times[\vep,1/\vep]$上的连续函数，且
+    对于固定的$t$，$f$全纯. 所以根据\thmref{thm: 含参积分、全纯}，$F_\vep(s)=
+    \int_{\vep}^{1/\vep}f(s,t)\rd t$全纯. 另外对于任意$s$，有估计
+    \[
+      |\Gamma(s)-F_\vep(s)|
+      \le \int_0^\vep e^{-t}t^{\sigma-1}\rd t 
+      + \int_{1/\vep}^\infty e^{-t}t^{\sigma-1}\rd t
+      \le \int_0^\vep t^{\sigma-1}\rd t + \int_{1/\vep}^\infty e^{-t}t^{M-1}\rd t.
+    \]
+    当$\vep\to 0$时，$\rhs\to 0$，所以收敛是一致的. 因此根据\thmref{thm: 级数、全纯}，在
+    $S_{\delta,M}$上$\Gamma(s)$是解析的.$\quad\blacksquare$
+  % end
+
+  \begin{lemma}[准周期性]
+    \label{lemma: Gamma的准周期性}
+    设$\Re(s)>0$，则$\Gamma(s+1)=s\Gamma(s)$. 因此$\Gamma(n+1)=n!$对$n=0,1,2\dots$成立.
+  \end{lemma}
+  \proof
+    对$F_\vep$分部积分，得
+    \[\begin{split}
+      F_\vep(s) = \frac{1}{s}\int_{\vep}^{1/\vep}e^{-t}\rd t^s 
+      = \frac{1}{s}\left\{ e^{-t}t^s\bigg|_{\vep}^{1/\vep} + F_\vep(s+1) \right\}.
+    \end{split}\]
+    其中$e^{-t}t^s\big|_{\vep}^{1/\vep}$在$\vep\to0$时趋于$0$，因此成立$\Gamma(s+1)=
+    s\Gamma(s)$. 同时根据$\Gamma(1)=1$可得$\Gamma(n+1)=n!$.$\quad\blacksquare$
+  % end
+
+  \begin{thm}[Gamma函数的延拓]
+    定义在$\Re(s)>0$上的Gamma函数可在$\mathbb{C}$上解析延拓为一个亚纯函数，且它在且近在
+    非正整数上有简单极点. 它在$s=-n$处的留数为$(-1)^n/n!$.
+  \end{thm}
+  \proof
+    不难想到可以利用\lemmaref{lemma: Gamma的准周期性}在$\Re(s)>-m$上定义所需的函数$F_m$，
+    接下来只需要证明$F_m$的极点相关性质满足命题所述. 由于这样定义的亚纯函数$F_m$同$\Gamma$
+    在定义域内的极点外的部分都是一致的，所以上述定义是良定义的.$\quad\blacksquare$
+  % end
+  \proof
+    下给出另一种证明，这一证明利用原表达式直接给出了$\Gamma$的延拓的表达式，并证明它满足所需
+    性质. 对于\equref{equ: Gamma函数}，成立
+    \[\begin{split}
+      \Gamma(s) &= \int_0^1e^{-t}t^{s-1}\rd t + \int_1^\infty e^{-t}t^{s-1}\rd t \\
+      &= \int_0^1\sum_{n=0}^\infty\frac{(-t)^n}{n!}t^{s-1}\rd t 
+        + \int_1^\infty e^{-t}t^{s-1}\rd t \\
+      &= \sum_{n=0}^\infty\frac{(-1)^n}{n!(n+s)}
+        + \int_1^\infty e^{-t}t^{s-1}\rd t.
+    \end{split}\]
+    考虑它在整个$\mathbb{C}$上的行为. 首先第二项收敛于一个全纯函数，所以仅需要证明第一项的
+    级数收敛于一个亚纯函数并有满足要求的极点. 考虑它在$D_R$中的行为，这样可以暂时不管$D_R$
+    外的极点，同时按照$N>2R$将级数拆为两部分，前半部分为所需的亚纯函数而第二部分在$D_R$内
+    全纯. 这里之所以选取$N>2R$是为了方便$n+s$的放缩. $\quad\blacksquare$
+  % end
+
+  \begin{pos}[沿拓的准周期性]
+    仍用$\Gamma$来表示Gamma函数在$\mathbb{C}$上的解析沿拓，它有性质
+    \begin{enumerate}
+      \item 在非极点处成立$\Gamma(s+1)=s\Gamma(s)$.
+      \item $\res_{-(n+1)}\Gamma(s)=-n\res_{-n}\Gamma(s)$.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{lemma}
+    对于$0<a<1$，成立$\int_0^\infty v^{a-1}/(1+v)\rd v = \pi/\sin(\pi a)$.
+  \end{lemma}
+  \proof
+    做代换$v=e^x$.
+  % end
+
+  \begin{thm}[Gamma函数的对称性]
+    对于任意$s\in\mathbb{C}$，成立
+    \[
+      \Gamma(s)\Gamma(1-s) = \frac{\pi}{\sin\pi s}.
+    \]
+  \end{thm}
+  
+
+% end
+
+% end
+
 \newpage
 \section{附录}
 

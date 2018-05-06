@@ -17,29 +17,32 @@
     \end{equation}
   \end{thm}
   \remark
+    考虑\equref{equ: Jensen}的$\rhs$，这一定理描述了在对数意义下，零点和函数值大小
+    的关系. 考虑普通的多项式的情况，若它有$R$个零点，则它的大小差不多就是$Az^R$，这一
+    定理说的是类似的事情.
   \proof
-    首先注意到如果$f_1$和$f_2$满足\equref{equ: Jensen}，则$f_1f_2$也满足.
-    所以我们考虑将$f$拆分成更加简单的形式并分别证明. 由于全纯，所以我们可以将它拆成
+    首先根据\corref{cor: 全纯、实部}的评注以及\equref{equ: Jensen}的形式，自然
+    可以想到设$F(z)=f(z)/\prod(z-z_k)$. 则有
     \[
-      f(z) = (z-z_1)\cdots (z-z_N)g(z).
+      \log\left|\frac{f(0)}{z_1\cdots z_N}\right| = 
+      \frac{1}{2\pi}\int_0^{2\pi}\log\left|
+      \frac{f(z)}{(z-z_1)\cdots(z-z_N)}\right|\rd\theta.
     \]
-    其中$g$在$\bar{D}_R$无零点，之后对于$g$和形如$x-w$的函数分别证明\equref{equ: Jensen}.\par
-    对于无零点的$g$，要证的即为
+    注意到这里的对数是实对数，将它拆开并对上式变形，最后可得
     \[
-      \log|g(0)| = \frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta.
+      \log|f(0)|=\frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta
+      + \sum_{k=1}^N\log\left(\frac{|z_k|}{R}\right)
+      - \frac{1}{2\pi}\sum_{k-1}^N\int_0^{2\pi}\log\left|
+      1-\frac{z_k}{R}e^{\iu\theta}\right|\rd\theta.
     \]
-    利用\thmref{thm: 全纯、对数存在性}和\corref{cor: 全纯、实部}的评注即可证明.\par
-    而对于形如$z-w$的函数，其中$w$是圆盘内的任意一点，它在$w$处有唯一零点，所要证的式子即为
+    我们只需要最后证明$\rhs$的最后一项的求和的每一项都为零即可. 采用\corref{cor: 全纯、实部}
+    里的记号，注意到被积函数是$u(e^{\iu\theta})$的形式，可以发现
     \[
-      \log|w|=\log\left( \frac{|w|}{R} \right) + \frac{1}{2\pi}\int_0^{2\pi}
-      \log|Re^{\iu\theta} - w|\rd\theta \quad\Leftrightarrow\quad
-      \int_0^{2\pi}\log|e^{\iu\theta}-a|\rd\theta = 0,
+      u(z) = \log\left|1-\frac{z_k}{R}z\right| = 
+      \Re\left(\log\left(1-\frac{z_k}{R}z\right)\right).
     \]
-    其中$a=w/R$. 作变量代换，用$-\theta$替换$\theta$，则上式等价为
-    \[
-      \int_0^{2\pi}\log|1-ae^{\iu\theta}|\rd\theta = 0.
-    \]
-    利用和之前相同的方法证明即可.$\quad\blacksquare$
+    上式的合理性由$1-zz_k/R$在单位圆盘内无零点保证. 同时注意到$u(0)=0$，从而$\rhs$的最后
+    一项为零. $\quad\blacksquare$
   % end
 
   \begin{lemma}
@@ -60,7 +63,8 @@
 
   \begin{cor}
     \label{cor: 整函数、零点、模}
-    条件同前. 此推论描述了零点和函数值大小之间的关系.
+    条件同前. 此推论仅仅是\thmref{thm: Jensen}的另一形式，它的$\lhs$的被积函数可以理解为
+    $D_r$内平均零点个数. 
     \[
       \int_0^R\mathfrak{n}(r)\frac{\rd r}{r} = \frac{1}{2\pi}
       \int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta - \log|f(0)|.
@@ -84,41 +88,26 @@
     其中$\rho$取遍所有满足\equref{equ: 整函数的阶、小于等于}的值.
   \end{defi}
   \remark
+    注意到这样一个事实：设$p<\rho$，则
+    \[
+      |f(z)|\le Ae^{B|z|^\rho + C|z|^p} \le Ae^{(B+C)|z|^\rho}.
+    \]
+    即，和多项式的情况类似，我们仅需要考虑指数上的最高次即可. 同样的，对于没有$e^|z|$
+    大的因子基本上都可以忽略掉.\par
     阶描述了整函数在无穷远处的行为，如果它的阶为$\rho$，那么在无穷远处，它的增长就
-    类似于$e^{|z|^\rho}$. 要证明某个函数的阶为$\rho$，即证明
+    类似于$e^{|z|^\rho}$. 之所以这一对任意$z\in\mathbb{C}$成立的式子描述了在
+    无穷远处的行为，是因为若我们知道对于充分大的$R=|z|$成立
+    \equref{equ: 整函数的阶、小于等于}，则由于$f$在$D_R$内是有有界的，
+    设$|f(z)|\le M$，而$e^x\ge e^{-R}$，所以对任意$z\in\mathbb{C}$成立
+    \[
+      |f(z)| \le \left(A + Me^R\right)e^{B|z|^\rho}.
+    \]
+    这也表明我们只需要对于充分大的$|z|$证明\equref{equ: 整函数的阶、小于等于}即可.\par
+    要证明某个函数的阶为$\rho$，即证明
     \[
       0 < \lim_{z\to\infty}\frac{|f(z)|}{e^{B|z|^\rho}} < \infty.
     \]
-  % end
-
-  \begin{thm}[等价定义]
-    $\rho$是整函数$f$的阶的充要条件为
-    \[
-      \rho = \limsup_{R\to\infty}\frac{\log(\log\|f\|_{\infty,D_R})}{\log R}.
-    \]
-  \end{thm}
-  \proof
-    首先证明充分性. 记$M(r) = \|f\|_{\infty, D_r}$，
-    \[
-      \rho = \limsup_{r\to\infty}\log_r\log M(r) = \lim_{R\to\infty}\sup_{r>R}
-      \log_r\log M(r).
-    \]
-    按照定义，对于任意$\vep>0$，存在$R_0>0$，使得对任意$R>R_0$成立
-    \begin{equation}
-      \label{equ: 阶等价定义证明1}
-      \rho - \vep < \sup_{r>R}\log_r\log M(r) < \rho + \vep.
-    \end{equation}
-    从而对于任意的$r>R_0$，有
-    \[
-      \log_r\log M(r) < \rho + \vep \quad\Rightarrow\quad
-      M(r) < e^{r^{\rho+\vep}}.
-    \]
-    由于$M(r)$在$D_{R_0}$上有界，所以存在$A>0$使得对任意$r$成立
-    \[
-      M(r) \le Ae^{Br^\rho} \quad\Rightarrow\quad |f(z)|\le Ae^{B|z|^\rho},\quad |z|=r.
-    \]
-    所以$f$的阶$\le\rho$. 同时根据\equref{equ: 阶等价定义证明1}，可知它就是$f$的阶.\par
-    而对于必要性TODO
+    
   % end
 
   \begin{thm}
@@ -133,8 +122,8 @@
     \end{enumerate}
   \end{thm}
   \remark
-    如果有$f(0)\ne 0$，[1.]中的“充分大”的要求可以去掉. 这一定理用于证明
-    \thmref{thm: 无穷乘积、导数}条件中的收敛性.
+    如果有$f(0)\ne 0$，[1.]中的“充分大”的要求可以去掉. 这一定理用于证明\thmref{thm:
+    无穷乘积、导数}条件中的收敛性.
   \proof
     对于[1.]，不妨设$f(0)\ne 0$. 考虑\corref{cor: 整函数、零点、模}和\defref{defi:
     整函数的阶}，可知
@@ -158,7 +147,13 @@
     收敛于零当且仅当其中一个某一项为零.
   \end{thm}
   \remark
-    这一定理的后半部分给出了确定一个用无穷乘积表示的函数的零点的方式.
+    这一定理的后半部分给出了确定一个用无穷乘积表示的函数的零点的方式. 同时注意，
+    前半部分仅仅是一个充分条件. $\prod(1+a_n)$的收敛性在$a_n\ne -1$的情况下
+    和$\sum\log(1+a_n)$的收敛性是等价的，而同时注意到
+    \[
+      \log(1+a_n) = a_n - \frac{a_n^2}{2} + O(a_n^3), 
+    \]
+    要构造诸如说明非必要的反例，通常可以使用这一估计.
   \proof
     正如同常见的一样，使用对数将乘积转化为求和. 由于$\{a_n\}$绝对收敛，所以不是一般性
     的，可设$|a_n|<1/2$. 所以可以对$1+a_n$取对数主支，即可以有

@@ -2,6 +2,10 @@
 
 \subsection{零点与极点}
 
+  \begin{pos}
+    $\int_C 1/z \rd z = 2\pi\iu$.
+  \end{pos}
+
   \begin{defi}[奇点]
     对于复函数$f$，称$z_0$为$f$的奇点，若$f$在$z_0$的某个去心领域内定义，但
     在$z_0$处无定义.
@@ -13,8 +17,11 @@
     则在$z_0$的某个领域$U\subset\Omega$中，存在一个在$U$中无零点的全纯函数$g$，
     以及唯一的正整数$n$，使得$f(z)=(z-z_0)^ng(z)$.
   \end{thm}
+  \remark
+    这一定理和之后的相对应的极点版本，说明了在局部分离出一个全纯函数的可能性.
   \proof
     幂级数展开.$\quad\blacksquare$
+  % end
 
   \begin{defi}[极点]
     设$f$在$z_0$的去心领域中有定义. 考虑函数$g=1/f$，定义它在$z_0$处的值为$0$. 若
@@ -35,8 +42,12 @@
     \]
     称$G(z)$前的项为$f$在$z_0$处的主部，称$a_{-1}$为留数，计作$\res_{z_0}f$.
   \end{thm}
+  \remark
+    这一定理给出了在极点\textbf{局部}的幂级数展开. 考虑到亚纯函数可以有不止一个
+    极点，所以是没法有一个全局收敛的幂级数展开的. 
   \proof
     展开$h(z)=f(z)(z-z_0)^n$的$\lhs$即可.$\quad\blacksquare$
+  % end
 
   \begin{thm}[留数的计算]
     设$z_0$是$f$的$n$阶极点，则
@@ -63,17 +74,8 @@
   \remark
     此定理对于任何玩具曲线都成立，同时如果其中有不止一个极点的话，只需要把它们的留数相加即可.
   \proof
-    首先取锁孔形并进行一系列常规操作，可得
-    \[
-      \int_{C}f(z)\rd z = \int_{C_\vep} f(z)\rd z.
-    \]
-    利用\thmref{thm: 极点展开}将$f(z)$在极点展开. 沿着$C_\vep$积分$G(z)$的结果为零.
-    同时，对于常值函数$f=a_{-k}$施各阶Cauchy积分定理，可知
-    \[
-      \frac{1}{2\pi\iu}\int_{C_\vep}\frac{a_{-1}}{z-z_0}=a_{-1},\quad
-      \frac{1}{2\pi\iu}\int_{C_\vep}\frac{a_{-k}}{(z-z_0)^k}=0.
-    \]
-    从而命题得证.$\quad\blacksquare$
+    主要思路为利用幂级数展开和逐项积分. 首先利用锁孔形曲线来将积分化至极点局部，
+    接下来利用\thmref{thm: 极点展开}并逐项积分即可. $\quad\blacksquare$
   % end
 
   \begin{pos}
@@ -107,14 +109,25 @@
     有界，则$z_0$是可去奇点.
   \end{thm}
   \proof
-    定义全纯函数
+    首先这是一个局部的问题，所以我们仅考虑$z_0$的一个小领域$D$，设其边界为$C$. 受
+    全纯函数中的结论的启发，我们定义$D$上的全纯函数\footnote{这一用含参积分定义的
+    函数的全纯性由\thmref{thm: 含参积分、全纯}保证.}
     \[
-      f_*(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.
+      f_*(z) = \frac{1}{2\pi\iu}\int_C\frac{f(\zeta)}{\zeta-z}\rd\zeta.  
     \]
-    再证明对于$z\in\Omega\backslash\{z_0\}$，$f(z)=f_*(z)$. 具体证明只需采用
-    和\thmref{thm: Cauchy公式}中类似的方法即可，对于固定的$z$，考虑将$z_0$和$z$
-    排除的双锁孔形，利用Cauchy定理并对饶$z_0$的积分做一个估计. 在估计的时候注意，
-    积分的路径是绕$z_0$的小圆，但是分母上的却是和$z_0$不相等的$z$.$\quad\blacksquare$
+    接下来证明$f_*(z)=f(z)$对$z\in D\backslash\{z_0\}$上相等即可.\par
+    为证明相等，考虑通过利用锁孔形$\Gamma$来圈掉奇点和$z$可得
+    \[
+      0 = \int_{\Gamma}\frac{f(\zeta)}{\zeta-z}\rd\zeta = 
+      \int_C - \int_{\gamma_0} - \int_{\gamma_z}.
+    \]
+    从而有
+    \[
+      2\pi\iu f_*(z) = \int_{\gamma_0}\frac{f(\zeta)}{\zeta-z}\rd\zeta
+      + \int_{\gamma_z}\frac{f(\zeta)}{\zeta-z}\rd\zeta.
+    \]
+    其中$\rhs$的第二项即为$2\pi\iu f(z)$而对于第一项，利用有界性放缩即可. 注意虽然
+    他的分母无零点，但$z_0$是分子的奇点，所以它不是一个全纯函数.$\quad\blacksquare$
   % end(proof)
 
   \begin{cor}
@@ -131,13 +144,19 @@
     设$f$在去心圆盘$D_r(z_0)\backslash\{z_0\}$上全纯且$z_0$是$f$的必要奇点.
     则$D_r(z_0)\backslash\{z_0\}$在$f$映射下的像集在复平面中稠密.
   \end{thm}
+  \remark
+    这一定理描述了全纯函数在必要奇点附近的行为，它几乎会取遍复平面中所有的点.
   \proof
-    反证法. 假设存在$w\in\mC$周围没有$f(z)$，则函数
+    反证法. 若像集不稠密则意味着存在$w\in\mathbb{C}$使得函数
     \[
-      g(z) = \frac{1}{f(z)-w}
+      g(z) = \frac{1}{f(z) - w}
     \]
-    全纯. 利用\thmref{thm: Riemann、可去奇点}及其推论可以证明$z_0$或是$f$的
-    可去奇点，或者极点，与条件矛盾.$\quad\blacksquare$
+    在除$z_0$外全纯且有界. 所以$z_0$是$g(z)$的可去奇点. 由于在$z_0$外
+    \[
+      f(z) = \frac{1}{g(z)} + w,
+    \]
+    而若$g(z_0)\ne 0$，则同样利用\thmref{thm: Riemann、可去奇点}可知$z_0$
+    是$f$的可去奇点. 而若$g(z_0)=0$，则可知是极点. 都与已知矛盾.$\quad\blacksquare$
   % end
 
   \begin{defi}[亚纯]
@@ -164,8 +183,6 @@
   \begin{defi}[Riemann球]
     TODO
   \end{defi}
-
-
 
 % end(subsection)
 
@@ -207,8 +224,8 @@
     $|f(z)|>|g(z)|$. 则在$C$内部，$f$和$f+g$的零点个数相同.
   \end{thm}
   \remark
-    虽然说此定理的结论说的是零点的个数，但是通过恰当的选取$g$，它可以用于
-    描述$f$的值域. 注意，$f(z)+g(z)=0$等价于$f(z)=-g(z)$.
+    虽然说此定理的结论说的是零点的个数，但是通过恰当的选取（常值函数）$g$，它可以用于
+    描述$f$的值域. 注意，方程$f(z)+g(z)=0$等价于方程$f(z)=-g(z)$.
   \proof
     定义
     \[
@@ -225,6 +242,8 @@
   \begin{thm}[开映射]
     若$f$在区域$\Omega$上全纯且非常值，则它为一个开映射.
   \end{thm}
+  \remark
+    TODO
   \proof
     即对于$w_0$周围的任意$w$，证明$g(z)=f(z)-w$有零点. 将$g$写为
     \[
@@ -433,6 +452,9 @@
       f(z_0) = \frac{1}{2\pi}\int_0^{2\pi}f(z_0+re^{\iu\theta})\rd\theta.
     \]
   \end{cor}
+  \remark
+    这一定理和Cauchy积分公式一样，给出了$f$在$z_0$的积分表达，它的优势在于$\rhs$中
+    的被积函数在形式上仍然是$f$，虽然它现在是关于$\theta$的函数.
   \proof
     $a_0 = f(z_0)$. $\quad\blacksquare$
   % end
@@ -450,7 +472,12 @@
     \[
       |e^z| = e^{\Re(z)}
     \]
-    这一事实来使用，尤其是在有$\log|f|$形式的问题中.
+    这一事实来使用，尤其是在有$\log|f|$形式的问题中：若$f$全纯且无零点，则根据
+    \thmref{thm: 全纯、对数存在性}存在全纯$g=\log f$，使得$f=e^g$. 则
+    \[
+      \log|f| = \log|e^g| = \log(e^{\Re(g)}) = \Re(g) = u.
+    \]
+    一般而言无需显示的用到$g=\log f$，我们所需要的仅仅是$g$全纯而已.
   % end
 
 % end(subsection)
