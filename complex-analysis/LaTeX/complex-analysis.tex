@@ -51,6 +51,10 @@
     Gamma函数可以在半平面$\Re(s)>0$上延拓为一个解析函数，且这个函数的表达式
     依然为\equref{equ: Gamma函数}.
   \end{thm}
+  \remark
+    直观上来说，之所以会有这样的性质，是因为当$t$充分大时，$e^{-t}$是指数减小的；
+    而对于$0$附近的情况，有$|t^{s-1}| = t^{\Re(s)-1}$，因此反常可积性也是可以
+    保证的.
   \proof
     由于解析是一个局部性质，所以仅需要证明在任意$S_{\delta,M}=\{\delta<\Re(s)<M\}$上
     \equref{equ: Gamma函数}定义了一个解析函数即可. 而由于\equref{equ: Gamma函数}实际
@@ -90,6 +94,12 @@
     定义在$\Re(s)>0$上的Gamma函数可在$\mathbb{C}$上解析延拓为一个亚纯函数，且它在且近在
     非正整数上有简单极点. 它在$s=-n$处的留数为$(-1)^n/n!$.
   \end{thm}
+  \remark
+    这样发现在另一半平面上，它的表达式和原表达式是不一样的，这是因为$t^{\sigma-1}$
+    在$\sigma<0$时不再在$0$附近反常可积. 所以在该半平面上对于$0$附近的部分有另外
+    形式的表达式，见\equref{equ: Gamma的延拓}. 这个式子的级数部分在一般情况下
+    显然是收敛的，唯一会出现问题的就是在$s=-n$的地方，那特定的一项会变成$\infty$.
+    在作估计的时候对于这一项单独处理即可.
   \proof
     不难想到可以利用\lemmaref{lemma: Gamma的准周期性}在$\Re(s)>-m$上定义所需的函数$F_m$，
     接下来只需要证明$F_m$的极点相关性质满足命题所述. 由于这样定义的亚纯函数$F_m$同$\Gamma$
@@ -98,13 +108,14 @@
   \proof
     下给出另一种证明，这一证明利用原表达式直接给出了$\Gamma$的延拓的表达式，并证明它满足所需
     性质. 对于\equref{equ: Gamma函数}，成立
-    \[\begin{split}
+    \begin{equation}\begin{split}
+      \label{equ: Gamma的延拓}
       \Gamma(s) &= \int_0^1e^{-t}t^{s-1}\rd t + \int_1^\infty e^{-t}t^{s-1}\rd t \\
       &= \int_0^1\sum_{n=0}^\infty\frac{(-t)^n}{n!}t^{s-1}\rd t 
         + \int_1^\infty e^{-t}t^{s-1}\rd t \\
       &= \sum_{n=0}^\infty\frac{(-1)^n}{n!(n+s)}
         + \int_1^\infty e^{-t}t^{s-1}\rd t.
-    \end{split}\]
+    \end{split}\end{equation}
     考虑它在整个$\mathbb{C}$上的行为. 首先第二项收敛于一个全纯函数，所以仅需要证明第一项的
     级数收敛于一个亚纯函数并有满足要求的极点. 考虑它在$D_R$中的行为，这样可以暂时不管$D_R$
     外的极点，同时按照$N>2R$将级数拆为两部分，前半部分为所需的亚纯函数而第二部分在$D_R$内
@@ -127,12 +138,62 @@
   % end
 
   \begin{thm}[Gamma函数的对称性]
+    \label{thm: Gamma函数的对称性}
     对于任意$s\in\mathbb{C}$，成立
     \[
       \Gamma(s)\Gamma(1-s) = \frac{\pi}{\sin\pi s}.
     \]
   \end{thm}
+  \remark
+    代入$s=1/2$，得$\Gamma(1/2)=\sqrt{\pi}$.
+  % end
+
+  \begin{thm}
+    函数$\Gamma$有如下性质：
+    \begin{enumerate}
+      \item $1/\Gamma(s)$为整函数，在$s=0,-1,-2,\dots$有简单零点，此外无零点.
+      \item 对于$1/\Gamma(s)$有估计
+        \[
+          \left|\frac{1}{\Gamma(s)}\right|\le c_1e^{c_2|s|\log|s|},
+        \]
+        从而它的阶为$1$.
+    \end{enumerate}
+  \end{thm}
+  \proof
+    对于[1.]只需要利用\thmref{thm: Gamma函数的对称性}即可并利用\equref{equ:
+    Gamma的延拓}来证明[2.]. 另外根据\defref{defi: 整函数的阶}的评注，只需要
+    考虑充分大的$|s|$即可.\par
+    首先有
+    \[
+      \frac{1}{\Gamma(s)} = \frac{\sin \pi s}{\pi}
+      \left\{\sum_{n=0}^\infty\frac{(-1)^n}{n!(n+s)}+
+      \int_1^\infty e^{-t}t^{-s}\rd t\right\}.
+    \]
+    对两项分别估计，首先是积分的部分. 由于对于大的$t$，主要的部分为$e^{-t}$，
+    所以对于$t^{-s}$可以进行较大的放缩. 设$|\sigma|\le n<|\sigma|+1$可以进行估计
+    \[\begin{split}
+      \left|\int_1^\infty e^{-t}t^{-s}\rd t\right|
+      &\le \int_0^\infty e^{-t}t^{|\sigma|}\rd t \\
+      &\le n! \\
+      &\le n^n \\
+      &\le e^{n\log n} \\
+      &\le e^{(|\sigma|+1)\log(|\sigma|+1)}
+    \end{split}\]
+    而对于$|\sin\pi s|$，利用Euler公式有估计$|\sin\pi s|\le e^{\pi|s|}$. 由于
+    只需要考虑充分大的$|s|$，所以这一部分的估计是成立的.\par
+    而对于级数部分的估计，如果不是$s=-n$附近的部分，它的行为主要由$\sin\pi s$确定，
+    下考虑$\Im(s)\le 1$的情况，对于$k-1/2\le \Re(s) < k+1/2$的那一项单独处理
+    即可.$\quad\blacksquare$
+  % end
   
+  \begin{thm}
+    记$\gamma = \lim_{N\to\infty}\sum_{n=1}^N 1/n - \log N$为Euler常数，
+    根据Hadamard定理有
+    \[
+      \frac{1}{\Gamma(s)} = e^{\gamma s}s\prod_{n=1}^\infty
+      \left( 1+\frac{s}{n} \right)e^{-s/n}.
+    \]
+  \end{thm}
 
 % end
 
