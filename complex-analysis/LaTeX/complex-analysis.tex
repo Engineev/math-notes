@@ -22,196 +22,201 @@
 \section{Fourier变换}
 
 \newpage
-\section{整函数}
-  \paragraph{说明}
-    本节默认$f$不恒为零.
-  % end
+\input{ch5-entire-functions.tex}
 
-\subsection{Jensen公式}
 
-  \begin{thm}[Jensen]
-    \label{thm: Jensen}
-    设$\Omega$是包含$\bar{D}_R$的开集，$f$在$\Omega$中全纯且$f(0)\ne 0$. 同时
-    对$z\in C_R$，$f(z)\ne 0$. 记$z_1,\dots,z_N$为$f$在$D_R$中的零点，其中每个
-    零点被计数其重数次，则
+\newpage
+\section{Gamma函数与Zeta函数}
+
+  \paragraph{相关}
+    \thmref{thm: 级数、全纯}. 对于通过级数定义的函数，可以通过在任意紧子集中
+    证明一致收敛性来导出全纯. 而对于利用普通含参积分定义的函数，则需要连续性以及
+    对于任意参数情况下的全纯来导出. 而对于反常含参积分，则一般可以通过定义化为
+    一个取极限过程和一个常义含参积分，对于取极限过程，证明它是一致的.\footnote{
+      实际上这里就是之前级数相关的内容.
+    }
+  % end 
+
+\subsection{Gamma函数}
+
+  \begin{defi}[Gamma函数]
+    对于$s>0$，定义Gamma函数为
     \begin{equation}
-      \label{equ: Jensen}
-      \log|f(0)| = \sum_{k=1}^N\log\left( \frac{|z_k|}{R} \right)
-      + \frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta.
+      \label{equ: Gamma函数}
+      \Gamma(s) = \int_0^\infty e^{-t}t^{s-1}\rd t.
     \end{equation}
-  \end{thm}
-  \remark
-  \proof
-    首先注意到如果$f_1$和$f_2$满足\equref{equ: Jensen}，则$f_1f_2$也满足.
-    所以我们考虑将$f$拆分成更加简单的形式并分别证明. 由于全纯，所以我们可以将它拆成
-    \[
-      f(z) = (z-z_1)\cdots (z-z_N)g(z).
-    \]
-    其中$g$在$\bar{D}_R$无零点，之后对于$g$和形如$x-w$的函数分别证明\equref{equ: Jensen}.\par
-    对于无零点的$g$，要证的即为
-    \[
-      \log|g(0)| = \frac{1}{2\pi}\int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta.
-    \]
-    利用\thmref{thm: 全纯、对数存在性}和\corref{cor: 全纯、实部}的评注即可证明.\par
-    而对于形如$z-w$的函数，其中$w$是圆盘内的任意一点，它在$w$处有唯一零点，所要证的式子即为
-    \[
-      \log|w|=\log\left( \frac{|w|}{R} \right) + \frac{1}{2\pi}\int_0^{2\pi}
-      \log|Re^{\iu\theta} - w|\rd\theta \quad\Leftrightarrow\quad
-      \int_0^{2\pi}\log|e^{\iu\theta}-a|\rd\theta = 0,
-    \]
-    其中$a=w/R$. 作变量代换，用$-\theta$替换$\theta$，则上式等价为
-    \[
-      \int_0^{2\pi}\log|1-ae^{\iu\theta}|\rd\theta = 0.
-    \]
-    利用和之前相同的方法证明即可.$\quad\blacksquare$
-  % end
-
-  \begin{lemma}
-    条件同前，设$z_1,\dots,z_N$是$f$在$D_R$中的零点，设$\mathfrak{n}(r)$为$f$在
-    $D_r$中的零点个数，则
-    \[
-      \int_0^R \mathfrak{n}(r)\frac{\rd r}{r} = 
-      \sum_{k=1}^N\log\left| \frac{R}{z_k} \right|.
-    \]
-  \end{lemma}
-  \proof
-    利用
-    \[
-      \log\left| \frac{R}{z_k} \right|=\int_{|z_k|}^R\frac{\rd r}{r},
-      \quad n_k(r) = ( r > |z_k| )?.\quad\blacksquare
-    \]
-  % end
-
-  \begin{cor}
-    \label{cor: 整函数、零点、模}
-    条件同前. 此推论描述了零点和函数值大小之间的关系.
-    \[
-      \int_0^R\mathfrak{n}(r)\frac{\rd r}{r} = \frac{1}{2\pi}
-      \int_0^{2\pi}\log|f(Re^{\iu\theta})|\rd\theta - \log|f(0)|.
-    \]
-  \end{cor}
-
-% end
-
-\subsection{有限阶函数}
-  \begin{defi}
-    \label{defi: 整函数的阶}
-    设$f$是整函数. 若存在正数$\rho$和正常量$A$和$B$，使得对任意$z\in\mC$成立
-    \begin{equation}
-      \label{equ: 整函数的阶、小于等于}
-      |f(z)| \le Ae^{B|z|^\rho},
-    \end{equation}
-    则称$f$增长率的阶$\le\rho$. 定义$f$增长率的阶（简称阶）为
-    \[
-      \rho_f = \inf\rho.
-    \]
-    其中$\rho$取遍所有满足\equref{equ: 整函数的阶、小于等于}的值.
   \end{defi}
 
-  \begin{thm}
-    设整函数$f$的阶$\le\rho$，则
-    \begin{enumerate}
-      \item 对于充分大的$r$成立$\mathfrak{n}(r)\le Cr^\rho$.
-      \item 设$z_1,z_2,\dots$为$f$的零点且$z_k\ne 0$，则对任意$s>\rho$，成立
-        \[
-          \sum_{k=1}^\infty\frac{1}{|z_k|^s} < \infty.
-        \]
-    \end{enumerate}
+  \begin{thm}[Gamma函数]
+    Gamma函数可以在半平面$\Re(s)>0$上延拓为一个解析函数，且这个函数的表达式
+    依然为\equref{equ: Gamma函数}.
   \end{thm}
   \remark
+    直观上来说，之所以会有这样的性质，是因为当$t$充分大时，$e^{-t}$是指数减小的；
+    而对于$0$附近的情况，有$|t^{s-1}| = t^{\Re(s)-1}$，因此反常可积性也是可以
+    保证的.
   \proof
-    对于[1.]，不妨设$f(0)\ne 0$. 考虑\corref{cor: 整函数、零点、模}和\defref{defi:
-    整函数的阶}，可知
+    由于解析是一个局部性质，所以仅需要证明在任意$S_{\delta,M}=\{\delta<\Re(s)<M\}$上
+    \equref{equ: Gamma函数}定义了一个解析函数即可. 而由于\equref{equ: Gamma函数}实际
+    上是极限$\lim_{\vep\to\infty}\int_{\vep}^{1/\vep}e^{-t}t^{s-1}\rd t$，所以要证明
+    的事情实际上包括：上述含参积分收敛；$F_\vep$解析；$F_\vep\to \Gamma$是一致的. 最后利用
+    \thmref{thm: 级数、全纯}完成证明.\par
+    设$\sigma=\Re(s)$，由于$|e^{-t}t^{s-1}| = e^{-t}t^{\sigma-1},$且$\rhs$的积分收敛，
+    所以原含参积分收敛. 
+    同时$f(s,t)=e^{-t}t^{s-1}$在$S_{\delta,M}\times[\vep,1/\vep]$上的连续函数，且
+    对于固定的$t$，$f$全纯. 所以根据\thmref{thm: 含参积分、全纯}，$F_\vep(s)=
+    \int_{\vep}^{1/\vep}f(s,t)\rd t$全纯. 另外对于任意$s$，有估计
+    \[
+      |\Gamma(s)-F_\vep(s)|
+      \le \int_0^\vep e^{-t}t^{\sigma-1}\rd t 
+      + \int_{1/\vep}^\infty e^{-t}t^{\sigma-1}\rd t
+      \le \int_0^\vep t^{\sigma-1}\rd t + \int_{1/\vep}^\infty e^{-t}t^{M-1}\rd t.
+    \]
+    当$\vep\to 0$时，$\rhs\to 0$，所以收敛是一致的. 因此根据\thmref{thm: 级数、全纯}，在
+    $S_{\delta,M}$上$\Gamma(s)$是解析的.$\quad\blacksquare$
+  % end
+
+  \begin{lemma}[准周期性]
+    \label{lemma: Gamma的准周期性}
+    设$\Re(s)>0$，则$\Gamma(s+1)=s\Gamma(s)$. 因此$\Gamma(n+1)=n!$对$n=0,1,2\dots$成立.
+  \end{lemma}
+  \proof
+    对$F_\vep$分部积分，得
     \[\begin{split}
-      \rhs \le CR^\rho-\log|f(0)|,\quad
-      \lhs \ge \int_{R/2}^R\mathfrak{n}(r)\frac{\rd r}{r}\ge 
-      \mathfrak{n}(R/2)\log 2.
+      F_\vep(s) = \frac{1}{s}\int_{\vep}^{1/\vep}e^{-t}\rd t^s 
+      = \frac{1}{s}\left\{ e^{-t}t^s\bigg|_{\vep}^{1/\vep} + F_\vep(s+1) \right\}.
     \end{split}\]
-    而对于充分大的$R$，$\log|f(0)|$项可忽略.\par
-    对于[2.]，首先由于有界点列必有聚点而$f$不恒为零，所以可知在单位圆中至多有有限个
-    零点，所以我们只需要考虑$|z_k|\ge 1$的零点即可. 将零点按照所处于哪一个$2^j\le
-    |z_k|<2^{j+1}$来分类并做恰当的放缩即可. $\quad\blacksquare$
+    其中$e^{-t}t^s\big|_{\vep}^{1/\vep}$在$\vep\to0$时趋于$0$，因此成立$\Gamma(s+1)=
+    s\Gamma(s)$. 同时根据$\Gamma(1)=1$可得$\Gamma(n+1)=n!$.$\quad\blacksquare$
   % end
 
-% end
-
-\subsection{无穷乘积}
-  \begin{thm}
-    若$\sum|a_n|<\infty$，则乘积$\prod_{n=1}^\infty(1+a_n)$收敛. 乘积
-    收敛于零当且仅当其中一个某一项为零.
-  \end{thm}
-  \proof
-    正如同常见的一样，使用对数将乘积转化为求和. 由于$\{a_n\}$绝对收敛，所以不是一般性
-    的，可设$|a_n|<1/2$. 所以可以对$1+a_n$取对数主支，即可以有
-    \[
-      \prod_{n=1}^N(1+a_n) = \prod_{n=1}^ne^{\log(1+a_n)}
-      = \exp\left(\sum_{n=1}^N\log(1+a_n)\right).
-    \]
-    而由于$|\log(1+a_n)|\le 2|a_n|$而$\{|a_n|\}$收敛，所以$\{\log(1+a_n)\}$也
-    绝对收敛，设其收敛于$B$. 由于$e^z$的连续性，可知该无穷乘积收敛于$e^B$. 这也意味着
-    若$1+a_n\ne 0$，则乘积的结果不为$0$. $\quad\blacksquare$
-  % end
-
-  \begin{thm}
-    \label{thm: 无穷乘积、导数}
-    设$\{F_n\}$是一列开集$\Omega$上全纯函数. 设存在收敛的正项级数$\{c_n\}$，使得
-    对任意$z\in\Omega$成立
-    \[
-      |F_n(z) - 1| \le c_n.
-    \]
-    则有
-    \begin{enumerate}
-      \item $\prod_{n=1}^\infty F_n(z)$在$\Omega$上一致收敛于全纯函数$F(z)$.
-      \item 若任意$F_n(z)$无零点，则
-        \[
-          \frac{F\hp(z)}{F(z)} = \sum_{n=1}^\infty\frac{F\hp_n(z)}{F_n(z)}.
-        \]
-    \end{enumerate}
+  \begin{thm}[Gamma函数的延拓]
+    定义在$\Re(s)>0$上的Gamma函数可在$\mathbb{C}$上解析延拓为一个亚纯函数，且它在且近在
+    非正整数上有简单极点. 它在$s=-n$处的留数为$(-1)^n/n!$.
   \end{thm}
   \remark
-    关于[2.]，考虑级数情况的求导以及对数将乘法化为加法的性质，即可明白为什么会成这样的
-    形式.
+    这样发现在另一半平面上，它的表达式和原表达式是不一样的，这是因为$t^{\sigma-1}$
+    在$\sigma<0$时不再在$0$附近反常可积. 所以在该半平面上对于$0$附近的部分有另外
+    形式的表达式，见\equref{equ: Gamma的延拓}. 这个式子的级数部分在一般情况下
+    显然是收敛的，唯一会出现问题的就是在$s=-n$的地方，那特定的一项会变成$\infty$.
+    在作估计的时候对于这一项单独处理即可.
   \proof
-    和之前的证明相似，我们可知它确实一致收敛.     
+    不难想到可以利用\lemmaref{lemma: Gamma的准周期性}在$\Re(s)>-m$上定义所需的函数$F_m$，
+    接下来只需要证明$F_m$的极点相关性质满足命题所述. 由于这样定义的亚纯函数$F_m$同$\Gamma$
+    在定义域内的极点外的部分都是一致的，所以上述定义是良定义的.$\quad\blacksquare$
+  % end
+  \proof
+    下给出另一种证明，这一证明利用原表达式直接给出了$\Gamma$的延拓的表达式，并证明它满足所需
+    性质. 对于\equref{equ: Gamma函数}，成立
+    \begin{equation}\begin{split}
+      \label{equ: Gamma的延拓}
+      \Gamma(s) &= \int_0^1e^{-t}t^{s-1}\rd t + \int_1^\infty e^{-t}t^{s-1}\rd t \\
+      &= \int_0^1\sum_{n=0}^\infty\frac{(-t)^n}{n!}t^{s-1}\rd t 
+        + \int_1^\infty e^{-t}t^{s-1}\rd t \\
+      &= \sum_{n=0}^\infty\frac{(-1)^n}{n!(n+s)}
+        + \int_1^\infty e^{-t}t^{s-1}\rd t.
+    \end{split}\end{equation}
+    考虑它在整个$\mathbb{C}$上的行为. 首先第二项收敛于一个全纯函数，所以仅需要证明第一项的
+    级数收敛于一个亚纯函数并有满足要求的极点. 考虑它在$D_R$中的行为，这样可以暂时不管$D_R$
+    外的极点，同时按照$N>2R$将级数拆为两部分，前半部分为所需的亚纯函数而第二部分在$D_R$内
+    全纯. 这里之所以选取$N>2R$是为了方便$n+s$的放缩. $\quad\blacksquare$
+  % end
+
+  \begin{pos}[沿拓的准周期性]
+    仍用$\Gamma$来表示Gamma函数在$\mathbb{C}$上的解析沿拓，它有性质
+    \begin{enumerate}
+      \item 在非极点处成立$\Gamma(s+1)=s\Gamma(s)$.
+      \item $\res_{-(n+1)}\Gamma(s)=-n\res_{-n}\Gamma(s)$.
+    \end{enumerate}
+  \end{pos}
+
+  \begin{lemma}
+    对于$0<a<1$，成立$\int_0^\infty v^{a-1}/(1+v)\rd v = \pi/\sin(\pi a)$.
+  \end{lemma}
+  \proof
+    做代换$v=e^x$.
+  % end
+
+  \begin{thm}[Gamma函数的对称性]
+    \label{thm: Gamma函数的对称性}
+    对于任意$s\in\mathbb{C}$，成立
+    \[
+      \Gamma(s)\Gamma(1-s) = \frac{\pi}{\sin\pi s}.
+    \]
+  \end{thm}
+  \remark
+    代入$s=1/2$，得$\Gamma(1/2)=\sqrt{\pi}$.
   % end
 
   \begin{thm}
-    \label{thm: cot级数展开}
-    \[
-      \pi\cot\pi z=\frac{1}{z}+\sum_{n=1}^\infty\frac{2z}{z^2-n^2}.
-    \]
+    函数$\Gamma$有如下性质：
+    \begin{enumerate}
+      \item $1/\Gamma(s)$为整函数，在$s=0,-1,-2,\dots$有简单零点，此外无零点.
+      \item 对于$1/\Gamma(s)$有估计
+        \[
+          \left|\frac{1}{\Gamma(s)}\right|\le c_1e^{c_2|s|\log|s|},
+        \]
+        从而它的阶为$1$.
+    \end{enumerate}
   \end{thm}
   \proof
-    整体思路是证明$\Delta(z) = \lhs(z) -  \rhs(z)$为一个有界整函数. 具体而言，
-    首先分别证明两侧的周期性，并描述在原点处极点的性质，从而得出想要的结论，注意对于
-    $\rhs$，成立
+    对于[1.]只需要利用\thmref{thm: Gamma函数的对称性}即可并利用\equref{equ:
+    Gamma的延拓}来证明[2.]. 另外根据\defref{defi: 整函数的阶}的评注，只需要
+    考虑充分大的$|s|$即可.\par
+    首先有
     \[
-      \rhs = \lim_{N\to\infty}\sum_{|n|\le N}\frac{1}{z+n}. \quad\blacksquare
+      \frac{1}{\Gamma(s)} = \frac{\sin \pi s}{\pi}
+      \left\{\sum_{n=0}^\infty\frac{(-1)^n}{n!(n+s)}+
+      \int_1^\infty e^{-t}t^{-s}\rd t\right\}.
     \]
-  % end
-
-  \begin{thm}
-    \[
-      \frac{\sin\pi z}{\pi} = z\prod_{n=1}^\infty\left(1-\frac{z^2}{n^2}\right).
-    \]
-  \end{thm}
-  \proof
-    首先注意到
-    \[
-      \left(\frac{f}{g}\right) = \frac{f}{g}
-      \left( \frac{f\hp}{f} - \frac{g\hp}{g} \right).
-    \]
-    而对于$f\hp/f$的形式，我们可以有\thmref{thm: 无穷乘积、导数}. 证明$(\lhs/\rhs)\hp=0$
+    对两项分别估计，首先是积分的部分. 由于对于大的$t$，主要的部分为$e^{-t}$，
+    所以对于$t^{-s}$可以进行较大的放缩. 设$|\sigma|\le n<|\sigma|+1$可以进行估计
+    \[\begin{split}
+      \left|\int_1^\infty e^{-t}t^{-s}\rd t\right|
+      &\le \int_0^\infty e^{-t}t^{|\sigma|}\rd t \\
+      &\le n! \\
+      &\le n^n \\
+      &\le e^{n\log n} \\
+      &\le e^{(|\sigma|+1)\log(|\sigma|+1)}
+    \end{split}\]
+    而对于$|\sin\pi s|$，利用Euler公式有估计$|\sin\pi s|\le e^{\pi|s|}$. 由于
+    只需要考虑充分大的$|s|$，所以这一部分的估计是成立的.\par
+    而对于级数部分的估计，如果不是$s=-n$附近的部分，它的行为主要由$\sin\pi s$确定，
+    下考虑$\Im(s)\le 1$的情况，对于$k-1/2\le \Re(s) < k+1/2$的那一项单独处理
     即可.$\quad\blacksquare$
   % end
+  
+  \begin{thm}
+    记$\gamma = \lim_{N\to\infty}\sum_{n=1}^N 1/n - \log N$为Euler常数，
+    根据Hadamard定理有
+    \[
+      \frac{1}{\Gamma(s)} = e^{\gamma s}s\prod_{n=1}^\infty
+      \left( 1+\frac{s}{n} \right)e^{-s/n}.
+    \]
+  \end{thm}
 
 % end
-
 
 % end
 
 \newpage
 \section{附录}
+
+\subsection{不等式}
+
+  \begin{pos}
+    对于任意$z\in\mC$，成立$|e^z-1|\le e^{|z|}-1\le |z|e^{|z|}$.
+  \end{pos}
+
+  \begin{pos}
+    对于任意$z\in\mathbb{D}$，成立$|e^z-1|\le 2|z|$.
+  \end{pos}
+
+  \begin{pos}
+    对于任意$z\in\mathbb{C}$，成立$|e^z|\ge e^{-|z|}$.
+  \end{pos}
+
+% end
 
 \subsection{数项级数}
 
@@ -231,6 +236,7 @@
       \sum_{n=M}^{N-1}(a_{n+1}-a_n)B_n.
     \]
   \end{thm}
+% end 
 
 \subsection{函数项级数}
 
@@ -238,6 +244,8 @@
     设$\{f_n\}$是一列函数且对于任意$n$，成立$\sup|f_n-f|\le M_n$且$M_n\to 0$，
     则$f_n$一致收敛于$f$.
   \end{thm}
+
+% end
 
 \subsection{多元微积分}
 
@@ -306,6 +314,7 @@
       = \frac{\pt z}{\pt x}(-r\cos\theta) + \frac{\pt z}{\pt y}(r\sin\theta).
     \end{split}\]
     将第二个式子两边同除$r$后求上两个式的平方和即可.$\quad\blacksquare$
-
+  % end
+% end
 
 \end{document}
