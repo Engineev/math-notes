@@ -1,0 +1,114 @@
+\input{def.th}
+
+\title{Fourier分析$\,$笔记}
+\author{任云玮}
+\date{}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+\section{The Genesis of Fourier Analysis}
+
+\section{Basic Property of Fourier Series}
+
+\subsection{Examples and formulation of the problem}
+% end
+
+\subsection{Uniqueness of Fourier series}
+  \paragraph{p37. }
+
+  \paragraph{p41. Notes on Theorem 2.1}
+    这一命题表明对于连续函数，只需要验证它们的Fourier系数是否相等即可. 
+  % end
+
+  \paragraph{p40. proof of Theorem 2.1}
+    先考虑$f$为实函数的情况. 首先条件中有$\hat{f}(n)=0$，按照定义它意味着
+    \[
+      \frac{1}{2\pi}\int_{-\pi}^\pi f(\theta)e^{\iu n\theta} \rd\theta=0.
+    \]
+    由于积分的线形性，所以我们有对于任意三角多项式$p_k$，成立
+    \[
+      \int_{-\pi}^\pi f(\theta)p_k(\theta)\rd\theta = 0.
+    \]
+    我们考虑利用反证法来证明此命题. 不失一般性的，我们假设定义在$[-\pi, \pi]$上，
+    在$\theta_0=0$处连续且为$f(0)>0$. 我们尝试构造一列三角多项式$\{p_k\}$，让它
+    在$0$附近为正且在其他地方迅速衰减，则我们即可得到$\int f(\theta)p_k(\theta)>0$，
+    而这与之前的讨论矛盾.\par
+    首先按照之前的想法，我们取充分小的$[-\delta,\delta]\subset [-\pi,\pi]$，满足
+    在其中$f(\theta)>f(0)/2$. 接下来我们构造一个三角多项式$p$，满足如下条件：
+    \begin{enumerate}
+      \item 在$[-\delta,\delta]$外$|p(\theta)|<s<1$.
+      \item 在$[-\delta,\delta]$上$p(\theta)\ge 0$.
+      \item 在某个$[-\eta,\eta]\subset[-\delta,\delta]$上$p(\theta)>r>1$.
+    \end{enumerate}
+    这样我们只需要令$p_k(\theta) = [p(\theta)]^k$，在进行一下估计即可. 我们可以设
+    \[
+      p(\theta) = \vep + \cos\theta.
+    \]
+    其中$\vep>0$充分小以满足[1.]. 同时显然只要最初选择的$|\delta|<\pi/2$，它就满足[2.].
+    而对于[3.]，只需要$|\eta|$充分小，也是可以成立的. \par
+    接下来我们对积分$\int f(\theta)p_k(\theta)\rd\theta$进行估计. 我们有
+    \[
+      \left|\int_{-\pi}^\pi\right| \ge 
+      \left|\int_{-\eta}^\eta + \int_{\eta\le|\theta|<\delta}\right|
+      -\left|\int_{\delta\le|\theta|\le \pi}\right|
+      \ge \left|\int_{-\eta}^\eta\right|
+      -\left|\int_{\delta\le|\theta|\le \pi}\right|.
+    \]
+    由于$f$ Riemann可积，所以有界，即$|f|<B$. 从而有
+    \begin{gather*}
+      \left|\int_{\delta\le|\theta|\le \pi}f(\theta)p_k(\theta)\rd\theta\right|
+       \le 2(\pi-\delta)Bs^k,\quad
+      \int_{-\eta}^\eta f(\theta)p_k(\theta)\rd\theta \ge 2\eta \frac{f(0)}{2}r^k.
+    \end{gather*}
+    当$k$充分大时，有$|\int_{-\pi}^\pi|>0$，与已知矛盾. \par
+    而对于$f$是复函数的情况，只需要利用$\bar{\hat{f}}(n) = \overline{\hat{f}(-n)}$即可.
+  % end
+
+  \paragraph{p41. Notes on Corollary 2.3}
+    这一命题表明一定条件下，Fourier系数的绝对收敛性可以保证Fourier级数的一致收敛
+    形. 而之后的命题（[Corollary 2.4]）则给出了通过函数的光滑程度导出Fourier系
+    数衰减速度的方法.
+  % end
+
+  \paragraph{p42. [1.]}
+    注意由于$e^{in\theta}$的周期性，设$b-a=2\pi$，有
+    \[
+      \frac{1}{2\pi}\int_{a}^be^{in\theta}\rd\theta = 
+      \begin{cases}
+        1, & n = 0, \\
+        0, & n \ne 0.
+      \end{cases}
+    \]
+  % end
+% end
+
+\subsection{Convolutions}
+  \paragraph{p47. Notes on Lemma 3.2}
+    这一引理表明可以用一列有界连续函数$\{f_k\}$在积分平均的含义下去逼近
+    一个Riemann可积函数$f$.
+  % end
+% end
+
+\subsection{Good kernels}
+  \paragraph{p49. Proof of Theorem 4.1}
+    直观地想，由于good kernel的性质，当$n$充分大时，$[x-\pi,x+\pi]$上的加权
+    平均的结果应该和$f(x)$是差不多的，自然而然就会想到把积分分为$|y|\le\delta$和
+    $\delta\le|y|\le\pi$两部分. 利用$f$在$x$处的连续性等性质估计
+    \[
+      (f\ast K_n)(x) - f(x) = \frac{1}{2\pi}\int_{-\pi}^pi
+      K_n(y)[f(x-y)-f(x)]\rd y
+    \]
+    即可证明在连续点处的收敛性. 而一致收敛性则有闭区间上的连续函数的一致连续性保证.
+  % end
+% end
+
+\subsection{Cesàro and Abel summability: applications to Fourier series}
+% end 
+
+
+
+\end{document}
