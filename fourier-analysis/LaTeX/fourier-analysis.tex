@@ -99,7 +99,7 @@
     平均的结果应该和$f(x)$是差不多的，自然而然就会想到把积分分为$|y|\le\delta$和
     $\delta\le|y|\le\pi$两部分. 利用$f$在$x$处的连续性等性质估计
     \[
-      (f\ast K_n)(x) - f(x) = \frac{1}{2\pi}\int_{-\pi}^pi
+      (f\ast K_n)(x) - f(x) = \frac{1}{2\pi}\int_{-\pi}^\pi
       K_n(y)[f(x-y)-f(x)]\rd y
     \]
     即可证明在连续点处的收敛性. 而一致收敛性则有闭区间上的连续函数的一致连续性保证.
@@ -107,7 +107,22 @@
 % end
 
 \subsection{Cesàro and Abel summability: applications to Fourier series}
-% end 
+  \paragraph{说明}
+    提出这些不同的可求和性的原因在Fourier级数在某些点常常不是收敛的，所以在此给出了
+    其他的定义级数收敛的方法，使得Fourier级数在那些点也有值. 而这些不同收敛方式则定义
+    了对应的不同形式的kernel.
+  % end
+
+  
+
+% end
+
+\subsection{Exercises}
+  \paragraph{积分公式}
+  \[
+    \int_0^\pi\sin n\theta\rd\theta = \frac{1-(-1)^n}{n}.
+  \]
+% end
 
 
 
