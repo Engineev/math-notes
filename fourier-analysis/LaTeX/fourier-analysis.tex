@@ -89,7 +89,9 @@
 \subsection{Convolutions}
   \paragraph{p47. Notes on Lemma 3.2}
     这一引理表明可以用一列有界连续函数$\{f_k\}$在积分平均的含义下去逼近
-    一个Riemann可积函数$f$.
+    一个Riemann可积函数$f$. 在处理非连续函数的Fourier级数时，常先使用
+    此引理. 而对于连续的情况，则直接使用Corollary 5.4即可，它声称连续
+    函数可以用三角多项式一致逼近.
   % end
 % end
 
@@ -122,6 +124,89 @@
   \[
     \int_0^\pi\sin n\theta\rd\theta = \frac{1-(-1)^n}{n}.
   \]
+% end
+
+\newpage
+\section{Convergence of Fourier Series}
+
+\subsection{Mean-square convergence of Fourier series}
+  \paragraph{p77. 说明}
+    首先注意到这些事实
+    \begin{enumerate}
+      \item $\{e_n=e^{\iu n\theta}\}_{|n|\le N}$是一组标准正交基，$S_N(f)$是这
+        组基生成的子空间$S_N$中的元素.
+      \item 由于是标准正交基，所以有
+        \[
+          S_N(f)=\sum_{n=-N}^N (f,e_n)e_n  \quad\text{且}\quad 
+          \|S_N(f)\|^2= \sum_{n=-N}^N |(f,e_n)|^2
+        \]
+      \item 由于$S_{N-1}\subset S_N$，所以在$S_N$中一定可以比在$S_{N-1}$中逼近地更好.
+    \end{enumerate}
+    根据[2.]，我们可以知道$S_N(f)$就是$f$在$S_N$中的投影，所以是最佳平方逼近函数. 对于
+    满足一定条件的$f$，我们可以导出其最佳平方逼近函数收敛于$f$.
+  % end
+
+  \paragraph{Proof of Theorem 1.1}
+    总体思路为找一列平方收敛于$f$的三角多项式并利用最佳逼近引理说明Fourier级数比它们
+    逼近地更好，所以也平方收敛与$f$.\par
+    由于可以用三角多项式一致地逼近一个连续函数，所以对于$f$连续情况的证明是方便的. 对于
+    $f$仅仅是可积的情况. 首先我们知道可以用一列一致有界的连续函数$f_k$，在积分的意义下
+    逼近$f$，对于这些连续的函数再重复之前的讨论即可. 注意需要先说明一下积分意义的逼近和
+    平方逼近之间的关系.
+  % end
+
+  \paragraph{p80. [1]}
+    很多并不是某个$\hat{f}(n)$的积分也有这样的形式.
+  % end
+% end
+
+\subsection{Return to pointwise convergence}
+  \paragraph{Proof of Theorem 2.1}
+    首先我们对结论进行处理，可知我们仅需证明当$N\to\infty$时，
+    \[
+      \frac{1}{2\pi}\int_{-\pi}^\pi (f(\theta_0-t)-f(\theta_0))D_N(t)\rd t\to 0.
+    \]
+    而这直觉上来讲是成立的，因为虽然$D_N$并非good kernel，但是当$N\to\infty$时，它仍集中
+    至原点附近，而由于$f$在$\theta_0$处可微，$f(\theta_0-t)-f(\theta_0)$在原点附近的值
+    趋于零. 虽然我们（或许）仍可以通过$[\delta,\pi]$的方法来证明，但我们也可以尝试利用
+    Riemann-Lebesgue引理，注意到有
+    \[\begin{split}
+      \int_{-\pi}^\pi (f(\theta_0-t)-f(\theta_0))D_N(t)\rd t
+      = \int_{-\pi}^\pi \frac{f(\theta_0-t)-f(\theta_0)}{\sin(t/2)}
+        \sin((N+1/2)t)\rd t.
+    \end{split}\]
+    由于
+    \[
+      \sin((N+1/2)t) = \sin(t/2)\cos(Nt) + \cos(t/2)\sin(Nt),
+    \]
+    所以我们只需要说明积分中的第一项可积即可. 而这可由
+    \[
+      \frac{f(\theta_0-t)-f(\theta_0)}{\sin(t/2)} =
+      \frac{f(\theta_0-t)-f(\theta_0)}{t}\frac{t}{\sin(t/2)},
+    \]
+    以及$f$在$\theta_0$处的可微性导出.
+  % end
+
+  \paragraph{Note on Theorem 2.2}
+    注意对于$f$和$g$本身，除了Riemann可积以外，没有任何光滑性方面的要求. 
+  % end
+
+  \paragraph{p83. Note on Sec 2.2.2}
+    
+  % end
+
+  \paragraph{p84. [1.]}
+    假设确实是某个Riemann可积函数$\tilde{f}$的Fourier级数，考虑该级数的Abel和. 按照
+    Abel和的定义可知在$r\to 1$时它发散. 同时我们利用Fourier级数的Abel和积分表示以及
+    $\tilde{f}$的有界性，可知当$r\to 1$时它是有界的，从而推出矛盾.
+  % end
+
+% end
+
+\subsection{Exercises}
+  \paragraph{引理}
+    记$e_n=e^{-\iu n\theta}$，对$n\ne 0$，有$|(f,e_n)|=|(f\hp,e_n)|/|n|$.
+  % end
 % end
 
 
