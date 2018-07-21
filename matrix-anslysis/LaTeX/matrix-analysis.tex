@@ -1,0 +1,60 @@
+\input{def.tex}
+
+\title{矩阵分析$\,$笔记}
+\author{任云玮}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Eigenvalues, Eigenvectors, and Similarity}
+\subsection{Introduction}
+% end
+\subsection{The eigenvalue-eigenvector equation}
+  \paragraph{p46}
+    注意对于矩阵$A$和常数$k$，有
+    \[
+      (A+kI)x=\lambda\hp x \quad\Rightarrow\quad
+      Ax = (\lambda\hp-k)x.
+    \]
+    因此在计算特征值的时候可以先给矩阵加上$I$的某个倍数来得到一个特征值更方便计算的矩阵。
+  % end
+
+  \paragraph{p46. Theorem 1.1.6}
+    这一定理的第一部分可以用来证明$\sigma(p(A))$非空并给出其中的某些值；而第二部分则限定了
+    $\sigma(p(A))$中的值的可选范围。如果我们在已知$p(A)$的特征值情况下讨论$A$，则这两部分的
+    效果是反过来的。
+  % end
+
+  \paragraph{p47. The proof of Theorem 1.1.9}
+    我们的目的是证明任意$A\in M_n$有至少一个特征值$\lambda$，且它所对应的特征向量可以被表示
+    为$g(A)y$的形式，其中$g(t)\in\mathbb{P}_{n-1}$.\par
+    按照定理1.1.6，我们可以找一个多项式$p$，找$p(A)$的特征值。考虑之前的观察以及$p$有常数项
+    这件事，我们只需要说明$0\in\sigma(p(A)))$，即证$p(A)$是奇异的。对于一个$p(A)$形式的矩
+    阵，十分自然地引入了一组向量$(A^ny, \dots, y)$。对于任意的$y\ne 0$，我们可以取恰当的
+    $p$使得这组向量是线性相关，从而$p(A)$是奇异的。将上述讨论反过来叙述即证明了命题的第一部
+    分，其中关于$p$需选取度数最小的那一个。\par
+    为得到所需要的$g$，我们只需要考虑把$p(A)y=0$进行因式分解，得
+    \[
+      (A-\lambda I)(g(A)y) = 0.
+    \]
+    由于$p$是满足线性相关的条件的多项式中度数最小的，所以$g(A)y$非奇异，从而它是一个特征向量。
+  % end
+% end
+
+\newpage
+\section{Cheat Sheet}
+  \begin{thm}[rank-nullity]
+    Let $A\in M_{m,n}(\mathbb{F})$ be given. $\rank A + \dim(\nullspace A) = n$.
+  \end{thm}
+
+  \begin{lemma}[full-rank factorization]
+    Suppose $A\in M_{m,n}(\mathbb{F})$, then $\rank A = k$ iff $A=XY^T$ for some
+    $X\in M_{m,k}(\mathbb{F})$ and $Y\in M_{n,k}(\mathbb{F})$ that each have 
+    independent columns.
+  \end{lemma}
+% end
+
+\end{document}
