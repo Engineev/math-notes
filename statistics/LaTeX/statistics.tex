@@ -13,8 +13,8 @@
 \subsection{离散分布}
   \subsubsection{Hypergeometric Distribution}
     \paragraph{含义}
-      设有$N$个球，其中$M$个为红色，$N-M$个为绿色，它们除颜色以外无区别。从中选取$K$个，
-      考虑恰有$x$个是红球的概率分布。
+      设有$N$个球，其中$M$个为红色，$N-M$个为绿色，它们除颜色以外无区别. 从中选取$K$个，
+      考虑恰有$x$个是红球的概率分布. 
     \paragraph{公式}
       \begin{align*}
         &P(X=x|N,M,K) = \frac{\binom{M}{x}\binom{N-M}{K-x}}{\binom{N}{K}}.\\
@@ -25,7 +25,7 @@
   % end
   \subsubsection{Binomial Distribution}
     \paragraph{含义}
-    考虑$n$次相同的成功概率为$p$的Bernoulli试验，考虑其中恰有$y$次成功的概率分布。
+    考虑$n$次相同的成功概率为$p$的Bernoulli试验，考虑其中恰有$y$次成功的概率分布. 
     \paragraph{公式}
     \begin{align*}
       & P(Y=y|n,p)=\binom{n}{y}p^y(1-p)^{n-y}. \\
@@ -36,7 +36,7 @@
   % end
   \subsubsection{Poisson Distribution}
     \paragraph{含义}
-    Poisson分布可以用来描述在一段时间内，某事件发生的次数的概率分布，例如类似于等车的行为。
+    Poisson分布可以用来描述在一段时间内，某事件发生的次数的概率分布，例如类似于等车的行为. 
     设$t\ge 0$而$N_t$是关于$t$的整数值随机变量，设它满足如下性质：
     \begin{enumerate}
       \item 初始无到达：$N_0=0$；
@@ -46,7 +46,7 @@
             \dfrac{P(N_t=1)}{t}=\lambda$；
       \item 不会出现同时到达的情况：$\lim_{t\to 0}\dfrac{P(N_t>1)}{t}=0$；
     \end{enumerate}
-    经常的，我们会进行归一化，同时只考虑$t=1$的情况，即“仅等一单位时间情况下，等到车的数量”。
+    经常的，我们会进行归一化，同时只考虑$t=1$的情况，即“仅等一单位时间情况下，等到车的数量”. 
     
     \paragraph{公式}
     \begin{align*}
@@ -56,21 +56,38 @@
       & M_{N_1}(t) = e^{\lambda(e^t-1)}.
     \end{align*}
 
+    \paragraph{推导}
+    我们仅考虑归一化的结果，即一个单位时间的情况. 我们把该单位时间等分成足够多的$n$，则对于每一
+    个小时间段，可以认为互相独立的Bernoulli试验，其成功的概率是$\lambda/n$. 则该单位时间的
+    到达次数，即为这$n$次Bernoulli试验的成功次数，即为一个二次分布，我们令$n\to\infty$，即
+    得到Poisson分布的pmf，
+    \[
+      f(x) 
+      = \lim_{n\to\infty} \binom{n}{x}(\lambda/n)^x (1-\lambda/n)^{1-x}
+      = e^{-\lambda}\frac{\lambda^x}{x!}.
+    \]
+
+    \paragraph{性质}
+    \begin{thm}
+      设$X\sim\text{Poisson}(\theta)$，$Y\sim\text{Poisson}(\lambda)$且$X$和$Y$独
+      立，则$X+Y\sim\text{Poisson}(\theta+\lambda)$.
+    \end{thm}
+
     \paragraph{利用Poisson分布近似}
     注意到Poisson描述的是连续的时间段中事件发生的情况，在某些离散的情况下，亦可以使用Poisson
-    分布来近似。考虑二项分布的情况，我们可以把Bernoulli试验的成功理解成Poisson分布中的“到
-    达”，同时把单个的Bernoulli试验理解成一个单位时间，则自然的$p$就对应着$\lambda$。若$p$
+    分布来近似. 考虑二项分布的情况，我们可以把Bernoulli试验的成功理解成Poisson分布中的“到
+    达”，同时把单个的Bernoulli试验理解成一个单位时间，则自然的$p$就对应着$\lambda$. 若$p$
     充分小，则可以认为这些离散的Bernoulli试验已经和连续的情况差不多乐，所以此时可以有
     \[
       P(Y=y|n,p) \sim P(N_n=y|p) = P(N_1=y|np).
     \]
-    我们可以通过比较它们的递推式来证明这一结论。
+    我们可以通过比较它们的递推式来证明这一结论. 
   % end
   \subsubsection{Negative Binomial Distribution}
     \paragraph{含义}
     考虑$n$次独立的Bernoulli$(p)$试验，设随机变量$X$表示在第$X$轮发生了等$r$次成功，即描述
-    一个成功了$r$次后才会停止的试验。或者考虑一种等价的形式，设随机变量$Y$表示在第$r$次成功前
-    的失败的次数，显然有$Y=X-r$。
+    一个成功了$r$次后才会停止的试验. 或者考虑一种等价的形式，设随机变量$Y$表示在第$r$次成功前
+    的失败的次数，显然有$Y=X-r$. 
     
     \paragraph{公式}
     \begin{align*}
@@ -82,15 +99,15 @@
 
     \paragraph{利用负二项分布近似Poisson分布}
     注意到如果我们令$p\to 1$而$r\to\infty$且同时满足$r(1-p)\to\lambda$，则期望与方差都
-    会趋于$\lambda$，和Poisson分布的结果一致。这暗示了在这一条件下，负二项分布或许可以近似
-    Poisson分布，而事实确实如此。\par
-    我们可以这样考虑这个事情。当$r$变大时候，一次试验在其中所占的份就变小了，从而变得更加的连续
+    会趋于$\lambda$，和Poisson分布的结果一致. 这暗示了在这一条件下，负二项分布或许可以近似
+    Poisson分布，而事实确实如此. \par
+    我们可以这样考虑这个事情. 当$r$变大时候，一次试验在其中所占的份就变小了，从而变得更加的连续
     了，而在这里把一次失败理解成一次到达，则$p\to 1$的条件同Poisson分布中关于概率与区间长度的
-    要求是一致的，而$r(1-p)\to\lambda$的要求可以从归一化之后的角度看待。
+    要求是一致的，而$r(1-p)\to\lambda$的要求可以从归一化之后的角度看待. 
   % end
   \subsubsection{Geometric Distribution}
     \paragraph{含义}
-    负二项分布中，取$r=1$的特殊情况，即一种成功就停止的试验。
+    负二项分布中，取$r=1$的特殊情况，即一种成功就停止的试验. 
 
     \paragraph{公式}
     \begin{align*}
@@ -104,8 +121,156 @@
     \[
       P(X>s|X>t) = P(X>s-t).
     \]
-    这也意味着如果某种概率是随着试验次数/时间的增长而有变化时，几何分布是不适用的。
+    这也意味着如果某种概率是随着试验次数/时间的增长而有变化时，几何分布是不适用的. 
   % end
 % end
+\subsection{连续分布}
+  \subsubsection{Exponential Distribution}
+    \paragraph{含义}
+    已知在单位时间内事件发生的次数为$\lambda$，$W$为第一次事件发生前所经过的时间. 
+
+    \paragraph{推导}
+    我们下求$W$的cdf并求导以得其pdf. 设$P_\lambda$为Poisson分布，则
+    \begin{align*}
+      & F(x)=1-P(W>x) = 1-P_\lambda(N_x=0) = 1-e^{-\lambda x} \\
+      \Rightarrow\quad &
+        f(x) = F\hp(x) = \lambda e^{-\lambda x}.
+    \end{align*}
+
+    \paragraph{公式}
+    设$\theta=1/\lambda$表示所需等时间的期望，则
+    \begin{align*}
+      & f(x) = \frac{1}{\theta}e^{-x/\theta}, \\
+      & \E(x) = \theta, \\
+      & \Var(x) = \theta^2, \\
+      & x\ge 0, \theta>0.
+    \end{align*}
+      
+  % end
+  \subsubsection{Gamma Distribution}
+    \paragraph{含义}
+    设单位时间内事件发生的次数为$\lambda$，$W$为第$\alpha$次事件发生的时间. 记$\theta=1/
+    \lambda$. 
+    
+    \paragraph{公式}
+    \begin{align*}
+      &f(x) = \frac{1}{\Gamma(\alpha)\theta^\alpha} x^{\alpha-1}e^{-x/\theta},\\
+      &E(W) = \alpha\theta \\
+      &\Var(W) = \alpha\theta^2 \\
+      &x \ge 0, \alpha,\theta>0.
+    \end{align*}
+    
+
+  % end
+  \subsubsection{正态分布}
+    \paragraph{公式}
+    其参数即为其均值$\mu$和方差$\sigma^2$.
+    \[
+      f(x|\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)},
+      -\infty<x<\infty.
+    \]
+    若$X\sim\text{n}(\mu,\sigma^2)$，则称$Z=(X-\mu)/\sigma\sim n(0,1)$呈
+    \textbf{标准正态分布}. 
+    \paragraph{性质}
+    正态分布的随机变量的pdf在$x=\mu$处达到最大值，在$x=\mu\pm\sigma$处变换凹凸性.
+    \paragraph{利用正态分布近似二项分布}
+    设$X\sim\text{binomial}(n, p)$且$Y\sim \text{n}(np, np(1-p))$，则
+    \[
+      P(X\le x)\approx P(Y\le x+1/2), \quad 
+      P(X\ge x)\approx P(Y\ge x-1/2).
+    \]
+    其中$\pm 1/2$为连续性修正. 
+  % end
+  
+% end
+
+\newpage
+\section{Cheat Sheet}
+
+  \begin{lemma}[独立]
+    设$(X,Y)$为二元随机向量的pmf为$f(x,y)$. 则随机变量$X$和$Y$独立当且仅当存在$g(x)$和
+    $h(y)$使得对任意$x,y\in\mathbb{R}$成立$f(x,y)=g(x)h(y)$.
+  \end{lemma}
+
+  \begin{thm}[变换的pdf]
+    设$(U,V)=g(X,Y)$是从$\mathcal{A}=\{(x,y)\,:\,f_{X,Y}(x,y)>0\}$到$\mathcal{B}=
+    g(\mathcal{A})$的双射. 设$h=g^{-1}$而$J$是$h$的Jacob行列式且$J$不恒为$0$，则
+    \[
+      f_{U,V}(u,v) = f_{X,Y}(h(u, v))|J|.
+    \]
+    TODO: p161
+  \end{thm}
+
+  \begin{lemma}[独立]
+    设$X$和$Y$为两个独立随机变量且$g$和$h$分别是仅关于$x$和$y$的函数，则随机变量$U=g(X)$和
+    $V=h(Y)$也独立. 
+  \end{lemma}
+
+  \begin{lemma}[协方差]
+    $\Cov(X,Y) = \E((X-\mu_X)(Y-\mu_Y)) = \E XY - \mu_x\mu_Y$.
+  \end{lemma}
+
+  \begin{lemma}
+    设$X_1,\dots,X_n$是随机采样且$g(x)$是一个满足$\E g(X_1)$和$\Var g(X_1)$存在的函数，
+    则有
+    \begin{align*}
+      \E\left(\sum_{i=1}^n g(X_i) \right) &= n(\E g(X_1)), \\
+      \Var\left( \sum_{i=1}^n g(X_i) \right) &= n\left(\Var g(X_1) \right).
+    \end{align*}
+    这一引理的$\lhs$中的变换的形式（求和），是常见的统计的形式，因此此引理可用于分析统计的均值
+    和方差. 
+  \end{lemma}
+
+% end
+
+\newpage
+\section{注解}
+  \paragraph{p212 Definition 5.2.2/3}
+    \textbf{随机变量}是指一个从样本空间$S$到$\mathbb{R}$的映射，而一个随机采样则是$n$个
+    iid 的随机变量. 而一个\textbf{统计}是指一个从一个随机采样到$\mathbb{R}^n$的映射. 而我
+    们所定义的\textbf{统计均值}和\textbf{统计方差}都是一个统计，即是一个从映射（随机变量）到
+    $\mathbb{R}^n$的映射. 如果我们取定随机采样，则可以认为它是一个从样本空间到
+    $\mathbb{R}^n$的映射，即它也是一个随机变量. 从而我们可以讨论它的均值或者方差，讨论它的分
+    布. 这里要注意，统计均值/方差和均值/方差是完全不同的东西，前者（在取定随机采样后）是一个随
+    机变量，而后者则是一个常数. 
+  % end
+
+  \paragraph{p214 Theorem 5.2.6}
+    这里给出了之所以在定义统计方差时，分母用$n-1$而非$n$. 只有这样才可以使得$S^2$的期望恰好为
+    $\sigma^2$——各随机变量的各自的方差. 
+  % end
+
+  \paragraph{p232 Definition 5.5.1}
+    首先再次注意随机变量是一个从样本空间到$\mathbb{R}$的映射，而$P(|X_n-X|\ge\vep)$表示
+    这样一件事情：如果对于样本空间里的一个元素，如果$X_n$和$X$之间的差不小于$\vep$，则把这个
+    元素“对应”的概率加上，把所有这些元素都加上的结果即为$P(|X_n-X|\ge\vep)$. 而此定义表明
+    当$n$充分大的时候，这些概率累加的结果可以充分小. 
+  % end
+
+  \paragraph{p234 Definition 5.5.6}
+    对于一个具体的式子，这一定义和Definition 5.5.1的一个区别在于，在后者中如果我们展开极限
+    以外的部分，我们会得到一个关于$\vep$和$n$的函数，需要这个函数在$n\to\infty$时候趋于零
+    （或者$1$）. 而在这一定义中，我们将不得不先处理极限，然后考察不满足要求的样本集合对应的
+    概率. 这一定义相较于5.5.1要更强，它表示函数“从概率角度”几乎处处点态收敛，而在5.5.1中，
+    它实际上是一个数列的收敛性，可以理解为它是某个“概括”了$X_n$的数量的收敛性。
+  % end
+
+  \paragraph{p235 Definition 5.5.10}
+    即对应的cdf列在$F_X$的连续点集合上点态收敛。
+  % end
+
+  \paragraph{p236 Theorem 5.5.13}
+    "converges in distribution to $\mu$" 的直观含义就是结果一定是$\mu$。
+  % end
+
+  \paragraph{p236 Theorem 5.5.14}
+    这一定理表明在一定条件下，$\sqrt{n}(\bar{X}_n-\mu)/\sigma$趋于$n(0, 1)$. 这一定理
+    的作用在于，假设我们从一个分布中进行随机采样，则当样本足够多时，样本均值的分布可以用正态
+    分布（的一点变形）来估计。仅一步的，结合Theorem 5.5.17，在一定条件下我们可以用样本方差
+    来代替方差。（见Example 5.5.18）
+  % end
+% end
+
+% TODO: p156 normal distribution
 
 \end{document}
