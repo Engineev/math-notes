@@ -1,0 +1,46 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsfonts,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular,
+  multirow,
+  mathtools,
+  mathrsfs,
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=green
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+\theoremstyle{margin}
+\theorembodyfont{\normalfont}
+\newtheorem{thm}{定理}
+\newtheorem{cor}[thm]{推论}
+\newtheorem{pos}[thm]{命题}
+\newtheorem{lemma}[thm]{引理}
+\newtheorem{defi}[thm]{定义}
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\nullspace}{nullspace}
+
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\pt}{\partial}
+\newcommand{\hp}{^\prime}
+\newcommand{\inv}{^{-1}}
+
