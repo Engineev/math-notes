@@ -259,11 +259,61 @@
     $S\inv AS$即可完成证明. 
   % end
   \paragraph{p78. Theorem 1.4.7}
-    $y$的正交补和$x$张成的子空间都是$A$的不变子空间。
+    $y$的正交补和$x$张成的子空间都是$A$的不变子空间. 
   % end
 
 
 
+% end
+
+\newpage
+\section{Unitary Similarity and Unitary Equivalence}
+\subsection{Unitary matrices and the QR factorization}
+  \paragraph{p84. Theorem 2.1.4}
+    酉阵即为标准正交基组成的矩阵. 同时可以把标准正交基看做一个直角坐标系. 
+  % end
+
+  \paragraph{p85. Definition 2.1.5}
+    等距同构：不改变两点间距离的变换，即满足$d(p,q) =d(\varphi(p), \varphi(q))$的变换.
+  % end
+
+  \paragraph{p86. Theorem 2.1.9}
+    从线性变换的角度考虑这一个定理. 设$A$是线性变换$\varphi$在标准正交基$\{e_i\}$下的矩阵，
+    则$A\inv$即为$\varphi\inv$在$\{e_i\}$下的矩阵，$\varphi^*$在$\{e_i\}$的矩阵为
+    $A^*$. 而$A\inv\sim A^*$表明，存在一个可逆线性变换$\psi$，成立$\varphi\inv=\psi
+    \inv\varphi^*\psi$，即有$\psi=\varphi^*\psi\varphi$. 
+  % end
+
+  \paragraph{p87. Example 2.1.12}
+    以下内容中，我们可以假设$w$为单位向量。Householder变换的几何含义为：做该向量关于平面
+    $w^\perp$的镜像。首先由于它是等距变化，所以是酉阵；同时有$\langle U_wu,v\rangle = 
+    \langle u,U_wv\rangle$，所以它是Hermite阵。同样的，对于实向量空间也有相应的结论的。
+    而由于它是酉阵（等距变化），所以特征值的模都为$1$。根据谱定理，我们知道它有$n$个不同的一维
+    度不变子空间，其中一个是$v$所在直线，它对应的特征值是$-1$，而$v^\perp$中的$n-1$个一维不
+    变子空间对应的特征向量都是$1$，所以其行列式为$-1$。
+  % end
+
+  \paragraph{p89. Theorem 2.1.14}
+    我们来依此解释这些结论中$Q$所对应的含义。首先$A\in M_{n,m}$是一个从$\mathbb{F}^m$到
+    $\mathbb{F}^n$的线性映射。(a)表明可以在$\mathbb{F}^n$中找到$m$个坐标轴，把$A$的行为
+    拆分成现在$\mathbb{F}^n$中作用，在变换到对应的$m$个坐标轴上。而对于(d)，则是一个相反的
+    拆分，先映射到$\mathbb{F}^m$中，再换成另一个坐标系。同时这些$Q$的列向量标准正交意味着这
+    些都是直角坐标系。\par
+    而$R$则表示我们拆分出的那个线性变换，它对角线非负意味着至少它不会把某条坐标轴映到几乎相反的
+    方向。
+  % end
+
+  \paragraph{p90. Exercise(Cholesky)}
+    设$A=QR$，其中$Q$为酉阵而$R$为对角线非负的上三角阵，则$B=A^*A=R^*Q^*QR=R^*R$，令$L=
+    R^*$即可。当$A$非奇异时，设$B=\tilde{L}\tilde{L}^*$，则有
+    \[
+      LL^*=\tilde{L}\tilde{L}^* \quad\Rightarrow\quad
+      L\inv\tilde{L} = L^*\tilde{L}^{-*}.
+    \]
+    其中LHS是下三角阵而RHS是上三角阵，所以它们都是对角阵。根据定理2.1.14证明中的讨论，它们都
+    为$I$，所以$L=\tilde{L}$.
+  % end
+  
 % end
 
 \newpage
