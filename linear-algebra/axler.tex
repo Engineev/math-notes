@@ -1,0 +1,29 @@
+\section{Linear Algebra Done Right}
+
+\setcounter{subsection}{7}
+\subsection{Operators on Complex Vector Spaces}
+  \paragraph{p243. 8.4}
+    这一定理表明，如果$T^{n+k}u=0$，则$T^nu=0$，其中$k\ge 0$.
+  % end
+
+  \paragraph{p243. 8.5}
+    一般而言，$V=\nul T\oplus\range T$是不成立的，注意到虽然$\dim V=\dim\nul T+\dim
+    \range T$始终成立，但是$\nul T$和$\range T$之间可能有非零的重合。所以实际上这一定理的
+    内容主要是$\nul T^n\cap \range T^n = \{0\}$.
+  % end
+
+  \paragraph{p247. The proof of 8.13}
+    注意有$(T-\lambda_1I)(T-\lambda_2I)=((T-\lambda_2I)(T-\lambda_1I))$. 我们的思
+    路在于逐个证明$a_j=0$. 要做到这一点，首先要去掉其他的项并保留当前$a_j$项，要消去其他项，
+    只需利用$v_k\in G(\lambda, T)=\nul(T-\lambda_kI)^n$，即利用$(T-\lambda_2I)^n
+    \cdots(T-\lambda_mI)^n$即可. 但是这样仅能得到
+    \[
+      0 = a_1(T-\lambda_2I)^n\cdots(T-\lambda_mI)^nv_1.
+    \]
+    由于我们不能确保上式右侧的，不考虑系数的向量最后不为零，所以不能直接得出$a_1=0$. 因此我们
+    希望给$v_1$再作用一个$(T-pI)^q$形式的线性算子（以确保仍可交换）使得它一定不为零。在此注意
+    到如果$w$是$T$的非广义特征向量，则可以满足条件，同时我们有$(T-\lambda_1I)^kv_1$是$T$的
+    一个非广义特征向量。
+  % end
+
+% end
