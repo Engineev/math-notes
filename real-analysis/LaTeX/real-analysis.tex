@@ -1,4 +1,4 @@
-\input{def.th}
+\input{def.tex}
 
 \title{实分析$\,$笔记}
 \author{任云玮}
@@ -8,393 +8,71 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\newpage
-
-\section{集合论导引}
-
-  \begin{thm}
-    \label{thm: 开集的闭方块表示}
-    所有$\R^n$中的开集$\mcal{O}$都可以写作可数个几乎不相交的闭方块的并的形式.
-  \end{thm}
-
-  \begin{pos}[对称差]
-    \label{pos: 对称差}
-    $\,$
-    \begin{enumerate}
-      \item $(A_1\cup A_2)\Delta(B_1\cup B_2)\subset(A_1\Delta B_1)\cup(A_2\Delta B_2)$.
-      \item TODO
-    \end{enumerate}
-  \end{pos}
 
 \newpage
-\section{测度论导引}
+\setcounter{section}{2}
+\section{Lebesgue Measure}
+  \paragraph{56. Definition of the outer measure}
+    注意定义中的下确界部分，这表明如果我们要证明$m^*A\ge k$，则只需要证明对任意$\{I_n\}$，
+    $\sum l(I_n)\ge k$即可；同时这表示在$m^*A<\infty$的情况下，总可以找到可列个开区间，
+    使得$\sum l(I_k) \le m^*A + K\vep$.\par
+    注意，外侧度并非可数可加测度。
+  % end
 
-\newpage
-\section{$\R^n$上的Lebesgue测度}
+  \paragraph{56. Proof of Proposition 1}
+    关于$[a,b]$情况中$(a_i,b_i)$的构造：将$I_n$中的线段从左到右排列，依次取覆盖了前一个
+    $b_i$的线段。对于任意的有限区间，用一个闭区间从内部逼近它并利用之前的结论，这样可以得到一
+    边的结论。同时利用$m^*I = m^*\bar{I}=l(\bar{I})=l(I)$来得到另一边，注意其中用到了
+    $\bar{I}\backslash I$至多包含两个点且单个点的外侧度为零。对于无穷区间的情况，同样是利用
+    内部的闭区间。
+  % end
 
-\subsection{方块的测度}
+  \paragraph{p58. Proposition}
+    这一命题表明任意Borel集都可以用开集在外侧度意义上从外部逼近；如果考虑是用$G_\delta$集，
+    则可以直接从外部在外侧度意义上相等。
+  % end
 
-\subsection{$\vep^n$的测度}
+  \paragraph{p58. Definition}
+    实际上这一定义意味着，如果我们定义相应的“内测度”$m_*$，则有$m^*(E)=m_*(E)$. 首先对于$E$，
+    一个十分符合直觉的定义“内测度”的方法为$m_*(E)=m_*(X)-m_*(X\backslash E)$，其中$X$是
+    某个包含$X$的集合。而这一定义的是实际上就是说对于任意$X$（可能不包含$E$），这一性质都是成
+    立的。\par
+    同时注意$\lhs\le\rhs$是自然成立的，所以只需要验证$\lhs\ge\rhs$即可。
+  % end
 
-\subsection{外测度}
+  \paragraph{p60. Lemma 11}
+    注意我们还没有证明开区间都是Lebesgue可测的，但我们已经证明了对于区间，外测度和长度是一致
+    的。
+  % end
 
-  \begin{lemma}
-    对于任意的$A_1,A_2\in\mcal{M}^*(\R^n)$，成立
-    $|\mu^*A_1 - \mu^*A_2|\le\mu^*(A_1\Delta A_2)$.
-  \end{lemma}
+  \paragraph{p61. Proof of Theorem 12}
+    定理10表明$\mathfrak{M}$是一个$\sigma$-代数且根据引理11，它包含所有$(a,\infty)$；
+    同时易证Boreal集$\mathfrak{B}$可由全体$(a,\infty)$生成，即它是包含所以$(a,\infty)$
+    的最小的$\sigma$-代数。因此$\mathfrak{B}\subset\mathfrak{M}$，所以Borel集都可测。
+  % end
 
-\subsection{Lebesgue测度}
-  \begin{defi}[Lebesgue测度]
-    称集合$A\in\mcal{M}^*(\R^n)$为Lebesgue可测，若对任意$\vep>0$，存在
-    初等集$B$，使得
-    \begin{equation}
-      \label{equ: Lebesgue测度}
-      \mu^*(A\Delta B) < \vep.
-    \end{equation}
-    记Lebesgue可测的集合全体为$\mcal{M}(\R^n)$. 定义$\mu$为$\mu^*$限制在
-    $\mcal{M}(\R^n)$上的函数，称其为Lebesgue测度.
-  \end{defi}
-  \remark
-    之所以既需要外测度也需要定义Lebesgue测度是因为虽然外测度是定义在所有集合上的，
-    但是它不满足可加性；而Lebesgue虽然有诸如可加性等很好的性质，但它只是定义在$\R^n$的
-    一个子集上面. 而如此定义可测的原因在于，对于初等集而言，外测度的性质是良好且直观的.
+  \paragraph{p64. Proposition 15}
+    这一命题表明可测集可以用开集从外部逼近，用闭集从内部逼近。如果考虑$G_\delta$集和
+    $F_\sigma$，则上述可以在测度意义下近似。同时若外侧度有限，则可以用有\textbf{限开}区间的
+    并来逼近。上述内容反之亦成立。
+  % end
 
-  \begin{pos}[Lebesgue测度的性质]
-    Lebesgue测度满足如下性质
-    \begin{enumerate}
-      \item 对任意$A\in\mcal{M}(\R^n)$，成立$\mu A\ge 0$.
-      \item $\vep^n\subset\mcal{M}(\R^n)$且若$A\in\vep^n$，则$\mu A=m A$.
-    \end{enumerate}
-  \end{pos}
+  \paragraph{p68. Proof of Proposition 19}
+    这里$\bigcup_r\cdots$可以被诠释为：枚举所有有理数$r$，对于每一个$r$，它对应了$\{x\,:
+    \,f(x)+g(x)<\alpha\}$这一集和中的一部分。取它们的并集则得到了完整的集合。
+  % end
 
-  \begin{thm}
-    $\mcal{M}(\R^n)$为环.
-  \end{thm}
-  \proof
-    利用\posref{pos: 对称差}即可. $\quad\blacksquare$
+  \paragraph{p69. Proposition 22}
+    可测函数可以用简单函数近似；简单函数可以用阶梯函数近似；阶梯函数可以用连续函数近似. 具体见
+    习题23. 另外，这里的近似指的是误差超过$\vep$的集合很小，在习题31中给出了另一种形式：不相
+    等的集合很小。
+  % end 
 
-  \begin{cor}
-    $\mcal{M}([0, 1])$为一个代数.
-  \end{cor}
-
-  \begin{thm}
-    $\mu$在$\mcal{M}(\R^n)$上满足可加性.
-  \end{thm}
-  \proof
-    即证明，若$A=A_1\cupdot A_2$，则$\mu A = \mu A_1 + \mu A_2$. 其中$\mu A
-    \le \mu A_1 + \mu A_2$可以由外测度的性质直接推出. 下考虑另一方向，尝试证明
-    $\mu A > \mu A_1 + \mu A_2 - \vep$.\par
-    对于固定的$\vep$，首先根据Lebesgue可测的定义取出基础集$B_i$，满足$\mu*(A_i
-    \Delta B_i)<\vep/6$，同时可以证明$m(B_1\cap B_2)<\vep/3$. 用$B=B_1\cup
-    B_2$来估计$A$即可完成证明.$\quad\blacksquare$
-
-  \begin{thm}
-    环$\mcal{M}(\R^n)$上的测度$\mu$是$\sigma$-可加的.
-  \end{thm}
-
-  \begin{thm}
-    \label{thm: 可数并可测}
-    设$A\in \mcal{M}^*(\R^n)$且$A=\bigcup_{k=1}^\infty A_k$，其中
-    $A_k\in\mcal{M}(\R^n)$. 则$A\in\mcal{M}(\R^n)$.
-  \end{thm}
-  \remark
-    注意，对于Lebesgue可测集，它的测度就是外测度.
-  \proof
-    首先将$A$重写为不相交集$A_k\hp=A_k\backslash\bigcup_{j=1}^{k-1}A_j$.
-    考虑级数$\sum\mu A_k\hp$，根据条件，它是收敛的. 之后对于它前充分多的有限项
-    所对应的集合的并，它是Lebesgue可测的，考虑它对应的初等集$B$. 而对于剩下的集合，
-    它们的外测度足够小. $\quad\blacksquare$
-
-  \begin{cor}
-    可数个零测集的并依然是零测集.
-  \end{cor}
-  \proof
-    利用外测度的$\sigma$-半可加性和\thmref{thm: 可数并可测}即可证明.
-
-  \begin{defi}[完备]
-    称定义在环$\mathcal{K}$上的测度$\mu$是完备的，若任意零测集的子集的测度也为零.
-  \end{defi}
-
-  \begin{thm}
-    Lebesgue测度是完备的.
-  \end{thm}
-
-\subsection{广义测度}
-
-  \begin{defi}
-    定义$\hat{Q}_l$为中心在原点、边长为$2l$的$n$维立方块.
-  \end{defi}
-
-  \begin{defi}[$\sigma$-可测]
-    \label{defi: sigma-可测}
-    称$A\subset\R^n$广义Lebesgue可测或$\sigma$-可测，若对于任意
-    $l\in\mathbb{N}$，集合$A\cap\hat{Q}_l$ Lebesgue可测. 同时，对于
-    $\sigma$-可测的集合，定义
-    \begin{equation}
-      \label{equ: sigma-测度}
-      \mu A = \lim_{l\to\infty}\mu(A\cap \hat{Q}_l).
-    \end{equation}
-    记$\sigma$可测的集合全体为$\mcal{M}_{\sigma}(\R^n)$.
-  \end{defi}
-
-  \begin{thm}
-    $\mcal{M}(\R^n)\subset\mcal{M}_{\sigma}(\R^n)$.
-  \end{thm}
-
-  \begin{thm}
-    若对于$A\in\mcal{M}_\sigma(\R^n)$，\equref{equ: sigma-测度}的极限为有限值，
-    则$A\in\mcal{M}(\R^n)$.
-  \end{thm}
-  \remark
-    这一定理表明，$\mcal{M}_\sigma(\R^n)$只是$\mcal{M}(\R^n)$加上了原来测度
-    为无穷的那些集合. 即对于测度有限部分，这两种的按照不同方式定义的测度是相同的.
-  \proof
-    为证明$A\in\mcal{M}(\R^n)$，只需要利用\thmref{thm: 可数并可测}，即验证
-    $A\in\mcal{M}^*(\R^n)$且$A$可以拆成可数个Lebesgue可测集的并的形式.\par
-    首先将利用$\{A_l\backslash A_{l-1}\}$拆分$A$，可以证明它们都是Lebesgue可测
-    的. 之后只需要证明$A$的外测度有限即可. 注意
-    \[
-      \mu^* A \le \sum_{l=1}^\infty\mu^*(A_l\backslash A_{l-1})
-      = \sum_{l=1}^\infty\mu(A_l\backslash A_{l-1}).
-    \]
-    而利用级数相关知识，可知$\rhs$收敛于有限值.$\quad\blacksquare$
-
-  \begin{thm}
-    \label{thm: 广义测度、sigma-代数}
-    $\mcal{M}_\sigma(\R^n)$是$\sigma$-代数，它的单位元为$\R^n$.
-  \end{thm}
-
-  \begin{cor}
-    设$X\subset\R^n$为紧集，则$\mcal{M}(X)$为$\sigma$-代数.
-  \end{cor}
-
-  \begin{thm}
-    $\R^n$中的开集都$\sigma$-可测.
-  \end{thm}
-  \proof
-    利用$\mcal{M}_\sigma(\R^n)$是$\sigma$-代数这一事实以及\thmref{thm:
-    开集的闭方块表示}即可.$\quad\blacksquare$
-
-\subsection{Borel $\sigma-$代数}
-
-  \begin{defi}[Borel $\sigma$-代数]
-    \label{defi: Borel代数}
-    定义$\R^n$上的Borel $\sigma$-代数是由开集全体生成的$\sigma$-代数，即
-    \[
-      \mcal{B}(\R^n) = \sigma(\mcal{T}(\R^n)) =
-      \bigcap\{ \mcal{A}\subset\R^n\,|\, \mcal{A}\supset\mcal{T}(\R^n),
-      \,\text{且$\mcal{A}$为$\sigma$-代数}\}.
-    \]
-    其中$\mcal{T}(\R^n)$表示$\R^n$上的开集全体.
-  \end{defi}
-  \remark
-    这一定义表明Borel $\sigma$-代数是最小的包含了所有开集的$\sigma$-代数. 首先，
-    对$\mcal{A}$的要求表明它是包含了所有开集的$\sigma$-代数，而$\bigcap$则表明
-    它是最小的. 与此同时，由于$\sigma$-代数对于取补集操作封闭，所以也可以说Borel
-    $\sigma$-代数是由全体闭集生成的. 
-
-  \begin{defi}[Borel集]
-    称Borel $\sigma$-代数中的元素为Borel集.
-  \end{defi}
-
-  \begin{thm}
-    Borel代数由$\R^n$中的闭方块全体$\mcal{K}(\R^n)$生成. 且Borel集Lebesgue可测.
-  \end{thm}
-  \remark
-    这一定理意味着只需要定义了方块以及方块上的测度，那么对应的Borel集永远是可测的.
-  \proof
-    首先考虑定理的前半部分. 根据\thmref{thm: 开集的闭方块表示}可知，$\mcal{T}(\R^n)
-    \subset\sigma(\mcal{K}(\R^n))$，从而$\sigma(\mcal{T}(\R^n))\subset
-    \sigma(\mcal{K}(\R^n))$. 而根据\defref{defi: Borel代数}的评注，可知反向也
-    成立. 因此$\mcal{B}(\R^n) = \sigma(\mcal{K}(\R^n))$.\par
-    至于可测性. 由于对于任意$A\in\mcal{K}(\R^n)$，有$A\in\mcal{M}_\sigma(\R^n)$，
-    所以根据\thmref{thm: 广义测度、sigma-代数}可知$\sigma(\mcal{K}(\R^n))\subset
-    \mcal{K}(\R^n)$.$\quad\blacksquare$
-
-\subsection{Borel正则性}
-
-  \paragraph{正则性}
-    如果说事物A是关于事物B正则的，那么它的含义是A可以用B来逼近. 例如说Lebesgue测度
-    是Borel正则的，它表明某些集合的Lebesgue测度可以用Borel集的测度来逼近.
-
-  \begin{thm}
-    \label{thm: Borel正则性}
-    设$A\subset\R^n$，则$\mu^*(A)=\inf\{\mu(G)\,|\,A\subset G,\,
-    \text{G为开集}\}$. 若$A\in\mcal{M}_\sigma(\R^n)$，则$\mu(A)=
-    \sup\{\mu(F)\,|\,F\subset A,\,\text{F为紧集}\}$.
-  \end{thm}
-  \remark
-    这一定理表明，我们可以从外部用开集或者从内部用紧集逼近一个集合.
-  \proof
-    首先考虑前半部分，对于$\mu^*(A)=\infty$的情况是显然的，与此同时$\mu^*(A)\le\inf$也
-    是如此，所以仅需要证明$\mu^*(A)\ge\inf$即可. 即证明对于任意的$\vep$，都存在开集$G$，
-    使得$\mu^*(A)+\vep\ge\mu(G)$.考虑$\lhs$，对于$\mu^*(A)$，用刚比它大一点的方块覆
-    盖$\{K_i\}$来替换代替它，即
-    \[
-      \sum_{i=0}^\infty\mu(K_i) \le \mu^*(A) + \frac{\vep}{2}.
-    \]
-    与此同时，对于每一个方块，考虑它对应的刚比它大一点的开方块$\tilde{K}_i$，即
-    \[
-      \mu(\tilde{K}_i) \le \mu(K_i) + \frac{\vep}{2^{i+1}}.
-    \]
-    利用半可加性即可知道这些开方块的并即为所需要的$G$.\par
-    而对于后半部分，$\mu(A)\ge\sup$仍是显然的，下考虑$\mu(A)\le\sup$的证明. 首先
-    对于$A$有界的情况，可以利用前半部分构造出合适的紧集. 首先取包含$A$的紧集$H$，接着
-    从$H$中间挖去$A$. 由前半部分可知，存在一个相应的开集$G\supset H\backslash A$.
-    它直观上来看，有一部分在$H$的外面，另一部分在$A$的里面. 而$A$中那些不属于$G$的部分，
-    即$H\backslash G$，就是所需要的紧集. \par
-    而对于$A$无界的情况，又分为两类. 首先是$\mu(A)=\infty$的情况，利用之前的结果可知
-    $\sup=\infty$. 而对于$\mu(A)<\infty$的情况，注意到当$l$充分大时，\equref{equ:
-    sigma-测度}中$\rhs$的增加就很小了，从而仍可以化归至有限的情况.$\quad\blacksquare$
-
-  \begin{thm}
-    $A\in\mcal{M}_\sigma(\R^n)$当且仅当对任意$\vep>0$，存在开集$G\supset A$使
-    成立$\mu^*(G\backslash A)<\vep$.
-  \end{thm}
-  \proof
-    首先假设$A\in\mcal{M}_\sigma(\R^n)$. 对于$\mu(A)<\infty$的情况，
-    利用\thmref{thm: Borel正则性}证明中所构造的开集即可. 而对于$\mu(A)=\infty$的情况，
-    只需对于$A_l$取对应开集，再取它们的并即可.\par
-    接着假设条件成立，证明$A\in\mcal{M}_\sigma(\R^n)$. 对于有限的情况，取比$A$稍大
-    的开集并用可数个闭方块来表示它，最后舍掉最后那些充分小的方块即得到了所要的初等集. 只需要
-    证明$A_l\in\mcal{M}_\sigma(\R^n)$即可，之后利用$\mcal{M}_\sigma(\R^n)$对可数
-    并封闭来完成证明.$\quad\blacksquare$
-
-  \begin{thm}
-    \label{thm: sigma-测度、夹逼}
-    $A\in\mcal{M}_\sigma(\R^n)$当且仅当对任意$\vep>0$，存在开集$G$和闭集$F$，满足
-    $F\subset A\subset G$且$\mu(G\backslash F)<\vep$. 若$\mu(A)<\infty$，则
-    $F$的选取可以是紧集.
-  \end{thm}
-  \proof
-    TODO
-  % end(proof)
-
-  \begin{defi}
-    记$\R^n$中所有开集的可数并全体为$G_\delta(\R^n)$，所有闭集的可数交为$F_\sigma(\R^n)$.
-  \end{defi}
-  \remark
-    可以证明，这两个集合实际就是Borel集. 相关的证明见\thmref{thm: sigma-可测、开集、闭集}.
-
-  \begin{thm}
-    \label{thm: sigma-可测、开集、闭集}
-    设$A\in\mcal{M}_\sigma(\R^n)$. 则存在$G\in G_\delta(\R^n)$和$F\in F_\sigma(\R^n)$
-    满足
-    \[
-      F\subset A\subset G,\quad \mu(G\backslash A) = \mu(A\backslash F) = 0.
-    \]
-  \end{thm}
-  \proof
-    对$\{ G_k\}$和$\{ F_k\}$施\thmref{thm: sigma-测度、夹逼}即可.$\quad\blacksquare$
-
-  \begin{cor}
-    $\mcal{M}_\sigma(\R^n)$是$\mcal{B}_\sigma(\R^n)$的在Lebesgue-$\sigma$测度
-    下的完备化\footnote{注意，$\mcal{M}_\sigma(\R^n)$是完备的.}
-    ，即对与$\mcal{M}_\sigma(\R^n)$中的集合和$\mcal{B}_\sigma(\R^n)$中
-    的集合仅相差Borel集中零测集的某个子集，即对于任意的$A\in\mcal{M}_\sigma(\R^n)$，
-    $A$可以被写为$X\cup M$的形式，其中$X\in\mcal{B}_\sigma(\R^n)$，而$M\subset N
-    \in\mcal{B}_\sigma(\R^n)$且$\mu N=0$.
-  \end{cor}
-
-\subsection{不变性与Lebesgue不可测集}
-
-  \begin{thm}
-    Lebesgue测度有平移不变性、相对伸缩不变性和镜像不变性.
-  \end{thm}
-
-  \begin{thm}[Lebesgue不可测集]
-    略
-  \end{thm}
-
-\subsection{其他测度}
-
-
-
-\newpage
-\section{可测函数}
-
-\subsection{可测函数的定义}
-   \begin{defi}[测度空间]
-     对于集合$X$，设$\mcal{M}(X)$是它的一个构成$\sigma$-代数的子集且该$\sigma$-代数的单位元
-     为$X$，设$\mu$是定义在$\mcal{M}$上的完备$\sigma$-可加测度. 称$(X, \mcal{M}, \mu)$为
-     一个测度空间.
-   \end{defi}
-
-   \begin{defi}[可测]
-     称函数$f:X\to\R$在集合$X$上关于测度$\mu$可测，若对任意实数$c$，集合$X(f>c):=\{x\in X
-     \,:\,f(x)>c\}$可测. 记定义在$X$上的可测的函数全体为$S(X,\mcal{M}, \mu)$，简记为$S(X)$.
-   \end{defi}
-
-  \begin{lemma}
-    以下命题等价.
-    \begin{enumerate}
-      \item $f\in S(X)$，即$X(f>c)\in\mcal{M}$.
-      \item $X(f\ge c)\in\mcal{M}$.
-      \item $X(f<c)\in\mcal{M}$.
-      \item $X(f\le c)\in\mcal{M}$.
-    \end{enumerate}
-  \end{lemma}
-  \proof
-    首先证明
-    \[
-      X(f\ge c) = \bigcap_{k=1}^\infty X\left(f>c-\frac{1}{k}\right).
-    \]
-    之后只需要利用$\mcal{M}$的$\sigma$-可加性既可得到$\lhs$的可测性. 对于其他的条件，
-    或与此证明类似，或可以直接利用补集等推出.$\quad\blacksquare$
-  % end{proof}
-
-  \begin{cor}
-    若$f\in S(X)$，则对于任意的$a\le b$，如下集合都可测：
-    \[
-      X(a\le f\le b),\quad X(a<f\le b),\quad X(a<f<b),\quad X(a\le f<b), \quad 
-      X(f=a).
-    \]
-  \end{cor}
-
-
-% end{subsection}
-
-% end{section}
-
-  \begin{defi}
-    记$\R^n$中所有开集的可数并全体为$G_\delta(\R^n)$，所有闭集的可数交为$F_\sigma(\R^n)$.
-  \end{defi}
-  \remark
-    可以证明，这两个集合实际就是Borel集. 相关的证明见\thmref{thm: sigma-可测、开集、闭集}.
-
-  \begin{thm}
-    \label{thm: sigma-可测、开集、闭集}
-    设$A\in\mcal{M}_\sigma(\R^n)$. 则存在$G\in G_\delta(\R^n)$和$F\in F_\sigma(\R^n)$
-    满足
-    \[
-      F\subset A\subset G,\quad \mu(G\backslash A) = \mu(A\backslash F) = 0.
-    \]
-  \end{thm}
-  \proof
-    对$\{ G_k\}$和$\{ F_k\}$施\thmref{thm: sigma-测度、夹逼}即可.$\quad\blacksquare$
-
-  \begin{cor}
-    $\mcal{M}_\sigma(\R^n)$是$\mcal{B}_\sigma(\R^n)$的在Lebesgue-$\sigma$测度
-    下的完备化\footnote{注意，$\mcal{M}_\sigma(\R^n)$是完备的.}
-    ，即对与$\mcal{M}_\sigma(\R^n)$中的集合和$\mcal{B}_\sigma(\R^n)$中
-    的集合仅相差Borel集中零测集的某个子集，即对于任意的$A\in\mcal{M}_\sigma(\R^n)$，
-    $A$可以被写为$X\cup M$的形式，其中$X\in\mcal{B}_\sigma(\R^n)$，而$M\subset N
-    \in\mcal{B}_\sigma(\R^n)$且$\mu N=0$.
-  \end{cor}
-
-\subsection{不变性与Lebesgue不可测集}
-
-  \begin{thm}
-    Lebesgue测度有平移不变性、相对伸缩不变性和镜像不变性.
-  \end{thm}
-
-  \begin{thm}[Lebesgue不可测集]
-    略
-  \end{thm}
-
-\subsection{其他测度}
-
-  
+  \paragraph{p72. Proposition 23}
+    注意这里的结论并非一致收敛，这里$A$的选取是可以依赖于$\vep$的，即“任意$\vep$，$\delta$，
+    存在$A$，……”；但是一致收敛的结论实际上也是成立的，具体内容见习题30.
+  % end
+% end
 
 
 \end{document}
