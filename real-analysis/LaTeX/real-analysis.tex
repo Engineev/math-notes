@@ -16,56 +16,56 @@
     注意定义中的下确界部分，这表明如果我们要证明$m^*A\ge k$，则只需要证明对任意$\{I_n\}$，
     $\sum l(I_n)\ge k$即可；同时这表示在$m^*A<\infty$的情况下，总可以找到可列个开区间，
     使得$\sum l(I_k) \le m^*A + K\vep$.\par
-    注意，外侧度并非可数可加测度。
+    注意，外侧度并非可数可加测度. 
   % end
 
   \paragraph{56. Proof of Proposition 1}
     关于$[a,b]$情况中$(a_i,b_i)$的构造：将$I_n$中的线段从左到右排列，依次取覆盖了前一个
-    $b_i$的线段。对于任意的有限区间，用一个闭区间从内部逼近它并利用之前的结论，这样可以得到一
-    边的结论。同时利用$m^*I = m^*\bar{I}=l(\bar{I})=l(I)$来得到另一边，注意其中用到了
-    $\bar{I}\backslash I$至多包含两个点且单个点的外侧度为零。对于无穷区间的情况，同样是利用
-    内部的闭区间。
+    $b_i$的线段. 对于任意的有限区间，用一个闭区间从内部逼近它并利用之前的结论，这样可以得到一
+    边的结论. 同时利用$m^*I = m^*\bar{I}=l(\bar{I})=l(I)$来得到另一边，注意其中用到了
+    $\bar{I}\backslash I$至多包含两个点且单个点的外侧度为零. 对于无穷区间的情况，同样是利用
+    内部的闭区间. 
   % end
 
   \paragraph{p58. Proposition}
     这一命题表明任意Borel集都可以用开集在外侧度意义上从外部逼近；如果考虑是用$G_\delta$集，
-    则可以直接从外部在外侧度意义上相等。
+    则可以直接从外部在外侧度意义上相等. 
   % end
 
   \paragraph{p58. Definition}
     实际上这一定义意味着，如果我们定义相应的“内测度”$m_*$，则有$m^*(E)=m_*(E)$. 首先对于$E$，
     一个十分符合直觉的定义“内测度”的方法为$m_*(E)=m_*(X)-m_*(X\backslash E)$，其中$X$是
-    某个包含$X$的集合。而这一定义的是实际上就是说对于任意$X$（可能不包含$E$），这一性质都是成
-    立的。\par
-    同时注意$\lhs\le\rhs$是自然成立的，所以只需要验证$\lhs\ge\rhs$即可。
+    某个包含$X$的集合. 而这一定义的是实际上就是说对于任意$X$（可能不包含$E$），这一性质都是成
+    立的. \par
+    同时注意$\lhs\le\rhs$是自然成立的，所以只需要验证$\lhs\ge\rhs$即可. 
   % end
 
   \paragraph{p60. Lemma 11}
     注意我们还没有证明开区间都是Lebesgue可测的，但我们已经证明了对于区间，外测度和长度是一致
-    的。
+    的. 
   % end
 
   \paragraph{p61. Proof of Theorem 12}
     定理10表明$\mathfrak{M}$是一个$\sigma$-代数且根据引理11，它包含所有$(a,\infty)$；
     同时易证Boreal集$\mathfrak{B}$可由全体$(a,\infty)$生成，即它是包含所以$(a,\infty)$
-    的最小的$\sigma$-代数。因此$\mathfrak{B}\subset\mathfrak{M}$，所以Borel集都可测。
+    的最小的$\sigma$-代数. 因此$\mathfrak{B}\subset\mathfrak{M}$，所以Borel集都可测. 
   % end
 
   \paragraph{p64. Proposition 15}
-    这一命题表明可测集可以用开集从外部逼近，用闭集从内部逼近。如果考虑$G_\delta$集和
-    $F_\sigma$，则上述可以在测度意义下近似。同时若外侧度有限，则可以用有\textbf{限开}区间的
-    并来逼近。上述内容反之亦成立。
+    这一命题表明可测集可以用开集从外部逼近，用闭集从内部逼近. 如果考虑$G_\delta$集和
+    $F_\sigma$，则上述可以在测度意义下近似. 同时若外侧度有限，则可以用有\textbf{限开}区间的
+    并来逼近. 上述内容反之亦成立. 
   % end
 
   \paragraph{p68. Proof of Proposition 19}
     这里$\bigcup_r\cdots$可以被诠释为：枚举所有有理数$r$，对于每一个$r$，它对应了$\{x\,:
-    \,f(x)+g(x)<\alpha\}$这一集和中的一部分。取它们的并集则得到了完整的集合。
+    \,f(x)+g(x)<\alpha\}$这一集和中的一部分. 取它们的并集则得到了完整的集合. 
   % end
 
   \paragraph{p69. Proposition 22}
     可测函数可以用简单函数近似；简单函数可以用阶梯函数近似；阶梯函数可以用连续函数近似. 具体见
     习题23. 另外，这里的近似指的是误差超过$\vep$的集合很小，在习题31中给出了另一种形式：不相
-    等的集合很小。
+    等的集合很小. 
   % end 
 
   \paragraph{p72. Proposition 23}
@@ -79,11 +79,133 @@
 
   \paragraph{p86. Theorem 9}
     首先根据命题6，在$f$有界的情况下才可以保证$\int f_n$的极限是存在的，所以$\rhs$在这里仅
-    仅是下极限。\par
+    仅是下极限. \par
     一个表明不等号可以严格成立的例子是：$f_n(x)=n\chi_{0,1/n}$，它几乎处处收敛于$0$，但是
     $\int_[0,1] f_n$始终为$1$. 
   % end
 
+% end
+
+\newpage
+\section{The Lebesgue Integral}
+  \paragraph{p79. Proof of Proposition 3}
+    在已知上下积分相等的前提下证明$f$可测：条件意味着可以有一列
+    \[
+      \int \{\psi_n(x)-\varphi_n(x)\}\rd x < \frac{1}{n}.
+    \]
+    这一积分的不等式意味着满足$m\Delta_v<v/n$，即$\varphi_n$和$\psi_n$相差太多的点不会很
+    多. 考虑$\psi^*$和$\varphi^*$，证明在极限情况下，这样的点（在此即不相等的点）为一个零测
+    集. 
+  % end
+
+  \paragraph{p92.}
+    这里之所以说大部分情况下，只需要有$|f_n|\le g$，则之前的结论仍然成立的原因在于，$g\pm 
+    f_n$是非负的，而积分和极限都有线性性. 
+  % end
+% end
+
+\newpage
+\section{Differentiation and Integration}
+  \paragraph{p97. Overview}
+    \begin{equation}
+      \label{eq:ch5-overview-1}
+      \frac{\rd}{\rd x}\int_a^x f(y)\rd y = f(x)
+    \end{equation}
+    几乎处处成立，注意我们已知对于连续点它是成立的. 仅对某一类函数$f$，可以定义$f\hp$使成立
+    \begin{equation}
+      \label{eq:ch5-overview-2}
+      \int_a^b f\hp(x)\rd x = f(b)-f(a).
+    \end{equation}
+  % end
+
+  \paragraph{p98. Lemma 1}
+    Vitali覆盖的十分常见的例子是考虑对$E$的每个点的所有领域，或者是类似于这样的集合。这一引理
+    的作用在于把一个\href{https://www.quora.com/
+    What-is-the-significance-of-the-Vitali-covering-lemma}
+    {全局的问题化为局部的问题}. 注意在这里的描述中并没有“3倍”的概念，所以在估计上界的时候(?)
+  % end
+
+  \paragraph{p100. Theorem 3}
+    这一定理对于单调递增的函数解决了p97中提出的问题：首先$f$几乎处处可微（从而几乎处处连续），
+    从而解决了\eqref{eq:ch5-overview-1}，同时也给出了唯一自然的$f\hp$的定义（由于是
+    Lebesgue积分，所以我们无需考虑那些不可微的点）；同时表明在仅有单调性的情况下，对
+    于\eqref{eq:ch5-overview-2}，只能成立不等式. \par
+    证明的关键点在于证明$E_{u,v}$是零测集. 注意到函数值的差就是微分的积分，所以在这里我们实际
+    上在估计$sv$和$su$. 
+  % end
+
+  \paragraph{p103. Lemma 4}
+    这一引理可用于在$f$和$P$，$N$以及$T$之间转换. 
+  % end
+
+  \paragraph{p103. Theorem}
+    通常来讲，这一结果只有对于有线性性的时候才真正有用，在诸如模长之类的只有三角不等式的场合则
+    只能用于进行宽松的有界性估计。
+  % end
+  
+  \paragraph{p105. Proof of Lemma 8}
+    思路：反证法. 考虑满足$f>0$的非零测子集，通过一些近似得到满足$\int_{a_n}^{b_n}f\ne 0$
+    的区间，从而推得矛盾. 
+  % end
+
+  \paragraph{p106. Proof of Lemma 9}
+    我们只需要证明$F\hp$几乎处处存在且对任意$y$成立$\int_a^y(F\hp-f)=0$并应用引理8即可. 
+    其中$F\hp$的几乎处处存在性由它的定义式及引理7得到. 下考虑$\int(F\hp-f)$. 首先把$F\hp$
+    化为更方便处理的形式，由于我们已知其存在性，所以对于几乎所有$x$，成立
+    \[
+      F\hp(x) = \lim_{n\to\infty}\frac{F(x+1/n)-F(x)}{1/n}=\lim_{n\to\infty}f_n.
+    \]
+    首先我们尝试交换积分和极限运算. 由于这是一个一般的函数，我们考虑利用Lebesgue收敛定理，即我
+    们需要证明$|f_n|\le g$对某个可积函数成立. 已知$|f|\le K<\infty$，所以
+    \[
+      |f_n(x)| = n\left|\int_x^{x+1/n}f(t)\rd t\right| \le K.
+    \]
+    从而有
+    \[
+      \int_a^y F\hp = \lim_{n\to\infty} n\int_a^y\{F(x+1/n)-F(x)\}\rd x.
+    \]
+    接下来处理该积分，我们有
+    \[
+      \int_a^y\{F(x+1/n)-F(x)\}\rd x = \int_y^{y+1/n}F - \int_a^{a+1/n}F.
+    \]
+    由于$F$的连续性（由引理7保证），我们有$n\int_y^{y+1/n}F\to F(y)$. 所以我们
+    \[
+      \int_a^y F\hp = F(y)-F(a)=\int_a^c f.
+    \]
+    证毕.
+  % end
+
+  \paragraph{p108. Fail to be absolutely continuous}
+    首先如果一个函数不是几乎处处可微的，那么它不是绝对连续的。对于一个几乎处处可微的函数，定理
+    14表明若它要是绝对连续的，那么它需要在微分后可以积回来。考虑Cantor函数，虽然它几乎处处可
+    微，但是它导数全是零。直观上来讲，它的变化全集中在了不可微的点处。
+  % end
+
+  \paragraph{p108. Proof of Lemma 11}
+    取$\vep=1$，把$[a,b]$分成长度$\le\delta$的子区间，插入这些子区间的端点。则对于每一组，
+    成立$\sum|f(x_i)-f(x_{i-1})|<\vep$。从而整体上有$t\le K\vep$，其中$K$是任意大于组
+    数的数。
+  % end
+
+  \paragraph{p109. Proof of Lemma 13}
+    考虑绝对连续的定义，对$|f(x\hp_i)-f(x_i)|$的求和天然的把一个全局性质化为了一个局部性质.
+    我们要证对于任意$c\in[a,b]$，成立$f(c)=f(a)$. 考虑Vitali覆盖定理，我们把$[a,c]$分为
+    两类区间，其中一类是$f$在其上的变化充分小的，这由几乎处处$f\hp(x)=0$保证，另一方面则是总
+    长度充分小的区间，在其上利用绝对连续性得到在其上的变化亦充分小。
+  % end
+
+  \paragraph{Sufficient condition of absolute continuity}
+    Lipchitz continuity or being an indefinite integral.
+  % end
+
+  \paragraph{p113. Lemma 16}
+    即把区间往右移动或单纯地向右拉伸，对应的弦的斜率增长。
+  % end
+
+  \paragraph{p113/114. Proposition 17/18}
+    这两个命题描述了函数的凸性和其导数的关系。
+  % end
+  
 % end
 
 
