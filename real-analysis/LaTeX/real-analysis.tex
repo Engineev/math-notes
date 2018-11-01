@@ -208,5 +208,117 @@
   
 % end
 
+\newpage
+\section{The Classical Banach Spaces}
+  \paragraph{p118.}
+    关于$|f+g|^p\le 2^p(|f|^p+|g|^p)$，只需要利用Jensen不等式即可证明。
+  % end
+
+  \paragraph{p118.}
+    我们可以利用$x^{-\alpha}$来构造属于$L^p$但不属于某个$L^q\,(q>p)$的函数。
+  % end
+
+  \paragraph{p119. $L^\infty$空间}
+    注意$L^\infty\subsetneqq\bigcap_{p=1}^\infty L^p$. 考虑\footnote{关于级数收敛性
+    的证明略。}
+    \[
+      f(x) = \sum_{n=1}^\infty n\chi_{(2^{-n}, 2^{-n+1}]}(x).
+    \]
+    它并不是一个几乎处处有界的函数，对于任意常数$M>0$，都有一小段$0$附近的测度不为零的区间，在
+    其上$f>M$. 但是可以验证它属于任意$L^p$.\par
+    $\|f\|_\infty$可以在某种含义上理解为$f$的上确界：$f$在某些总体上可以忽略的点上取值可以
+    是$\infty$，而我们在考虑上确界的时候显然不应当考虑这些点，所有有了如此的定义。注意
+    $\lim_{p\to\infty}\|f\|_p =\|f\|_\infty$是成立的。可以这样考虑，当$p$变大时，再积分
+    $\int_0^1|f|^p$中，$|f|$较大的点所占的影响就越大，到最后整个积分的值就有其上确界所主导。
+    从这一角度考虑，$L^\infty$实际上是$\|\cdot\|_\infty$有意义的函数全体。
+  % end
+
+  \paragraph{p121. Hölder}
+    \href{http://pi.math.cornell.edu/~erin/analysis/lectures.pdf}{Notes}.
+    另外关于Young不等式，可以利用$\log$的凹性来证明。
+  % end
+
+  \paragraph{p125. Proof of Theorem 6}
+    $\,$\par
+    \textit{Overview:} Our goal is to show that every absolutely summable 
+    sequence $\langle f_n\rangle$ is summable. To achieve it, we need to find
+    the pointwise sum $s=\lim s_n = \lim\sum_{k=1}^n f_k$ (a.e.) first and
+    estimate $\|s-s_n\|$. Note that it suffices to shows the existence of the 
+    limit for every fixed $x$.\par
+    Now we investigate what can the absolute summability provides. 
+    \begin{enumerate}
+      \item Hypothesis: $\sum_{n=1}^\infty\|f_n\|=M<\infty$.
+      \item Define nonnegative $g_n(x)=\sum_{k=1}^n|f_k(x)|$, 
+            the partial sum of $|f_k|$.
+      \item Minkowski $\Rightarrow \|g_n\|\le\sum_{k=1}^n\|f_k\|\le M$, i.e.,
+            $\int g_n^p \le M^p$. 
+      \item For each $x$, $\langle g_n(x)\rangle$ is increasing and therefore 
+            converges to an extended real number, denoting it by $g(x)$. Now we
+            have the pointwise limit of $g_n(x)$ a.e..
+      \item From [3] and Fatou's Lemma, $\int g^p \le M^p$, i.e., $g$ is 
+            integrable and therefore finite a.e.. 
+      \item [5] implies that the number sequence $\langle f_n(x)\rangle$ is 
+            absolutely convergent (and therefore convergent) for almost every 
+            $x$.
+      \item Hence, we can define $s(x)=\sum_{n=1}^\infty f_n(x)$ pointwisely.
+            For those point where $f_n$ does not converge, we simply define $s(x)
+            =0$.
+      \item Now we are going to estimate $\|s_n-s\|$.
+      \item Note that $g^p$ is integrable function which dominates $s_n-s$. 
+            Hence, we can use the Lebesgue Convergence Theorem to conclude that
+            $\lim\int|s_n-s|^p = \int\lim|s_n-s|^p = 0$.
+    \end{enumerate}
+  % end
+
+  \paragraph{p127. Proof of Problem 17}
+    \footnote{I assume that $1/p+1/q=1$ here.}
+    $\,$\par
+    \textit{Overview:} The key to the proof is to divide $[0,1]$ into two sets,
+    on one of which the integral of $|g|^q$ is sufficiently small and on the
+    other one, the convergence of $f_n$ is uniform and therefore $|f_n-f|$ is 
+    bounded.
+    \begin{enumerate}
+      \item Fix $\vep>0$.
+      \item Since $g\in L^q$, there exists some $\delta>0$ such that for all 
+            subset of $E=[0,1]$ whose measure $<\delta$, the integral of $|g|^q$
+            over it is $<\vep^q$.
+      \item Hypothesis: $f_n\to f$ a.e.
+      \item From 3 and the Egoroff's Theorem, there exists $A\subset E$ with $m
+            A<\delta$ such that $f_n\to f$ uniformly on $A$.
+      \item Now we estimate $|\int_{E\setminus A}(f-f_n)g|$ and $|\int_A|$.
+      \item For the first part, the Hölder inequality yields
+            \[
+              \left|\int_{E\setminus A}(f-f_n)g\right| \le
+              \left\{\int_{E\setminus A}|f-f_n|^p\right\}^{1/p}
+              \left\{\int_{E\setminus A}|g|^q\right\}^{1/q}.
+            \]
+      \item The uniform convergence of $f_n$ ([4.]) ensures the existence of 
+            some $N_1>0$ such that for all $n>N$, $\sup_{E\setminus A}|f_n-f|
+            <\vep$. Hence, $(\int_{E\setminus A})^{1/p}<\vep$. Meanwhile, note 
+            that $(\int_{E\setminus A})^{1/q}<\|g\|_q<\infty$. Hence, the 
+            first part is $< \|g\|_q\vep$.
+      \item For the second part, the Hölder inequality yields a similar 
+            inequality.
+      \item This time, $(\int_A)^{1/q}<\vep$ by [2.] and
+            \[
+              \left\{\int_A|f-f_n|^p\right\} \le \|f-f_n\|_p \le 
+              \|f\|_p + \|f_n\|_p \le \|f\|_p + M.
+            \]
+            Hence, the second part is bounded by $(\|f\|_p+M)\vep$.
+      \item Consequently, for every $n>N$,
+            \[
+              \left|\int f_ng - \int fg\right| \le 
+              (\|g\|_q+\|f\|_p+M)\vep.
+            \]
+    \end{enumerate}
+  % end
+
+  \paragraph{p127. Lemma 7}
+    $f\in L^p$差不多是有界的.
+  % end
+
+  
+% end
+
 
 \end{document}
