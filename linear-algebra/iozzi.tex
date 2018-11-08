@@ -38,10 +38,47 @@
     \end{tabular}
   % end
   
-  \paragraph{p34. 换基公式（二次型）}
+  \paragraph{p34. 换基公式（双线性）}
     $\tilde{B} = L^TBL$.
   % end
 % end
 
+\subsection{Inner Products}
+  \paragraph{p41. 双线性，二次型，内积}
+    \begin{enumerate}
+      \item 双线性：$\varphi:V\times V\to\mathbb{R}$，对于各分量线性。
+      \item 内积：$g:V\times V\to\mathbb{R}$，满足对称性和正定性的双线性函数。
+      \item 二次型：$\mathbb{R}^n\to\mathbb{R}$，对于双线性取$V=\mathbb{R}^n$，同时
+      取相同的第一第二分量，即$\varphi(v,v)$. 可证明，任意二次型都为$v^TSv$的形式。通常
+      要求$S$为对称阵，即要求原双线性函数为对称的。
+    \end{enumerate}
+  % end
 
+  \paragraph{p42. 内积与标准正交基}
+    设$\mathcal{B}\subset V$是内积$g$下的一组标准正交基，则$g$在$B$下的矩阵为单位阵。由于
+    标准正交基$\mathcal{B}$是一定存在的，所以任意内积都有形式
+    \[
+      g(u,v) = [u]_{\mathcal{B}}^T [v]_{\mathcal{B}} = v^iw_i
+    \]
+  % end
+
+  \paragraph{p48. Reciprocal Basis}
+    Let $g:V\times V\to\mathbb{R}$ be an inner product, $\mathcal{B}=\{b_1,
+    \dots,b_n\}$ a basis of $V$ and $\mathcal{B}^g=\{b^1,\dots,b^n\}$ the
+    reciprocal basis of $\mathcal{B}$. Put $G=[g]_{\mathcal{B}}=[g_{ij}]$ and 
+    $M=[g]_{\mathcal{B}^g}=[g^{ij}]$. Then
+    \begin{enumerate}
+      \item $MG=I$.
+      \item $\mathcal{B}^g=\mathcal{B}M$ and \textit{vice versa}. Namely, 
+            $M=L_{\mathcal{B}^g\mathcal{B}}$.
+      \item The reciprocal basis is contravariant and the vector coordinates 
+            w.r.t to the reciprocal basis if covariant. Namely, $[v]_{\wtilde{
+            \mathcal{B}}^g}^T=[v]_{\mathcal{B}^g}^TL_{\wtilde{\mathcal{B}}
+            \mathcal{B}}$.
+      \item (Change of basis to the reciprocal basis) TODO
+    \end{enumerate}
+  % end
+% end
+
+% end
 
