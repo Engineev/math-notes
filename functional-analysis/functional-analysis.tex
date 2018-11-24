@@ -1,0 +1,95 @@
+\input{def.tex}
+
+\title{泛函分析$\,$笔记}
+\author{任云玮}
+\date{}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\setcounter{section}{1}
+\section{Normed Spaces. Banach Spaces}
+  \paragraph{p58. Normed Spaces and metric spaces}
+    首先它们的共同点在于在其上都定义了“距离”的概念，而不同点在于，metric space的定义中就包含
+    了“距离”metric，而对于normed space，它\textbf{首先}是一个向量空间，而对应的“距离”也是
+    通过向量的“长度”norm来定义的. 
+  % end
+
+  \paragraph{p68. Schauder basis and Hamel basis}
+    在Hamel basis的语境下，张成是指用\textbf{有限}的线性组合来张成，即$x=\sum_{i=1}^n
+    \alpha_ib_i$. 而在Schauder basis的语境中，我们利用范数定义了收敛级数的概念，这允许我们
+    用$\textbf{可数无限}$的线性组合来张成，即$x=\sum_{n=1}^\infty\alpha_ib_i$.
+  % end
+
+  \paragraph{p72. Lemma 2.4-1}
+    这一定理的用处在于，通过范数得到各个坐标（及其和）的上界. 
+    关于证明：
+    \begin{enumerate}
+      \item 假设存在$\|y_m\|\to 0$，得到坐标向量各个分量序列的有界性. 
+      \item 利用有界性逐次得到一个坐标向量所有分量都收敛的子列$(y_{m_n})$，设收敛于$y$.
+      \item 利用范数的连续性推出矛盾. 
+    \end{enumerate}
+  % end
+
+  \paragraph{p75.}
+    注意一个拓扑空间即为一个集合$X$和由它的满足一定性质的子集组成的集合$\mathcal{T}$. 例如
+    一个度量空间和其中的开集全体. 而这里的意思是，对于两个等价范数，对应的拓扑空间是相同的. 
+  % end
+ 
+  \paragraph{p78. F. Riesz's Lemma}
+    考虑$X=Z=\mathbb{R}^2$，$Y=\spn(x)$，则这一引理即是在说：在单位圆上我们可以找到一个
+    点$z$，使得它离$x$轴上的任意点都有一定距离. 这一例子对于理解证明的思路也是很有帮助的. 
+  % end
+
+  \paragraph{p118. Proof of Theorem 2.10-2}
+    利用$Y$的完备性逐点地定义$T$，证明$T\in B(X,Y)$且$T_n\to T$. 
+  % end
+
+  \paragraph{p121. Examples}
+    在这些例子总所做的事情是：(1) 求出dual space中对应的norm；(2) 构造一个的线性双射. (3)
+    证明该双射保norm. 其中(1)和(2)的顺序可以互换，而(1)时常被并入(3). 
+    另外注意在此并没有dual Schauder basis的概念. 
+  % end
+
+  \paragraph{p121. 2.10-6}
+    首先，我们构造从${l^1}\hp$到$l^\infty$的双射. 设$(e_k)=(\delta_{kj})$为$l^1$的一个
+    Schauder基，则对于任意$f\in {l^1}\hp$，定义$Tf=(\gamma_k)=(f(e_k))$. 易得$T$是线
+    性映射. 由于$f$的有界性，有
+    \begin{equation}
+      \label{eq:121-1}
+      \sup_k|f(e_k)|\le \sup_k\|f\|\|e_k\|\le \|f\|,
+    \end{equation}
+    从而$(\gamma_k)\in l^\infty$. 同时对于任意$(\beta_k)\in l^\infty$，我们可以定义
+    $g(x)=\sum_{k=1}^\infty x_k\beta_k \in {l^1}^*$. 同时由于$|x_k\beta_k| \le 
+    (\sup_k\beta_k)|x_k|$而$\sum|x_k|<\infty$，所以$g\in{l^1}\hp$. 因此$T$是一个线性
+    双射. \par
+    接下来我们求出${l^1}\hp$上的对应范数. 首先注意到级数$\sum x_kf(e_k)$的收敛是一致的且
+    $f$是连续的，从而有$f(x)=f(\sum x_ke_k)=\sum x_kf(e_k)$. 因此
+    \[
+      \|f\|=\sup_{\|x\|=1}|f(x)|=
+      \sup_{\|x\|=1}\left|\sum_{k=1}^\infty x_kf(e_k)\right|\le
+      \sup_k|f(e_k)|\sum_{k=1}^\infty|x_k|=\sup_k|f(e_k)|.
+    \]
+    而同时根据\equref{eq:121-1}，有$\|f\|=\sup_k|f(e_k)|$.\par
+    最后显然线性双射$T$是保范数的，从而它是一个同构. 因此$l^1$的对偶空间为$l^\infty$.
+  % end
+
+  \paragraph{p122. 2.10-7}
+    首先和之前一样，取$(e_k)$作为$l^p$的一组Schauder基，对于任意$f\in {l^p}\hp$，定义$
+    Tf=(f(e_k))$. 首先我们证明$(\gamma_k)=(f(e_k))\in l^q$. 即证明$\sum_{k=1}^n|
+    \gamma_k|^q$关于$n$有界. 注意对于任意$x$，有
+    \[
+      \|f\|\|x\| \ge |f(x)| = \sum_{k=1}^\infty \xi_k\gamma_k.
+    \]
+    所以我们只需要取如(11)所示的$x_n$，即可使得不等式两边有所需的形式. 从而得$(\gamma_k)\in
+    l^q$. 而反之对于$b=(\beta_k)\in l^q$，定义$g(x)=\sum_{k=1}^\infty\xi_k\beta_k$.
+    $g$的线性性是显然的，而有界性有Hölder不等式保证. 所以$T$是一个双射，而$T$的线性性是显然
+    的. 剩余的证明略. 
+  % end
+
+% end
+
+\end{document}
